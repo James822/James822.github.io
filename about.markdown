@@ -8,7 +8,9 @@ permalink: /about/
 
 This blog is a way for me to document my own progress, and share it with anyone and everyone.
 
-Througout my programming career (begininng since 2018), a huge part of my programming
-knowledge has come from blogs like this one, blogs that helped me understand otherwise difficult concepts, by presenting them in a human and clear way.
-I want to contribute back to this community and repository of "open" knowledege by sharing
-what I know, and document my own process and learning for myself and others.
+There are two things I want to accomplish with this blog:
+- Share my knoweldge and give back to the community that I learned from.
+- Document and share my various exploits and discoveries, for me and for others.
+
+The orientation of this blog is mostly towards math/technical/programming related things,
+but I might occasionally do some other stuff.
