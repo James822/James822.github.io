@@ -27,21 +27,11 @@ description: >- # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://jamesspratt.blog
 github_username: James822
-minimal_mistakes_skin: default
-search: true
 
 # Build settings
-markdown: kramdown
 theme: minima
-
 plugins:
   - jekyll-feed
-  
-# Outputting
-permalink: /:categories/:title/
-# paginate: 5 # amount of posts to show
-paginate_path: /page:num/
-timezone: America/Toronto
 
 # Exclude from processing.
 # The following items will not be processed, by default.
@@ -62,57 +52,3 @@ timezone: America/Toronto
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
-
-# Plugins (previously gems:)
-plugins:
-  - jekyll-paginate
-  - jekyll-sitemap
-  - jekyll-gist
-  - jekyll-feed
-  - jemoji
-  - jekyll-include-cache
-
-author:
-  name   : "James Spratt"
-  avatar : "/assets/images/bio-photo.jpg"
-  bio    : "Programmer and Designer."
-  links:
-    - label: "Website"
-      icon: "fas fa-fw fa-link"
-      url: "https://"
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/James822"
-
-footer:
-  links:
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/James822"
-
-defaults:
-  # _posts
-  - scope:
-      path: ""
-      type: posts
-    values:
-      layout: single
-      author_profile: true
-      read_time: true
-      comments: true
-      share: true
-      related: true
-  # _pages
-  - scope:
-      path: "_pages"
-      type: pages
-    values:
-      layout: single
-      author_profile: true
-
-category_archive:
-  type: liquid
-  path: /categories/
-tag_archive:
-  type: liquid
-  path: /tags/

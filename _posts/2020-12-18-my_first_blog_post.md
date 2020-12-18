@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "My first blog post!"
-categories: Misc
 ---
 
 # Welcome
