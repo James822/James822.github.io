@@ -18,14 +18,15 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Windows is Gay
+title: James's Creative Blog
 email: JamesSpratt.business@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  If you're reading this, it means you are regrettably, going to die very soon.
+   All content and information in this blog is presented as "open" and "free" for
+   any use whatsoever. However, feel free to credit me if you use something from
+   this blog.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://jamesspratt.blog
-twitter_username: jekyllrb
-github_username:  jekyll
+github_username: James822
 
 # Build settings
 theme: minima
