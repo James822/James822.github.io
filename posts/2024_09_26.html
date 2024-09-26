@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+
+    <style type="text/css">
+      body {
+	  margin-left: 25%;
+	  margin-right: 25%;
+	  background-color: gainsboro;
+      }
+    </style>
+    
+    <title>Blog of James Spratt</title>
+    
+  </head>
+  <body>
+    <h1 style="text-align:center;">Best operation syntax for programming languages?</h1>
+    <p style="text-align:center;">2024/09/26</p>
+    <br>
+    <hr>
+    <br>
+    <p>For the past week or so I've been thinking about ideas for a programming language syntax that I might want to design. I'm not interested in creating a programming language at this point, but I'm wondering if it would be worthwhile to build my own transpiler that compiles down to C code - just because there a couple of things I want to change in C.
+    </p>
+    <p>
+      For example, consider unary and binary operations. We will ignore the ternary operator, as according to this post: <a href="https://math.stackexchange.com/questions/116771/are-all-n-ary-operators-simply-compositions-of-binary-operators">are all n-ary operations are compositions of binary operators?</a>, we can define all n-ary operations with just a composition of binary operations.
+      <br>
+      In general, what is the best syntax to denote these operations? What I mean specifically is what is the best order to have them? These are the available choices:
+      <ul>
+	Let <code>x</code> and <code>y</code> be the operands, and <code>*</code> represent the operator, which could be addition "+", subtraction "-", increment "++", or any unary/binary operation.
+	
+	<li>Operators go in-between the operands (Infix Notation): <code>x * y </code>
+	</li>
+	
+	<li>Operators go before the operands (Polish Notation): <code>* x y </code>
+	</li>
+
+	<li>Operators go after the operands (Reverse Polish Notation): <code>x y *</code>
+	</li>
+	
+      </ul>
+    </p>
+    <p> Personally, I think a mix of Reverse Polish Notation (RPN) and infix is actually the best way to go, for unary and binary operations respectively.<br>
+      If you use RPN Notation for unary operators (which is basically just putting the operand at the end), and you use infix notation for binary operators; then you can easily define a syntax that has obvious precedent rules AND is very easy to read - IF you take it be the case that unary operators have a higher precedence than binary (which is a standard assumption in most programming languages).
+    </p>
+
+    <p>For unary operations it makes intuitive sense when you are reading from left to right. You start with the thing you want to operate on, "x" (which could be any variable or expression), and then you apply the operation "*" to x. So, applying "*" to x is written as:<br>
+      <code>x*</code>
+    </p>
+    <p>This scales very well to chained unary operations as well, for example, consider applying the operations "*", "&", and "++" to "x", in that exact order. We would write that as: <br>
+      <code>x*&++</code>
+      <br>
+      We don't need brackets or anything, it's just obvious that the operations are applied in that order as you read from left to right.
+    </p>
+    <p>This notation also scales well to infix notation with binary operations. We can actually consider a binary operation to be a "unary operation" that takes in a paramter for its operation. For example, the "+" binary operation takes two operands, the primary and secondary which are "x" and "y" respectively. In that case, we can think of the binary expression:<br>
+      <code>x + y</code><br>
+      As a unary expression with the form:<br>
+      <code>x+(y)</code><br>
+      Where "y" is seen as the "parameter" to the "unary" operation +. This why it is denoted by "+(y)" because it reads "+ takes y as a parameter".
+    </p>
+    <p>This left-right consistency between RPN for unary operations and infix-notation for binary operations is why I like this particular mix! It allow us to compose statements such as this:<br>
+      <code>x*&++ + y++*&* - z&**&</code><br>
+      With zero ambiguity, assuming that unary operations have a higher precedence than binary, which is a traditional assumption. The x, y, and z unary "clusters" get evaluated first because unary operators have higher precedence, and then it looks something like this:<br>
+      <code>x + y - z</code><br>
+      Where x + y is evaluated, and then z is subtracted.
+    </p>
+    
+    <!-- <p> For example, take this C expression: <code>z[0]</code><br> -->
+    <!--   If we only care about syntax at the moment, and disregard what the operations "&, *, ++, -, *, []" are, then we can easily see that it's not hard to follow the order of operations in this statement. First, we evalute the unary operators following x: <code>x&*&++</code>, and we do it in the left to right order, which is as so: "&" then "*" then "&" then "++". Then, the binary operation "-" between the result and "y" is evaluated.<br> -->
+    <!--   Then, the "z" expression is evaluated, with the order being "[0]", then "&", then "*". And finally, we take this result, and the previous result, and perform the binary operation "*". -->
+    <!-- </p> -->
+    <!-- <p>Now, let us try to write the same expression in C, which has a less consistent syntax for unary and binary operations:<br> -->
+    <!--   <code>(*&x) * (z[0]&*)</code> -->
+    <!-- </p> -->
+  </body>
+</html>
