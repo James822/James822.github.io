@@ -1,0 +1,63 @@
+body {
+    background-color: hsl(190, 7%, 13%);
+
+    font-family: sans-serif;
+    line-height: 2;
+}
+
+.main_content {
+    background-color: hsl(199, 6%, 22%);
+    
+    margin-left: 21%;
+    margin-right: 21%;
+    margin-top: 2%;
+    margin-bottom: 8%;
+    
+    border-style: solid;
+    border-width: 6px;
+    border-radius: 4px;
+    border-color: hsla(50, 0%, 0%, 0.3);
+    
+    padding: 3%;
+
+    color: hsl(0, 0%, 90%);
+    font-size: 110%;
+}
+
+h1 {
+    text-align: center;
+    /* color: hsl(204, 90%, 25%); */
+    color: hsl(203, 99%, 48%);
+}
+
+.bio {
+    text-align: center;
+    font-size: 80%;
+    line-height: 1;
+}
+
+h2 {
+    /* color: hsl(204, 90%, 25%); */
+    color: hsl(192, 85%, 40%);
+}
+
+hr {
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.20);
+}
+
+a:link {
+    color: hsl(210, 80%, 65%);
+  background-color: transparent;
+  text-decoration: none;
+}
+a:visited {
+    color: hsl(250, 80%, 65%);
+  background-color: transparent;
+  text-decoration: none;
+}
+a:hover {
+  color: hsl(0, 80%, 65%);
+  background-color: transparent;
+  text-decoration: underline;
+}

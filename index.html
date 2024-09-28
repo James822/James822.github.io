@@ -1,86 +1,71 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-
-    <style type="text/css">
-      body {
-	  margin-left: 25%;
-	  margin-right: 25%;
-	  font-size: 110%;
-      }
-
-      h1 {
-	  text-align: center;
-	  color: #0b5487;
-      }
-      h2 {
-	  color: #0b5487;
-      }
-      
-      hr {
-	  border-style: solid;
-	  border-color: rgba(0, 0, 0, 0.25);
-      }
-      
-    </style>
-    
+    <link rel="stylesheet" href="main_style.css">
     <title>Blog of James Spratt</title>
-    
   </head>
   <body>
     
-    <h1>Blog of James Spratt</h1>
-    
-    <br><hr><br>
+    <div class="main_content">
+      <h1>Blog of James Spratt</h1>
+      
+      <div class="bio">
+	  <p>Github: <a href="https://github.com/James822">https://github.com/James822</a></p>
+	  <p>Email: JamesSpratt.business@protonmail.com</p>
+      </div>
+      
+      <br><hr><br>
 
 
-    <h2>What this Blog is</h2>
-    
-    <p>Welcome to my personal blog/website! I mostly write about programming, general computer science, and mathematics, but I also occassionally write about other random topics.</p>
-    
-    <p>Right now the blog is a testing ground for my knowledge of basic web development (HTML, CSS, JS), but I'm mainly hoping to use it as repository for all of the main projects that I am working on. I also want to make blog posts on techniques and little discoveries that I make that are related to math, computer science, and the art of programming. And there will also be just general topic blog posts on any paticular subject that I feel like writing about. It could be philosophy, science, politics, history, etc. I'm also planning on including some certain sections that don't necessarily correspond to a "post". For example, I have a section called "important resources" which is basically just a large listing of important resources that I think are very useful to anyone in similar line of work as myself (or just in general).</p>
+      <h2>What this Blog is</h2>
+      
+      <p>Welcome to my personal blog/website! I mostly write about programming, general computer science, and mathematics, but I also occassionally write about other random topics.</p>
+      
+      <p>Right now the blog is a testing ground for my knowledge of basic web development (HTML, CSS, JS), but I'm mainly hoping to use it as repository for all of the main projects that I am working on. I also want to make blog posts on techniques and little discoveries that I make that are related to math, computer science, and the art of programming. And there will also be just general topic blog posts on any paticular subject that I feel like writing about. It could be philosophy, science, politics, history, etc. I'm also planning on including some certain sections that don't necessarily correspond to a "post". For example, I have a section called "important resources" which is basically just a large listing of important resources that I think are very useful to anyone in similar line of work as myself (or just in general).</p>
 
-    <p>This blog will also function as a "personal repository" of the information that I have learned over the years. Sometimes I wonder if I have lost a significant amount of useful knowledge just because I didn't take the time to document it properly so that I could refer back to it later. So, I'm hoping that with this blog, I'll be able to document all of the useful information and knowledge that I aquire so that I can share it not just publicly, but also with my future self.</p>
+      <p>This blog will also function as a "personal repository" of the information that I have learned over the years. Sometimes I wonder if I have lost a significant amount of useful knowledge just because I didn't take the time to document it properly so that I could refer back to it later. So, I'm hoping that with this blog, I'll be able to document all of the useful information and knowledge that I aquire so that I can share it not just publicly, but also with my future self.</p>
 
-    <p>Ideally, I'd like to update this blog once a week by making a new blog post every Sunday, or at least every other Sunday if not every week. Either I'll be posting a blog about something completely new, or I'll update a current project or blog thread that I've previously been working on (or both if I'm feeling ambitious). We'll see if this actually happens, but I really want to be diligent about this because I see this blog as a tool to keep myself on-track and focused on my work. The way I see it, if I don't update this blog weekly, then it means that I'm slacking on my projects and work.</p>
+      <p>Ideally, I'd like to update this blog once a week by making a new blog post every Sunday, or at least every other Sunday if not every week. Either I'll be posting a blog about something completely new, or I'll update a current project or blog thread that I've previously been working on (or both if I'm feeling ambitious). We'll see if this actually happens, but I really want to be diligent about this because I see this blog as a tool to keep myself on-track and focused on my work. The way I see it, if I don't update this blog weekly, then it means that I'm slacking on my projects and work.</p>
 
-    <br><hr><br>
-    
-    <h2>Categories</h2>
-    <ul>
-      <li>Computer Science</li>
+      <br><hr><br>
+      
+      <h2>Categories</h2>
       <ul>
-	<li>General Programming</li>
-	<li>Language Design</li>
-	<li>3D Graphics</li>
+	<li>Computer Science</li>
+	<ul>
+	  <li>General Programming</li>
+	  <li>Language Design</li>
+	  <li>3D Graphics</li>
+	</ul>
+	<li>Projects</li>
+	<ul>
+	  <li>ProtoKyrand</li>
+	</ul>
+	<li>Uncategorized</li>
       </ul>
-      <li>Projects</li>
+
+      <br><hr><br>
+      
+      <h2>All Posts</h2>
+      <!-- Write javascript to automatically create these entries from the posts/ folder, or at least automatically fetch the blog title. -->
       <ul>
-	<li>ProtoKyrand</li>
+	<li>Sept. 26, 2024: <a href="posts/2024_09_26.html">Best operation syntax for programming languages?</a></li>
+	<li>Sept. 24, 2024: <a href="posts/2024_09_24.html">The very first post</a></li>
       </ul>
-      <li>Uncategorized</li>
-    </ul>
 
-    <br><hr><br>
+      <br><hr><br>
+      
+      <h2>Collection of Important Resources and Links for Developers</h2>
+      <p>One of the challenges that I've faced as a developer is that it's not so easy to find relavent resources to learn important information.
+      </p>
+      <p>Here is a list of many important links that you should take a look at:
+	<ul>
+	  <li>List of important books according to hackers: <a href="https://www.gutenberg.org/files/3008/3008-h/3008-h.htm#booktitles"> here</a></li>
+	</ul>
+      </p>
+
+      <br><hr><br>
+    </div>
     
-    <h2>All Posts</h2>
-    <!-- Write javascript to automatically create these entries from the posts/ folder, or at least automatically fetch the blog title. -->
-    <ul>
-      <li>Sept. 26, 2024: <a href="posts/2024_09_26.html">Best operation syntax for programming languages?</a></li>
-      <li>Sept. 24, 2024: <a href="posts/2024_09_24.html">The very first post</a></li>
-    </ul>
-
-    <br><hr><br>
-    
-    <h2>Collection of Important Resources and Links for Developers</h2>
-    <p>One of the challenges that I've faced as a developer is that it's not so easy to find relavent resources to learn important information.
-    </p>
-    <p>Here is a list of many important links that you should take a look at:
-      <ul>
-	<li>List of important books according to hackers: <a href="https://www.gutenberg.org/files/3008/3008-h/3008-h.htm#booktitles"> here</a></li>
-      </ul>
-    </p>
-
-    <br><hr><br>
   </body>
 </html> 
