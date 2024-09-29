@@ -1,27 +1,37 @@
 body {
-    background-color: hsl(190, 7%, 13%);
-
+    background-color: hsla(190, 3%, 5%, 1.0);
     font-family: sans-serif;
     line-height: 2;
 }
 
 .main_content {
-    background-color: hsl(199, 6%, 22%);
+    background-color: hsla(199, 7%, 19%, 1.0);
     
-    margin-left: 24%;
-    margin-right: 24%;
+    margin-left: 22%;
+    margin-right: 22%;
     margin-top: 2%;
     margin-bottom: 8%;
     
     border-style: solid;
     border-width: 6px;
-    border-radius: 4px;
     border-color: hsla(50, 0%, 0%, 0.3);
     
     padding: 3%;
 
     color: hsl(0, 0%, 90%);
     font-size: 105%;
+}
+
+.post_heading {    
+    border-left: solid 18px;
+    border-color: hsla(0, 0%, 0%, 0.2);
+    
+    padding-right: 0%;
+    padding-left: 2%;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    line-height: 1;
+    /* background-color: hsla(0, 0%, 50%, 0.1); */
 }
 
 h1 {
@@ -47,17 +57,17 @@ hr {
 }
 
 a:link {
-    color: hsl(210, 80%, 65%);
-  background-color: transparent;
-  text-decoration: none;
+    color: hsl(200, 80%, 55%);
+    background-color: transparent;
+    /* text-decoration: underline; */
 }
 a:visited {
-    color: hsl(250, 80%, 65%);
-  background-color: transparent;
-  text-decoration: none;
+    color: hsl(270, 80%, 65%);
+    background-color: transparent;
+    /* text-decoration: underline; */
 }
 a:hover {
-  color: hsl(0, 80%, 65%);
-  background-color: transparent;
-  text-decoration: underline;
+    color: hsl(0, 80%, 55%);
+    background-color: transparent;
+    /* text-decoration: underline; */
 }
