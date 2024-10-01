@@ -2,11 +2,9 @@ import os
 import shutil
 
 SRC_DIR = "src/"
-IMAGES_DIR = "docs/images/"
-# PAGES_DIR = "docs/pages/"
 POSTS_DIR = SRC_DIR + "posts/"
 
-STYLES_FILE = "docs/css/styles.css"
+STYLES_FILE = "docs/styles.css"
 TITLE_FILE = SRC_DIR + "title.html"
 PANEL_FILE = SRC_DIR + "panel.html"
 MAIN_PAGE_FILE = SRC_DIR + "main_page.html"
@@ -20,12 +18,6 @@ if __name__ == "__main__":
     if not os.path.isdir(SRC_DIR):
         print("bad path")
         exit()
-    if not os.path.isdir(IMAGES_DIR):
-        print("bad path")
-        exit()
-    # if not os.path.isdir(PAGES_DIR):
-    #     print("bad path")
-    #     exit()
     if not os.path.isdir(POSTS_DIR):
         print("bad path")
         exit()
@@ -56,14 +48,7 @@ if __name__ == "__main__":
     title_file.close()
     panel_file.close()
     main_page_file.close()
-
     
-    # delete contents of docs/pages/ directory so that we can rebuild them
-    shutil.rmtree("docs/pages/")
-    
-    # re-create docs/pages/
-    os.mkdir("docs/pages")
-
     
     # building site
     
@@ -81,7 +66,7 @@ if __name__ == "__main__":
 
     built_main_page_contents = main_page_contents[:title_marker_index] + title_contents + main_page_contents[title_marker_index:panel_marker_index] + panel_contents + main_page_contents[panel_marker_index:]
 
-    index_file = open("docs/pages/index.html", "w")
+    index_file = open("docs/index.html", "w")
     index_file.write(built_main_page_contents)
     index_file.close()
 
@@ -105,7 +90,7 @@ if __name__ == "__main__":
 
             built_post_contents = post_contents[:title_marker_index] + title_contents + post_contents[title_marker_index:panel_marker_index] + panel_contents + post_contents[panel_marker_index:]
 
-            docs_post_file = open("docs/pages/" + filename.name, "w")
+            docs_post_file = open("docs/" + filename.name, "w")
             docs_post_file.write(built_post_contents)
             docs_post_file.close()
             
