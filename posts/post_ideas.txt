@@ -1,1 +1,0 @@
-- make a post about your language idea syntax with pointer operations, built-in functions/operators (*, &, []), and postfix operator syntax.

@@ -1,0 +1,9 @@
+- make a post about your language idea syntax with pointer operations, built-in functions/operators (*, &, []), and postfix operator syntax.
+
+- make a post about the goal-based design for ProtoKyrand:
+    - always keep the main goal in mind of what the overall game should be
+    - set for yourself the goals you want to accomplish
+    - create an approximiation of your goals that is as simple and quick as possible, just get something working
+    - then, iterate on that approximiation and bring it closer to the full game, and repeat the process
+
+- CPU-bound programming is based. GPUs are too unreliable and CPUs these days are decently powerful and have multiple cores
