@@ -2,14 +2,14 @@ body {
     margin: 0px; /* this ensures that there is no default whitespace so my website can actually cover the entire page */
     background-color: hsla(190, 5%, 10%, 1.0);
     font-family: sans-serif;
-    font-size: 104%;
+    font-size: 110%;
 }
 
 .grid_container {
     display: grid;
     column-gap: 0px;
     row-gap: 0px;
-    grid-template-columns: 31% 31% 38%;
+    grid-template-columns: 33% 33% 34%;
     grid-template-rows: auto auto;
     
     color: hsl(0, 0%, 90%);
@@ -38,7 +38,7 @@ body {
     grid-row-end: 3;
 
     margin: 30px;
-    margin-right: 60px;
+    margin-right: 80px;
 }
 
 .grid_content {
@@ -54,8 +54,9 @@ body {
     border-color: hsla(50, 0%, 0%, 0.3);
     
     margin: 30px;
-    margin-left: 60px;
-    padding: 45px;
+    margin-left: 80px;
+    margin-right: 0px;
+    padding: 55px;
 }
 
 .panelbar_section {
