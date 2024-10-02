@@ -1,6 +1,7 @@
 body {
     margin: 0px; /* this ensures that there is no default whitespace so my website can actually cover the entire page */
-    background-color: hsla(190, 3%, 8%, 1.0);
+    background-color: hsla(190, 5%, 10%, 1.0);
+    font-family: sans-serif;
     font-size: 104%;
 }
 
@@ -37,6 +38,7 @@ body {
     grid-row-end: 3;
 
     margin: 30px;
+    margin-right: 60px;
 }
 
 .grid_content {
@@ -52,7 +54,7 @@ body {
     border-color: hsla(50, 0%, 0%, 0.3);
     
     margin: 30px;
-    margin-right: 0px;
+    margin-left: 60px;
     padding: 45px;
 }
 

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Blog of James Spratt</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+  </head>
+  <body>
+    <div class="grid_container">
+
+      <div class="grid_title">
+  <h1 style="color:hsl(186, 50%, 50%);font-size: 300%;"><a style="color: inherit; text-decoration: none;" href="index.html">The Blog of James Spratt</a></h1>
+  <hr>
+</div>
+<!--$title.html-->
+
+      <div class="grid_panel">
+  
+  <div class="panelbar_section">
+    <h2>About</h2>
+    <div class="bio">
+      <p>
+	Github: <a href="https://github.com/James822">https://github.com/James822</a>
+	|
+	Email: <a href="mailto:JamesSpratt.business@protonmail.com">JamesSpratt.business@protonmail.com</a>
+    </div>
+  </div>
+  
+  <!-- <div class="panelbar_section"> -->
+  <!--   <h2>Categories</h2> -->
+  <!--   <ul> -->
+  <!--     <li>Computer Science</li> -->
+  <!--     <ul> -->
+  <!-- 	<\!-- <li>General Programming</li> -\-> -->
+  <!-- 	<li>Language Design</li> -->
+  <!-- 	<\!-- <li>3D Graphics</li> -\-> -->
+  <!--     </ul> -->
+  <!--     <li>Projects</li> -->
+  <!--     <ul> -->
+  <!-- 	<li>ProtoKyrand</li> -->
+  <!--     </ul> -->
+  <!--     <li>Uncategorized</li> -->
+  <!--     <ul> -->
+  <!--     </ul> -->
+  <!--   </ul> -->
+  <!-- </div> -->
+  
+  <div class="panelbar_section">
+    <h2>Recent Posts</h2>
+    <ul>
+      <li>Oct. 01 2024: <a href="2024_10_01.html">ProtoKyrand Update 1 - Basic Dev Setup</a></li>
+      <li>Sep. 28 2024: <a href="2024_09_28.html">ProtoKyrand Update 0 - The start of something new</a></li>
+    </ul>
+  </div>
+  
+  <!-- <div class="panelbar_section"> -->
+  <!--   <h2>Assorted Links</h2> -->
+  <!--   <ul> -->
+  <!--     <li>List of important books according to hackers: <a href="https://www.gutenberg.org/files/3008/3008-h/3008-h.htm#booktitles"> here</a></li> -->
+  <!--   </ul> -->
+  <!-- </div> -->
+  
+</div> 
+<!--$panel.html-->
+      
+      <div class="grid_content">
+	
+	<div class="post_heading">
+	  <h1>ProtoKyrand Update 1 - Basic Dev Setup</h1>
+	  <p style="font-size:80%">Oct. 01 2024, James Spratt</p>
+	</div>
+	<br>
+
+	<br><h3>Overview</h3>
+	<p>So, to get started I'll give an overview of my development situation right now.</p>
+
+	<p>Currently I'm hoping that I can do all my development on Linux, and then occasionally compile on Windows and get it working there. The idea is to strictly use cross-platform libraries and function calls and whatnot so that I should be able to compile on linux (with gcc) and windows (with msvc) with basically no hassle. I doubt this will actually end up working in practice, but we'll deal with those issues as they come up.</p>
+
+	<p>I'm also going to do my best to automate and document the development setup/build process. One thing that I've found over the years is that there are so many little details that can go wrong with the build setup and environment, that everytime I come back to an old project that's been untouched for some time, it's usually broken in some way and requires several hours and headaches to get working again. This time, I'll try to get everything right by documenting the build/development setup so that if I need to get someone else involved or remember how to do it myself in the future, it won't be so bad.</p>
+
+	<p>What I'll do is include a "README.txt" file in the root folder of my ProtoKyrand directory, and then include in it a tutorial for how to interact with the project (how to build it, how to work on different platforms, synchronization, etc.). Basically, I'll include everything in there so that anyone could pick up the directory and README.txt and figure out how to build it and run it.</p>
+
+	<br><h3>Housekeeping</h3>
+	<p>This isn't the first time that I've worked on this project, I first started working on it about a year ago. I checked the properties of the folder for ProtoKyrand and it says it was created July 21, 2023, so last summer.</p>
+
+	<p>Back then, I was only targeting windows and using vulkan. I wasn't using SDL or OpenGL, so most of the code needs to change. There's also some other files in there that need to be cleaned up. I'm either going to delete them or move them to the "old.ProtoKyrand/" subdirectory so that I can take my time to go through the old stuff.</p>
+	
+	<p>Right now the only files from the project is a windows batch script that I was using to compile the code with MSVC, and the old "main.c" file for the project. I'm going to re-write the code from scratch, but I'll refer to the old colde if it has any useful things that I can salvage.</p>
+
+	<br><h3>Multi-platform workflow</h3>
+	<p>Since I'll be targeting two platforms (Linux and Windows), I'll need to build and test the game on each platform. Currently I'm dual-booting both linux/windows, so I'll be bouncing back and forth compiling and testing. The tentative plan is to develop on linux primarily, and then build/test on windows occasionally. </p>
+	
+	<p>Since my storage is seperate for both operating systems, I'll need a way to synchronize access between the platforms. For now, I just have an NTFS formatted partition that I'll be using on the windows side. Otherwise, I have a personal drive formatted in ext4 for the main linux development.</p>
+
+	<p>On the NTFS partition, there is a folder called "WINDOWS_ACCESS" which sounds exactly like what you would think it is for. This folder is meant to be the "drop point" between linux and windows so that I can synch them up from here. The directory for ProtoKyrand (among any other files or directories that I want to sync) will be in the "WINDOWS_ACCESS" directory.</p>
+
+	<p>All I have to remember is two things:
+	  <ul>
+	    <li>Whenever I want to boot into windows, I'll run an rsync scrip that syncs everything on linux -> to everything on windows (in the WINDOWS_ACCESS dir)</li>
+	    <li>Whenever I finish working on Windows, I need to boot back into linux and then run an rsync script to sync everything on windows (in the WINDOWS_ACCESS dir) -> to everything on linux.</li>
+	  </ul>
+	</p>
+
+	<p>I don't think it will be too hard to remember to do this, as long as I make it a habit to always be "aware" that work on windows needs to be synched. The nice thing about this is that when I'm exclusively working on linux, I don't need to think about synchronization; only when I boot into and out of windows do I need to worry about it. In this sense my ext4 drive will be considered the "master" drive.</p>
+
+	<p>The documentation for this workflow and the scripts that sync between windows and linux (the NTFS partition and the ext4 partition) will be placed on the NTFS partition, right alongside the WINDOWS_ACCESS directory. My thinking behind this is that if we didn't have windows, then there would be no need for the syncing workflow and scripts. In that sense, windows is the "entity" that needs to "know" about the synching process. I'll also include a link to this documentation from the README file in the ProtoKyrand root directory.</p>
+
+	<p>It might also seem odd that I'm not keeping the scripts in the ProtoKyrand directory itself, but this is because there are other files that I want to synch, not just ProtoKyrand, so it makes more sense to consolidate all of that synching into one place - rather than being spread out everywhere.</p>
+
+	<br><h3>Compilation</h3>
+	<p>As I said before, I'll be using gcc on linux and msvc on windows. For now, I'm not going to use any build system like GNU Make or something, I'll just indivdually write scripts for each platform to run the compiler. Eventually this might prove to be cumbersome and error-prone, but at this point I just want to get things working.</p>
+
+	<p>For now, the build script on windows has to be manually maintained and updated. The linux build file (which is just a bash script: "ProtoKyrand/linux_build.sh") is considered to be the "master" build file, and so the windows build file has to be written to function the same as the linux build file. Whenever I boot into windows, I need to make sure that I edit the windows build script with MSVC so that it functions the same as the linux one with GCC.</p>
+	
+	<p>One VERY IMPORTANT thing to note is that there is a single variable in both scripts that is very important to have set correctly. It is the "PROJECT_ROOT" variable, and it is the file path of the project root (which is different between systems). As long as that is configured correctly, then the rest of the build process will work correctly, otherwise it will be all wrong.</p>
+
+	<p>All the other filepaths in the build script and even in the code itself will rely on the PROJECT_ROOT variable by concatenating it to every filepath. So if it is wrong, every filepath will become invalid.</p>
+
+	<p>If you're wondering why I don't just use relative paths, I'm still sort of using relative paths in the sense that every filepath is relative to the root. This will allow me to freely re-organize the directory structure many times without having to worry about breaking things, because everything will always reference the root. I need to figure out how to make it so that somehow if the PROJECT_ROOT variable is set incorrectly, that my scripts or code will be able to detect that. I'll look into that later, but for now this is how it is.</p>
+
+	<br><h3>Future Plans</h3>
+	<p>For now, the goal is to just get a basic OpenGL "hello triangle" application running. In the next post I'll demo the short bit of code that gets the hello triangle working, and then from there, I'll set some goals.</p>
+	
+      </div>
+    </div>
+  </body>
+</html>
