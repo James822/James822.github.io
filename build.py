@@ -6,10 +6,10 @@ import os
 SRC_DIR = "src/"
 DOCS_DIR = "docs/"
 POSTS_DIR = SRC_DIR + "posts/"
+DOCS_POSTS_DIR = DOCS_DIR + "posts/"
 
 TEMPLATE_FILE = SRC_DIR + "template.html"
 # WELCOME_PAGE = SRC_DIR + "welcome_page.html"
-RECENT_POSTS_PAGE = SRC_DIR + "recent_posts_page.html"
 CATEGORIES_PAGE = SRC_DIR + "categories_page.html"
 PROJECT_PAGE = SRC_DIR + "project_page.html"
 ABOUT_PAGE = SRC_DIR + "about_page.html"
@@ -18,11 +18,11 @@ dirs = []
 dirs.append(SRC_DIR)
 dirs.append(DOCS_DIR)
 dirs.append(POSTS_DIR)
+dirs.append(DOCS_POSTS_DIR)
 
 files = []
 files.append(TEMPLATE_FILE)
 # files.append(WELCOME_PAGE)
-files.append(RECENT_POSTS_PAGE)
 files.append(CATEGORIES_PAGE)
 files.append(PROJECT_PAGE)
 files.append(ABOUT_PAGE)
@@ -97,7 +97,7 @@ if __name__ == "__main__":
             post_page_file = open(POSTS_DIR + filename.name, "r")
             post_page_file_contents = post_page_file.read()
 
-            docs_post_page_file = open(DOCS_DIR + filename.name, "w")
+            docs_post_page_file = open(DOCS_POSTS_DIR + filename.name, "w")
             docs_post_page_file.write(tf_first + post_page_file_contents + tf_second)
             
 
