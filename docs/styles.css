@@ -101,8 +101,8 @@ a:link {
     text-decoration: none;
 }
 a:visited {
-    color: hsl(180, 90%, 55%);
-    /* color: hsl(279, 60%, 55%); */
+    /* color: hsl(180, 90%, 55%); */
+    color: hsl(279, 60%, 55%);
     /* color: inherit; */
     background-color: transparent;
     /* text-decoration: underline; */

@@ -3,11 +3,15 @@
     <div class="post_title_heading">Introduction to Group Theory and Permutations</div>
     <div class="post_title_subtext">2025 Mar 07, James Spratt</div>
   </div>
-  <p>I've recently taken a course in group theory, branch of abstract algebra that studies the structures known as <b>groups</b>.</p>
+  <p>I've recently taken a course in group theory, a branch of abstract algebra that studies the mathematical structures known as <b>groups</b>.</p>
 
-  <p>Abstract algebra is a fascinating study in mathematics, as it unifies concepts previously scattered in different areas. For example, boolean algbera is the mathematical structure that underlies working with propositional logic, digital circuit design (logic gates), and even set operations. Groups, the primary study of <i>group theory</i>, happen to be structures that are encountered very frequently in mathematics. Many other structures such as vector spaces, rings, fields, the real numbers; can all be shown to have group-like structures.</p>
+  <p>Abstract algebra is a fascinating study in mathematics, as it unifies concepts previously scattered in different areas. Boolean algbera for example is the mathematical structure that underlies working with operations on any kind of binary system. Propositional logic, digital circuit design (logic gates), and even set operations are all forms of boolean algebra. Set operations, propositonal logic, and the design of combinational circuits may seem disparate; but their structure is essentially the same.</p>
 
-  <p>Group theory is quite a vast topic, so I'm only going to focus on the study of permutation groups in this post. According to Cayley's Theorem, every group is isomoprh. This is another way of saying that permutations can be understood to be the essential concept of group theory, so we can start there.</p>
+  <p>This is why I have come to love abstract algebra as a discpline. At it's core, it is the formal study of mathematical <b>essence</b>. Two structures may have different <b>substance</b>, but if they function exactly the same up to some kind of isomorphism; then they are the <i>essentially</i> the same.</p>
+
+    <p>Groups, the primary study of <i>group theory</i>, happen to be a type of structure that is encountered very frequently in mathematics. Many other structures such as vector spaces, rings, fields, the real numbers; can all be shown to have group-like structures.</p>
+
+  <p>Group theory is quite a vast topic, so I'm only going to focus on the study of permutation groups in this post, but this is not without justification. According to <a href="https://en.wikipedia.org/wiki/Cayley's_theorem">Cayley's Theorem</a>, every group is isomorphic to some permutation group. This is another way of saying all groups can be understood in terms of permutations, so it might not be such a bad idea to start there.</p>
   
   <br><div class="he">Permutations</div>
   <p>A <b>permutation</b> of a set of numbers <math><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo></math> is a bijection from <math><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo></math> to itself. So it is a function of the form:</p>
@@ -22,19 +26,27 @@
 
   <p>This means simply that 1 is sent to 2, 2 is sent to 3, and 3 is sent to 1.</p>
 
-  <p>Rather than painstakingly write out the function value for each input, we can represent this same exact function <math><mi>τ</mi></math> in tabular form as the following: </p>
+  <p>Rather than painstakingly write out the function value for each input, we can represent this same exact function in <math><mi>τ</mi></math> in tabular form as the following: </p>
 
   <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
 
-  <p>And as you can see, this is the exactly the same format for how we represented the loading zones in the previous table. In general, we can represent any permutation with the following form:</p>
+  <p>This format is known as <a href="https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy">Cauchy's</a> two-line notation, but we will refer to it as tabular form. All entries are read "top-down" per column. In any given column, the element of the top row is "sent" to the element of the bottom row.</p>
+
+  <p>More generally, we can represent any permutation with the following form:</p>
 
   <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mi>.</mi><mi>.</mi><mi>.</mi></mtd><mtd><mi>n</mi></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>1</mn></msub></mtd><mtd><msub><mi>a</mi><mn>2</mn></msub></mtd><mtd><msub><mi>a</mi><mn>3</mn></msub></mtd><mtd><mi>.</mi><mi>.</mi><mi>.</mi></mtd><mtd><msub><mi>a</mi><mi>n</mi></msub></mtd></mtr></mtable><mo>)</mo></mrow></math>
 
-  <p>Where <math><mi>n</mi></math> is the number of elements to be permuted, and <math><msub><mi>a</mi><mi>i</mi></msub></math> are the numbers belonging to the set <math><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo></math>, and it also must be the case that <math><msub><mi>a</mi><mi>i</mi></msub><mo>≠</mo><msub><mi>a</mi><mi>j</mi></msub></math> iff <math><mi>i</mi><mo>≠</mo><mi>j</mi></math>. Any kind of table that follows this specific format is a valid permutation.</p>
+  <p>And this is read as 1 goes to <math><msub><mi>a</mi><mn>1</mn></msub></math>, 2 goes to <math><msub><mi>a</mi><mn>2</mn></msub></math>, 3 goes to <math><msub><mi>a</mi><mn>3</mn></msub></math>, and so on. Here, <math><mi>n</mi></math> is the number of elements to be permuted, and <math><msub><mi>a</mi><mi>i</mi></msub></math> are the numbers belonging to the set <math><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo></math>, and it also must be the case that <math><msub><mi>a</mi><mi>i</mi></msub><mo>≠</mo><msub><mi>a</mi><mi>j</mi></msub></math> iff <math><mi>i</mi><mo>≠</mo><mi>j</mi></math>. Basically, there can't be any duplicate <math><msub><mi>a</mi><mi>i</mi></msub></math>. Any kind of table that follows this specific format is a valid permutation. So next time you look at your excel sheet, realize that might be looking at a permutation</p>
 
-  <!-- <p>There is also another way to represent permtuations using something called <b>cycle notation</b>. A <b>k-cycle</b> is a permutation that maps elements in a circular manner, and we write it as the following: </p> -->
+  <p>Notice also that the order of columns does not matter, as we could freely swap them to our liking without changing the permutation. As a matter of style, we typically like to order the columns by the first/top row with 1,2,3,... etc.</p>
 
-  <p>It turns out that the set of all permutations for a given set <math><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo></math> forms a special kind of group called the <b>Symmetric Group</b>.</p>
+  <!-- <p>It turns out that the set of all permutations for a given set <math><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo></math> forms a special kind of group called the <b>Symmetric Group</b>.</p> -->
+
+
+  <br><div class="he">Compositions of Permutations</div>
+  <p>Since permutations are bijective functions from a set to itself, it is possible to compose any number of permutations we like, as long as the permutations are both of n elements.</p>
+
+  <p>The operation of function composition is given by <math><mi>σ</mi><mo>∘</mo><mi>τ</mi><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo><mo>=</mo><mi>σ</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></math> for two permutations <math><mi>τ</mi></math> and <math><mi>σ</mi></math>. In other words, apply the permutation <math><mi>τ</mi></math> first, and then with the output of that, feed it into σ</p>
 
   
   <br><div class="he">Symmetric Group</div>
@@ -160,6 +172,6 @@
   <br><div class="he">Further Applications</div>
   <p>In the case that several loading zones belong to the same area, we can treat them as a group.</p>
 
-  <br><div class="he">References</div>
-  <p>Thanks to Dr. L Hoehn for his course and notes on group theory, of which I used as a reference to create this blog post.</p>
+  <!-- <br><div class="he">References</div> -->
+  <!-- <p>Thanks to Dr. L Hoehn for his course and notes on group theory, of which I used as a reference to create this blog post.</p> -->
 </div>
