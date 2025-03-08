@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Blog of James Spratt</title>
+  </head>
+  <body>
+    
+    <div class="blog_header">
+      <div class="blog_title">
+	<a style="color: inherit; text-decoration: none;" href="index.html">Blog of James Spratt</a>
+      </div>
+      <hr style="width:600px; border: 1px solid hsl(202, 15%, 30%);">
+      <div class="header_text">
+	<div style="flex: 0 0 80px"><a href="index.html">Categories</a></div>
+	<div style="flex: 0 0 80px">|</div>
+	<div style="flex: 0 0 80px"><a href="project_page.html">Projects</a></div>
+	<div style="flex: 0 0 80px">|</div>
+	<div style="flex: 0 0 80px"><a href="about_page.html">About</a></div>
+      </div>
+    </div>
+
+
+    <div class="main_section">
+      
+      <!-- <div class="panel_body"> -->
+      <!-- 	<div class="panel_inner"> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	  <a href="index.html">Recent Posts</a> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	  <a href="categories_page.html">Post Categories</a> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	  <a href="index.html">Projects</a> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	  <a href="about_page.html">About</a> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	</div> -->
+      <!-- </div> -->
+
+      <!-- post_title: "example_post_title" -->
+<!-- author: "example_author_name" -->
+<!-- date: "example_date" -->
+<!-- category: "example_category" -->
+
+<!-- ---body--- // what follows under this is raw html -->
+
+<div class="post_body">
+  <div class="post_title">
+    <div class="post_title_heading">Reduction Inference</div>
+    <div class="post_title_subtext">2025 Feb 24, James Spratt</div>
+    <!-- <div class="post_title_subtext">Category : Logic</div> -->
+  </div>
+  <p>For around half a year now I've been deeply fascinated with systems of logic, many sorted logic (first order, second order, etc.), rewrite systems, proof theory, and the like.</p>
+
+  <p>Although my knowledge on the subject is certainly quite limited, I've come across some very interesting results when trying to define my own logic system.</p>
+
+  <p>Around last summer I attempt to create a rewrite system of my own that would accept first-order sentences, a set of axioms, and a then a list of transformations to act as an automated proof-checker. I never did quite finish this system, but even just working on the logical preliminaries expanded my knowledge by a significant amount, leading me to a key discovery that I have called "reduction inference".</p>
+
+
+  <br><div class="he">Modus Ponens</div>
+  <p>One of the most interesting results that I came across when trying to develop the theory behind a proof system (a formal method to derive theorems from a set of axioms, using the rules of logic), is that all inference or reasoning is actually a <i>reduction</i> of information.</p>
+
+  <p>What I mean to say is that to infer or to deduce information is not, strictly speaking, creating any new information that did not exist prior. Rrather, it is a focus on a paticular subset of information that may have been previously readily apparent.</p>
+
+  <p>Consider the exampe of <i>modus ponens</i>, a familiar and ancient form logical inference that arises in classical logic and also mathematical logic. We can state it like such in propositional form:</p>
+
+  <br>
+  <math display="block" style="font-size: 18pt">
+    <mi>P</mi>
+    <mo>∧</mo>
+    <mo>(</mo>
+    <mi>P</mi>
+    <mo>⟹</mo>
+    <mi>Q</mi>
+    <mo>)</mo>
+    <!-- <mspace width="7px" /> -->
+    <mtext>, therefore:</mtext>
+    <mspace width="7px" />
+    <mi>Q</mi>
+  </math>
+  <br>
+
+  <p>Let us focus on the
+    <math>
+      <mi>P</mi>
+      <mo>∧</mo>
+      <mo>(</mo>
+      <mi>P</mi>
+      <mo>⟹</mo>
+      <mi>Q</mi>
+      <mo>)</mo>
+    </math>
+    part and ignore the "therefore" (inference) part. Using the basic rules of logic, we can rewrite this formula as such:</p>
+
+  <br>
+  <math display="block" style="font-size: 18pt">
+    <mi>P</mi>
+    <mo>∧</mo>
+    <mo>(</mo>
+    <mi>P</mi>
+    <mo>⟹</mo>
+    <mi>Q</mi>
+    <mo>)</mo>
+  </math>
+  <br>
+  <math display="block" style="font-size: 18pt">
+    <mo>⟺</mo>
+    <mi>P</mi>
+    <mo>∧</mo>
+    <mo>(</mo>
+    <mo>¬</mo>
+    <mi>P</mi>
+    <mo>∨</mo>
+    <mi>Q</mi>
+    <mo>)</mo>
+  </math>
+  <br>
+  <math display="block" style="font-size: 18pt">
+    <mo>⟺</mo>
+    <mo>(</mo>
+    <mi>P</mi>
+    <mo>∧</mo>
+    <mo>¬</mo>
+    <mi>P</mi>
+    <mo>)</mo>
+    <mo>∨</mo>
+    <mo>(</mo>
+    <mi>P</mi>
+    <mo>∧</mo>
+    <mi>Q</mi>
+    <mo>)</mo>
+  </math>
+  <br>
+  <math display="block" style="font-size: 18pt">
+    <mo>⟺</mo>
+    <mi>P</mi>
+    <mo>∧</mo>
+    <mi>Q</mi>
+  </math>
+  <br>
+
+  <p>And so we proved that the following logical equivalence is true:</p>
+
+  <br>
+  <math display="block" style="font-size: 18pt">
+    <mo>[</mo>
+    <mi>P</mi>
+    <mo>∧</mo>
+    <mo>(</mo>
+    <mi>P</mi>
+    <mo>⟹</mo>
+    <mi>Q</mi>
+    <mo>)</mo>
+    <mo>]</mo>
+    <mo>⟺</mo>
+    <mo>[</mo>
+    <mi>P</mi>
+    <mo>∧</mo>
+    <mi>Q</mi>
+    <mo>]</mo>
+  </math>
+  <br>
+
+  <p>So we can restate <i>modus ponens</i> in the following logically equivalent fashion:</p>
+
+  <br>
+  <math display="block" style="font-size: 18pt">
+    <mi>P</mi>
+    <mo>∧</mo>
+    <mi>Q</mi>
+    <!-- <mspace width="7px" /> -->
+    <mtext>, therefore:</mtext>
+    <mspace width="7px" />
+    <mi>Q</mi>
+  </math>
+  <br>
+
+  <p>But this is clearly a loss of information! We went from assuming the truth of two propositions (namely P and Q), to only inferring that one such proposition Q is true. So we can readily conclude that all inference is essentially (logically) a reduction of information, rather than revealing anything new.</p>
+
+  <p>An insightful conclusion that we can derive from this experiment is that all true information that exists (specifically true statements that are decidable in a system), already exists within the system. Given a Formal System, such as a <a href="https://en.wikipedia.org/wiki/Hilbert_system">Hilbert-style</a> system), we can conclude that deriving theorems from that system is not a revelation of new of information, but rather a focused subset of what the axioms entail.</p>
+
+  <p>This also gives arise to a notion of having the minimum information to prove something. We may conclude that for example Q is provable from P, but it may not be the case that everything in P is strictly neccessary to prove Q. In this case, there may exist a subset R of Q such that R is completely neccessary for Q. We might be interested in the smallest subset of axioms or theorems that is neccessary to prove a theroem</p>
+
+  <br><div class="he">Focus</div>
+  <p>An important practical lesson that I've derived from this little experiment is that all of our reasoning is essentially a focused subset of what is relevant to us. At any given time we can only hold so much in our minds, but even less, we are only interested in a small subset of things for specific purposes. The example of modus ponens illustrates that we don't really care to emphasize what we already knew was true (P), but that we care about something that we weren't aware of being true (Q).</p>
+
+  <p>It was steve jobs that famously said that "focusing is about saying no", rather than saying "yes". There are an ifinite amount of considerations that can be had at any time, but such a small subset is only of concern to us at a given time for a specific problem, and therefore a signifcant portion of proving theorems and reasoning lies in the ability to focus on what is relevant, and ignore all else.</p>
+
+  <br><div class="he">References</div>
+  <p>Special thanks to <a href="https://tmke8.github.io/">Thomas M. Kehrenberg</a> for his LaTeX to MathML converter available at this link: <a href="https://tmke8.github.io/latex2mmlc/">https://tmke8.github.io/latex2mmlc/</a> which was used to help create the equations seen in this post.</p>
+</div>
+
+
+    </div>
+
+  </body>
+</html>

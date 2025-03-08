@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Blog of James Spratt</title>
+  </head>
+  <body>
+    
+    <div class="blog_header">
+      <div class="blog_title">
+	<a style="color: inherit; text-decoration: none;" href="index.html">Blog of James Spratt</a>
+      </div>
+      <!-- Email: JamesSpratt.business@protonmail.com -->
+    </div>
+
+
+    <div class="main_section">
+      
+      <div class="panel_body">
+	<div class="panel_inner">
+	  <span class="divider">|</span>
+	  <a href="index.html">Recent Posts</a>
+	  <span class="divider">|</span>
+	  <a href="index.html">Post Categories</a>
+	  <span class="divider">|</span>
+	  <a href="index.html">Projects</a>
+	  <span class="divider">|</span>
+	  <a href="about_page.html">About</a>
+	  <span class="divider">|</span>
+	</div>
+      </div>
+
+      <div class="post_body">
+	<!-- post content goes in here -->
+	<p>For around half a year now I've been deeply fascinate with systems of logic, many sorted logic (first order, second order, etc.), rewrite systems, proof theory, and the like.</p>
+
+<p>Although my knowledge on the subject is certainly quite limited, I've come across some very interesting results when trying to define my own logic system.</p>
+
+<p>Around last summer I attempt to create a rewrite system of my own that would accept first-order sentences, a set of axioms, and a then a list of transformations to act as an automated proof-checker. I never did quite finish this system, but even just working on the logical preliminaries expanded my knowledge by a significant amount, leading me to a key discovery that I have called "reduction inference".</p>
+
+
+<br><div class="he">Reduction Inference</div>
+<p>One of the most interesting results that I came across when trying to develop the theory behind a proof system (a formal method to derive theorems from a set of axioms, using the rules of logic), is that all inference or reasoning is actually a <i>reduction</i> of information.</p>
+
+<p>What I mean to say is that to infer or to deduce information is not, strictly speaking, creating any new information that did not exist prior. Rrather, it is a focus on a paticular subset of information that may have been previously readily apparent.</p>
+
+<p>Consider the exampe of <i>modus ponens</i>, a familiar and ancient form logical inference that arises in classical logic and also mathematical logic. We can state it like such in propositional form:</p>
+
+<p>P AND (P => Q) therefore Q</p>
+
+<p>What this says in plain english is that</p>
+
+<p>Let us focus on the "P AND (P => Q)" part and ignore theUsing the basic rules of logic, we can rewrite </p>
+
+<p>This also gives arise to a notion of having the minimum information to prove something. We may conclude that for example Q is provable from P (P |- Q), but it may not be the case that everything in P is strictly neccessary to prove Q. In this case, there may exist a subset R of Q such that R is neccessary for Q</p>
+
+      </div>
+
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,6 @@
+post_title: "example_post_title"
+author: "example_author_name"
+date: "example_date"
+category: "example_category"
+
+---body--- // what follows under this is raw html

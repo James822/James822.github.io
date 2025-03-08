@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Blog of James Spratt</title>
+  </head>
+  <body>
+    
+    <div class="blog_header">
+      <div class="blog_title">
+	<a style="color: inherit; text-decoration: none;" href="index.html">Blog of James Spratt</a>
+      </div>
+      <div class="header_text" style="margin-left: 773px;">
+	<div style="flex: 0 0 70px"><a href="index.html">Categories</a></div>
+	<div style="flex: 0 0 70px">|</div>
+	<div style="flex: 0 0 70px"><a href="project_page.html">Projects</a></div>
+	<div style="flex: 0 0 70px">|</div>
+	<div style="flex: 0 0 70px"><a href="about_page.html">About</a></div>
+      </div>
+    </div>
+
+
+    <div class="main_section">
+      
+      <!-- <div class="panel_body"> -->
+      <!-- 	<div class="panel_inner"> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	  <a href="index.html">Recent Posts</a> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	  <a href="categories_page.html">Post Categories</a> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	  <a href="index.html">Projects</a> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	  <a href="about_page.html">About</a> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	</div> -->
+      <!-- </div> -->
+
+      <div class="post_body">
+  <div class="post_title">
+    <div class="post_title_heading">Better Filesystems and References</div>
+    <div class="post_title_subtext">2025 Mar 06, James Spratt</div>
+  </div>
+  <p>How many times have you come across the common issue when you're trying to organize the files on your computer with more than one scheme? Let's say that you have a bunch of photos and you want to organize them by year. Take this as an example scheme:</p>
+
+<div class="code_block"><pre>
+Pictures/
+--> 2025/
+    --> Italy_Wedding_02
+    --> Italy_Wedding_01
+    --> Portual_trip_02
+    --> Portual_trip_01
+    --> Vancouver_03
+--> 2024/
+    --> Vancouver_02
+    --> Vancouver_01
+    --> Paris_03
+--> 2023/
+    --> Paris_02
+    --> Paris_01
+</pre></div>
+
+  <p>There's nothing wrong with this organization scheme, but it's rigid when we want to consider sorting by any other methods. For example, we also might want to sort all of the photos by location as well. This is fairly common for people who travel frequently, so we might want to organize by country rather than date:</p>
+
+<div class="code_block"><pre>
+Pictures/
+--> Italy/
+    --> Italy_Wedding_02
+    --> Italy_Wedding_01
+--> Canada/
+    --> Vancouver_03
+    --> Vancouver_02
+    --> Vancouver_01
+--> France/
+    --> Paris_03
+    --> Paris_02
+    --> Paris_01
+--> Portugal/
+    --> Portual_trip_02
+    --> Portual_trip_01
+</pre></div>
+
+  <p>This is all well and fine except that now we've lost the ability to organize the files by year, and it's not clear how we could re-organize the directory tree so that the files could be both sorted by year and by location. The issue stems from the fact that the categories are non-disjoint, i.e. non-overlapping, so it's impossible to partition them cleanly in a tree-like structure.</p>
+
+  <p>At this point, most people just give up and accept that there's really only one organization scheme that can exist at one point, and so they just pick one and deal with it. For the most part, it's not so bad, but when you have to deal with large files and organization then it can become annoying.</p>
+
+  <br><div class="he">Symbolic Links</div>
+  <p>A common solution proposed is to use Symbolic Links or <b>symlinks</b> for short. A symlink is a reference to a file, so it's basically just a container that holds a path to either a directory or file. In this way, it's entirely possible to have more than one organization scheme by creating directories that don't have an "real" files, just symbolic links to files.</p>
+
+  <p>So if we wanted to solve our problem with picture organization by year AND by location, then we could do the following: </p>
+
+  <ul>
+    <li>First, take every picture and place it into a directory called <code>All_Pictures_Flat</code>, simply place every picture in here and don't worry about organizing anything in here, this is just a storage spot.</li>
+    <li>Then, create a folder called <code>Pictures</code> which will only contain symbolic links to the real files in <code>All_Pictures_Flat</code>.</li>
+    <li>In the folder <code>Pictures</code>, create the sub-folders <code>Year</code> and <code>Location</code> or whatever other category you would like to organize with, and then in each of those subfolders, organize it to your liking and then use symbolic links instead of "real" files.</li>
+  </ul>
+
+  <p>If we represent symbolic links with the ":-" symbol, then following the steps above would give us something like this:</p>
+
+<div class="code_block"><pre>
+All_Pictures_Flat/
+--> Italy_Wedding_02
+--> Italy_Wedding_01
+--> Vancouver_03
+--> Vancouver_02
+--> Vancouver_01
+--> Paris_03
+--> Paris_02
+--> Paris_01
+--> Portual_trip_02
+--> Portual_trip_01
+
+Pictures/
+--> Year/
+    --> 2025/
+        --> :- All_Pictures_Flat/Italy_Wedding_02
+        --> :- All_Pictures_Flat/Italy_Wedding_01
+        --> :- All_Pictures_Flat/Portual_trip_02
+        --> :- All_Pictures_Flat/Portual_trip_01
+        --> :- All_Pictures_Flat/Vancouver_03
+    --> 2024/
+        --> :- All_Pictures_Flat/Vancouver_02
+        --> :- All_Pictures_Flat/Vancouver_01
+        --> :- All_Pictures_Flat/Paris_03
+    --> 2023/
+        --> :- All_Pictures_Flat/Paris_02
+        --> :- All_Pictures_Flat/Paris_01
+--> Location/
+    --> Italy/
+        --> :- All_Pictures_Flat/Italy_Wedding_02
+        --> :- All_Pictures_Flat/Italy_Wedding_01
+    --> Canada/
+        --> :- All_Pictures_Flat/Vancouver_03
+        --> :- All_Pictures_Flat/Vancouver_02
+        --> :- All_Pictures_Flat/Vancouver_01
+    --> France/
+        --> :- All_Pictures_Flat/Paris_03
+        --> :- All_Pictures_Flat/Paris_02
+        --> :- All_Pictures_Flat/Paris_01
+    --> Portugal/
+        --> :- All_Pictures_Flat/Portual_trip_02
+        --> :- All_Pictures_Flat/Portual_trip_01
+</pre></div>
+
+  <p>Even with this overly simple and contrived example, the directory structure is already quite complicated and managing it would be a nightmare. There are so many issues and things that could go wrong:</p>
+
+  <ul>
+    <li>For starters, this directory structure requires constant maintenance. Every time you change one of the organization schemes, you have to update the other ones to make sure they are also in sync. If you have lets say 10 different organization schemes, then every single file (or rather symlink) will need to by manually synchronized across 10 different places!</li>
+    <li>Symbolic links are very finicky, as if the filepath changes then they all automatically break and have to be fixed one-by-one. For example, if any of the filenames in the <code>All_Pictures_Flat</code> changes, then every symlink to that file will break. If the name or location of the <code>All_Pictures_Flat</code> directory itself changes, then EVERY single symlink will break and will have to be fixed manually.</li>
+    <li>This system requires extra training and knowledge, if you were to implement this in a workplace for example, you would need to train every worker to understand how this system works. There's a very high chance (even in a smaller workplace) that someone will accidentally mess up.</li>
+    <li>None of this is portable across more than one system, it might work between partitions on a single device, but it will break in any networked scenario. Even between an OS reinstall on the same machine this will probably break.</li>
+    <li>There are symlink managers that can automatically manage this, but then you would need to install one of these and configure it to work properly. Assuming that you find a symlink manager to your liking, it still won't solve some of the issues and it only adds extra complexity rather than fixing the underlying issue (not to mention that these don't work across a networked system).</li>
+  </ul>
+
+  <p>It's quite clear that symlinks are far from suited for our purposes, and they certainly don't solve the underlying problem. So what do we do?</p>
+
+  
+  <br><div class="he">Hard Links</div>
+  <p>Rather than using symlinks, we can instead use <b>hardlinks</b> which are basically the same as symlinks, but instead of using a filepath they actually link to the file itself. What this means is that it stores a unique integer ID that references the data segment of the file on whatever filesystem the hardlink is created on.</p>
+
+  <p>The advantage of using hardlinks is that it fixes the issue of files being renamed or moved around (which are both really the same thing), which would normally break a symlink. A hardlink will never break as long as the file remains undeleted, so if we create a hardlink to a file, then we can rename that file or move it around as freely as we like.</p>
+
+  <p>This helps fix some of our issues, but we will still have to implement the ugly solution with having multiple different directories and we will still need to manage them seperately, which is too complex and certainly uneccesary.</p>
+
+  <p>Furthermore, hardlinks are filesystem specific and so they cannot work across a networked system or even on a single computer if there is more than one filesystem (i.e. more than one storage device)! So hardlinks are also out of the question.</p>
+
+  <p>Because of these reasons it's often said that hardlinks are somehow less portable than symlinks, but this is a laughable proposition and people who say this don't really know what they're talking about. Symlinks themselves are based on the filepath which is subject to change at ANY time. There is no mechanism to enforce that a symlink is even pointing to a valid file, which should obviously deem symlinks as being utterly useless, as we just have to hope that the filenames are not changed. Trusting in hopes and dreams is not a viable strategy.</p>
+
+  <p>What most people don't realize is that what we think of as a "file" is actually just a hardlink to a file. Therefore, a symlink is just a link to a hardlink! And it's not even a consistent one at that. Symlinks are not consistent across filesystems in any manner, two filesystems may have two files that have the exact same filepath. Unless these filesystems are somehow linked or managed together; then there is no way to enforce unique filepaths across more than one system or OS (with the exception of a symlink manager, but we already established that those are unideal).</p>
+
+  <p>Besides, using a symlink <i>properly</i> requires that you somehow enforce or commit to the filepath staying unchanged so that the link is not broken, but that's functionally the same thing as just using a hardlink! We are essentially treating the filepath <i>as if</i> it is a hard link with a sequence of character bytes that points to the file.</p>
+
+  <p>Still, hardlinks are not the solution for our problem, but they are a much better improvement than symlinks as they have the property that the thing they reference will never change (unless deleted), as they reference the file directly with an integer value (e.g. an i-node value).</p>
+
+  <p>Clearly, a more simple and robust solution is desired,. Even the simple example of a single device with only one filesystem is still quite limited, we can hardly impose basic organization schemes without unnecesssary hassle that involves using unsustainable and awkward methods.</p>
+
+  
+  <br><div class="he">Filesystems and Filepaths are the Problem</div>
+  <p>The obvious conclusion is that the model of using <i>only</i> filepaths to refer to files is a broken concept that needs to be fixed. Any detractors from this point must note the following, which is that filepaths are really just symlinks in disguise. A filepath is simply a sequence of bytes that identifies a file, and the underlying file can. The difference is that hardlinks are at least consistent for the lifetime of a file on a given filesystem, whereas the same is never true of a filepath. And like we noted before, filepaths are not consistent across more than one system</p>
+
+  <p>No matter what we do we will always need a reference or ID to refer to a "thing", file, or resource; so we might as well standardize it and make it immutable for the lifetime of the file/resource. File/resource deletion will <i>always</i> make the reference invalid, there is simply no way around this fact, but we can certainly handle the situation with grace.</p>
+
+  <p>Another issue is with filesystems. In general, filesystems should be considered to be a device-specific and low-level system for storing and accessing physical data. The core problem is that we have conflated *file organization* with *file storage*, which should actually be seperated out into seperate concepts.</p>
+
+  <p>For example, in a typical business network there is typically a shared file storage solution such as OneDrive or Dropbox, and there is a sense that systems like these exist independent of any one device/filesystem. There is clearly both a real need and desire to create a "cloud" filesystem that operates on top of several devices over a given network.</p>
+
+  <p>But this notion applies even just to one computer, even to a single Operating System, as there is no real difference between a filesystem installed on a seperate computer versus a seperate filesystem on the same machine. Therefore, this mental abstraction applies even to a single unit. In fact, even if the system is "unitary" in the sense that there is only one device/OS/filesystem etc., we should still impose the idea that it could be extended to other filesystems later, whether they be on the same computer or across a network.</p>
+
+  <p>Therefore, as a normal user, it should be impossible to directly access filesystems and create/delete files. Rather, a second layer on top should be implemented that can seamlessly integrate several filesystems possibly across a network.</p>
+
+  <p>But how does this relate to file organization? And also what does this have to do with filepaths being "bad"?</p>
+
+  <p>The answer is that file organization should exists as a seperate structure from file storage. This is actually how we solved our problem initally when we created the <code>All_Pictures_Flat</code> and <code>Pictures</code> directories. The <code>All_Pictures_Flat</code> directory is the "low-level" storage section that represents the filsystem(s) that the files are actually stored on. Clearly, this is not something the user should interact with directly, but rather this should be managed by the OS or by the filemanager software.</p>
+
+  <p>The <code>Pictures</code> directory is the "userspace" section in the sense that it is where the users have free access to change and manage. Everything here should consist of only links (I won't specify what type of links at this moment), and it should be the interface to create/delete files and whatnot.</p>
+
+  <p>Some people will be quick to point out that this is already how it works on every filesystem! This is true, as filesystems  essentially maintain the files in blocks with i-nodes or some other integer identifier, and the directory structure is nothing but an organizational scheme that has references or links to the actual files on disk. BUT, (and this is a very big BUT), the issue here is that the <b>organizational scheme</b> also exists within each filesystem! Rather than conflating the organizational scheme with each individual filesystem, we should take that out and make it a seperate structure that operates on top of filesystems.</p>
+
+  <p>What I am advocating for is to strip down filesystems and make them only handle the absolute minimum set of features that needs to be implemented. Then, everything else such as access control, directory structure, organizational scheme, etc., should all exists at the level of the file manager software.</p>
+
+  <p>When it comes to filepaths, using filepaths to reference something will always carry the possibility that the reference could break. So instead of using filepaths, it should also be possible to refer to files with some kind of GUID or UUID that uniquely identifies the file over a given network, so it's preferrable to use that over filepaths. That's why I specifically said that <i>only</i> using filepaths is bad, but its fine to use them <i>alongside</i> a GUID or UUID.</p>
+
+  <p>But we still haven't got to a real solution yet, as I've left things pretty vauge at this point and messy. I'll now clean everything up and prresent my solution to all these problems.</p>
+
+  
+  <br><div class="he">The Solution - KFS</div>
+  <p>The solution, which I call the K-File System or <b>KFS</b> for short is a file manager that solves all of the problems previously mentioned. This solution can be implemented on top of existing systems, but it would work much better of operating systems can support something like this.</p>
+
+  <p>KFS is essentially distrbuted software that scales to any size or type of network. On it's own, it basically acts as a replacement for most file managers present on your operating system, but it also scales to work across a network or even just between different partitions or filesystems on a single device.</p>
+
+  <p>In KFS, every file is referenced by a GUID that is global with respect to the given KFS instance. This GUID is a 128-bit unsigned integer that allows over which is over <math><msup><mn>10</mn><mn>38</mn></msup></math> files that we can track at once. The <a href="https://rivery.io/blog/big-data-statistics-how-much-data-is-there-in-the-world/">global data volume</a> estimate is around 149 zetabytes which is no more than <math><msup><mn>10</mn><mn>25</mn></msup></math> bytes, well within our limits.</p>
+
+  <p>When a file is created, KFS interacts</p>
+
+  
+  
+
+  <!-- <p>It really doesn't make sense to give ever user access to filesystems, this should be abstracted away. It's a low-level feature that shouldn't have direct access. Rather than access filesystems, users should access a file-manging software that acts on top of a filesystem or multilpe filesystems, possibly over a network.</p> -->
+
+  <!-- <p>We can't get around hard links anyways, so why should we ever use something that could change? Think about how much better the interent would have been if html links could never break. If we used idenitfier numbers instead of DNS, then we could have solved so many issues and problems!</p> -->
+
+  <!-- <p>Also heriachral category tagging is much better, as tags naturally form </p> -->
+
+  <br><div class="he">Universal or Global Identifiers</div>
+  <!-- <p>The solution is so obvious that I'm suprised it's never been implemented before, and in fact it already exists! The answer is to simply use UUIDs or GUIDs (call them whatever you like, it doesn't matter) as a sort of "hardlink" that is device independent. These identifiers globally and uniquely identify a "thing" and never change. The meaning of "global" depends on the context, and global might only be global with respect to a single business network or the entireity of the United States, but it doesn't really matter.</p> -->
+
+  <!-- <p>The only real caveat is that GUIDs <i>can</i> break, but that is <b>only</b> when the file is deleted. There is no way around this because the act of deletion itself implies that things MUST break because the original resource no longer exists. It is a logical impossibility to prevent this, but there are many things we can do to work around it. -->
+  <!--   This is not an issue if GUIDs are not allowed to be recycled, but if they can be reused, then there's a simple solution.</p> -->
+</div> 
+
+
+    </div>
+
+  </body>
+</html>
