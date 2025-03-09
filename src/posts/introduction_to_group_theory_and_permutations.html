@@ -1,7 +1,8 @@
 <div class="post_body">
   <div class="post_title">
-    <div class="post_title_heading">Introduction to Group Theory and Permutations</div>
+    <div class="post_title_heading">Introduction to Group Theory Part 1: Permutations</div>
     <div class="post_title_subtext">2025 Mar 09, James Spratt</div>
+    <!-- <div class="post_title_subtext">Category: Mathematics</div> -->
   </div>
   <p>I've recently taken a course in group theory, a branch of abstract algebra that studies the mathematical structures known as <b>groups</b>.</p>
 
@@ -11,7 +12,7 @@
 
   <p>Groups, the primary study of <i>group theory</i>, happen to be a type of structure that is encountered very frequently in mathematics. Many other structures such as vector spaces, rings, fields, the real numbers; can all be shown to have group-like structures.</p>
 
-  <p>Group theory is quite a vast topic, so I'm only going to focus on the study of permutation groups in this post, but this is not without justification. According to <a href="https://en.wikipedia.org/wiki/Cayley's_theorem">Cayley's Theorem</a>, every group is isomorphic to some permutation group. This is another way of saying all groups can be understood in terms of permutations, so it might not be such a bad idea to start there.</p>
+  <p>Group theory is quite a vast topic, so for this part I'm only going to focus on the study of permutations in this post, but this is not without justification. According to <a href="https://en.wikipedia.org/wiki/Cayley's_theorem">Cayley's Theorem</a>, every group is isomorphic to some permutation group. This is another way of saying all groups can be understood in terms of permutations, so it might not be such a bad idea to start there. In the next part we will go over how permutations relate to groups more generally.</p>
   
   <br><div class="he">Permutations</div>
   <p>A <b>permutation</b> of a set of numbers <math><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo></math> is a bijection from <math><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo></math> to itself. So it is a function of the form:</p>
@@ -55,7 +56,7 @@
 
   <p>Let's see where the number "1" goes under the composition of <math><mi>σ</mi><mo>∘</mo><mi>τ</mi></math>: <math><mi>τ</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn></math>, which implies that <math><mi>σ</mi><mo>∘</mo><mi>τ</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mi>σ</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>=</mo><mi>σ</mi><mo stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo></math>, and therefore: <math><mi>σ</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>=</mo><mn>3</mn></math>. A similar process can be performed for "2" and "3" to show that: <math><mi>σ</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn></math>, and <math><mi>σ</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn></math>.</p>
 
-  <p>There is a much easier way to create compositions of permutations by using the tabular form directly. Take the first permutation <math><mi>τ</mi></math> and superimpose it on top of the second permutation <math><mi>τ</mi></math>. (order matters here, don't put <math><mi>σ</mi></math> on the top and <math><mi>τ</mi></math> on the bottom). You should have something like this:</p>
+  <p>There is a much easier way to create compositions of permutations by using the tabular form directly. Take the first permutation <math><mi>τ</mi></math> and superimpose it on top of the second permutation <math><mi>σ</mi></math>. (order matters here, don't put <math><mi>σ</mi></math> on the top and <math><mi>τ</mi></math> on the bottom). You should have something like this:</p>
 
   <math display="block"><mi>τ</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
   <math display="block"><mi>σ</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
@@ -120,12 +121,12 @@
 
   <p>but writing all of these extra 1-cycles is redundant, so we usually leave them out.</p>
 
-  <p>If we want to write the <i>identity</i> permutation (that is, the permutation that takes every number to itself), then we can simply write it like so with empty brackets <math><mrow><mo>(</mo><mtable><mtr><mtd></mtd></mtr></mtable><mo>)</mo></mrow></math>. This element is special, and so we give it the letter <math><mi>e</mi></math> (not to be confused with euler's number):</p>
+  <p>If we want to write the <i>identity</i> permutation (that is, the permutation that takes every number to itself), then we can simply write a cycle with empty brackets <math><mrow><mo>(</mo><mtable><mtr><mtd></mtd></mtr></mtable><mo>)</mo></mrow></math>. This element is special, and so we give it the letter <math><mi>e</mi></math> (not to be confused with euler's number):</p>
   
   <math display="block"><mi>e</mi><mo>=</mo><mrow><mo>(</mo><mtable><mtr><mtd></mtd></mtr></mtable><mo>)</mo></mrow><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mi>.</mi><mi>.</mi><mi>.</mi></mtd><mtd><mi>n</mi></mtd></mtr><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mi>.</mi><mi>.</mi><mi>.</mi></mtd><mtd><mi>n</mi></mtd></mtr></mtable><mo>]</mo></mrow></math>
 
   <br><div class="he">Converting Between Cycle Form and Tabular Form</div>
-  <p>There is a straightfoward way to convert from cycle-form to tabular-form so let's take an example composition of disjoint cycles and see how we can convert it to tabular form:</p>
+  <p>There is a straightforward way to convert from cycle-form to tabular-form so let's take an example composition of disjoint cycles and see how we can convert it to tabular form:</p>
 
   <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mn>2</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>6</mn></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mn>7</mn></mtd><mtd><mn>9</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
 
@@ -167,7 +168,7 @@
 
   <p>Finally, the last number we need to visit is 8, but 8 just maps back to itself so we leave it as is.</p>
 
-  <p>Using cycle notation is generally preferred over tabular form as it takes up less space, and it also better represent a core feature of the permutation in a better way than tabular form does. Using disjoint cycles is really handy so we will continue with this format primarly, but feel free to use tabular form as well to help you understand cycle form.</p>
+  <p>Using cycle notation is generally preferred over tabular form as it takes up less space, and it also represents a core feature of the permutation in a better way. Using disjoint cycles is really handy so we will continue with this format primarly, but feel free to use tabular form as well to help you understand cycle form. Note also that compositions of non-disjoint cycles is perfectly valid too, but we prefer to use disjoint cycles whenever possible.</p>
 
 
   <br><div class="he">Inverses and The Identity Permutation</div>
@@ -205,8 +206,14 @@
 
   <p>The inverse of an inverse is itself, i.e. <math><mo stretchy="false">(</mo><msup><mi>σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><msup><mo stretchy="false">)</mo><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><mi>σ</mi></math>, and this is true for any function but you can verify for this special case of permutation functions.</p>
 
-  
+  <p>Also, the inverse of any 2-cycle is itself, so <math><msup><mrow><mo>(</mo><mtable><mtr><mtd><mi>a</mi></mtd><mtd><mi>b</mi></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><mrow><mo>(</mo><mtable><mtr><mtd><mi>a</mi></mtd><mtd><mi>b</mi></mtd></mtr></mtable><mo>)</mo></mrow></math> for any numbers <math><mi>a</mi></math> and <math><mi>b</mi></math>. This is because of the following:</p>
 
+  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mi>a</mi></mtd><mtd><mi>b</mi></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mi>a</mi></mtd><mtd><mi>b</mi></mtd></mtr></mtable><mo>)</mo></mrow><mo>=</mo><mi>e</mi></math>
+
+  <p>And in general: <math><mrow><mo>(</mo><mtable><mtr><mtd><mi>a</mi></mtd><mtd><mi>b</mi></mtd></mtr></mtable><mo>)</mo></mrow><mo>=</mo><mrow><mo>(</mo><mtable><mtr><mtd><mi>b</mi></mtd><mtd><mi>a</mi></mtd></mtr></mtable><mo>)</mo></mrow></math> for any 2-cycles.</p>
+
+
+  
   <br><div class="he">Extended Compositions</div>
   <p>An interesting thing we can do is compose a permutation with itself, i.e. <math><mi>σ</mi><mo>∘</mo><mi>σ</mi></math>, which leads to some interesting things. For one, we can write as a shorthand: <math><mi>σ</mi><mo>∘</mo><mi>σ</mi><mo>=</mo><msup><mi>σ</mi><mn>2</mn></msup></math>, understanding that the superscript here refers to composition and NOT exponentiation.</p>
 
@@ -230,9 +237,7 @@
 
   <p>This gives us the ability to "treat" compositions similar to exponent rules as seen in normal arthmetic.</p>
 
-  <p>An interesting question might be to ask for what values of <math><mi>k</mi></math> does <math><msup><mi>σ</mi><mi>k</mi></msup><mo>=</mo><mi>e</mi></math>, if any at all.</p>
-
-  <p>The answer is that this is true for any <i>finite</i> permutation, which is what we have been dealing with in this post (we won't really get into infinite cases). We can prove this by contradiction.</p>
+  <p>An interesting question might be to ask for what values of <math><mi>k</mi></math> does <math><msup><mi>σ</mi><mi>k</mi></msup><mo>=</mo><mi>e</mi></math>, if any at all. The answer is that this is true for any <i>finite</i> permutation, which is what we have been dealing with in this post (we won't really get into infinite cases).</p>
 
   <p>If you think about, there cannot be an infinite amount of different permutations generated by a permutation permuting itself. Eventually, it will have to start repeating itself. There are only a finite amount of numbers to permute <math><mi>n</mi></math>, so there can only be at most <math><mi>n</mi><mo>!</mo></math> different permutations.</p>
 
@@ -254,29 +259,17 @@
 
 
 
-  <br><div class="he">Group Theory Axioms</div>
-  <p>We've now reach a good point where we can actually start talking about group theory proper, and in fact most of our notation and results that we showed with permutations generalizes quite well to any kind of group in general. </p>
+  <br><div class="he">Symmetric Group</div>
+  <p>Before we even introduce the axioms of groups, we can start talking about a specific type of group called the <b>symmetric group</b>.</p>
 
-  <p>A <b>group</b> is a set <math><mi>G</mi></math> equipped with a binary operation "<math><mo>∙</mo></math>" that satifies the following axioms or properties:</p>
+  <p>The <b>symmetric group</b> for some non-negative integer <math><mi>n</mi></math> is the set of all permutations of <math><mi>n</mi></math>, and is defined formally as:</p>
 
-  <dl>
-    <dt><b>Axiom 1 : Closure</b></dt>
-    <dd><math><mo>∙</mo><mo lspace="0.2222em" rspace="0.2222em">:</mo><mi>G</mi><mo>×</mo><mi>G</mi><mo>→</mo><mi>G</mi></math>, this means that the binary operation is "closed", so it stays within <math><mi>G</mi></math>.</dd>
-    <dt><b>Axiom 2 : Associativity</b></dt>
-    <dd><math><mo>∀</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo>,</mo><mi>c</mi><mo>∈</mo><mi>G</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mi>a</mi><mo>∙</mo><mo stretchy="false">(</mo><mi>b</mi><mo>∙</mo><mi>c</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">(</mo><mi>a</mi><mo>∙</mo><mi>b</mi><mo stretchy="false">)</mo><mo>∙</mo><mi>c</mi></math>, the binary operation must be associative (but not necessarily commutative).</dd>
-    <dt><b>Axiom 3 : Identity</b></dt>
-    <dd><math><mo>∃</mo><mi>e</mi><mo>∈</mo><mi>G</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mo>∀</mo><mi>a</mi><mo>∈</mo><mi>G</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mi>e</mi><mo>∙</mo><mi>a</mi><mo>=</mo><mi>a</mi><mo>∙</mo><mi>e</mi><mo>=</mo><mi>a</mi></math>, so there must exists an identity element.</dd>
-    <dt><b>Axiom 4 : Inverse</b></dt>
-    <dd><math><mo>∀</mo><mi>a</mi><mo>∈</mo><mi>G</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mo>∃</mo><msup><mi>a</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>∈</mo><mi>G</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mi>a</mi><mo>∙</mo><msup><mi>a</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><msup><mi>a</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>∙</mo><mi>a</mi><mo>=</mo><mi>e</mi></math>, every group element has an identity element.</dd>
-  </dl>
+  <math display="block"><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mo stretchy="false">{</mo><mi>σ</mi><mi>|</mi><mi>σ</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo><mo>→</mo><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo><mo stretchy="false">}</mo></math>
+
+  <p>Since the amount of permutations is <math><mi>n</mi><mo>!</mo></math> for any <math><mi>n</mi></math>, then: <math><mi>|</mi><msub><mi>S</mi><mi>n</mi></msub><mi>|</mi><mo>=</mo><mi>n</mi><mo>!</mo></math>, so the size of the symmetric group grows incredibly large even with fairly small values of <math><mi>n</mi></math>.</p>
+
+  <p>For example, the symmetric group <math><msub><mi>S</mi><mn>20</mn></msub></math> is the number of permutations of the number <math><mi>n</mi><mo>=</mo><mn>20</mn></math>, so we know that <math><mi>|</mi><msub><mi>S</mi><mn>20</mn></msub><mi>|</mi><mo>=</mo><mn>20</mn><mo>!</mo></math>, which is over 2 quintillion permutations! That is approximately 2 million terabytes of information! The growth of the factorial function is very bad, and it would be absurd to brute force check all permutations for even some of the smallest numbers. Group theory can help reduce the complexity of studying permutations of very large numbers</p>
+
+
   
-  <p>All of this might seem very trivial to talk about, but consider a game that has 20 loading zones (which is not uncommon, and in fact many games have more), then the amount of permutations of 20 is 20 factorial, which is over 2 quintillion permutations, which is approximately 2 million terabytes of information! The growth of the factorial function is very bad, and it would be absurd to brute force this problem.</p>
-
-  <p>Of course, most randomization algorithms will just pick permutations at random, but then they might not have certain properties that we would like. The naive approach would be to generate every permutation and search the permutations to find the desirable ones, but our results from group theory (especially k-cycles) makes it easy to select from literally billions of billions of combinations!</p>
-
-  <br><div class="he">Further Applications</div>
-  <p>In the case that several loading zones belong to the same area, we can treat them as a group.</p>
-
-  <!-- <br><div class="he">References</div> -->
-  <!-- <p>Thanks to Dr. L Hoehn for his course and notes on group theory, of which I used as a reference to create this blog post.</p> -->
 </div>
