@@ -298,9 +298,16 @@
 
   <p>A <b>group</b> is a set <math><mi>G</mi></math> equipped with a binary operation "<math><mo>∙</mo></math>" that satifies the following axioms or properties:</p>
 
-  <ul>
-    <li><math><mo>∙</mo><mo lspace="0.2222em" rspace="0.2222em">:</mo><mi>G</mi><mo>→</mo><mi>G</mi></math>, this means that the binary operation is "closed", so it stays within <math><mi>G</mi></math>.</li>
-  </ul>
+  <dl>
+    <dt><b>Axiom 1 : Closure</b></dt>
+    <dd><math><mo>∙</mo><mo lspace="0.2222em" rspace="0.2222em">:</mo><mi>G</mi><mo>×</mo><mi>G</mi><mo>→</mo><mi>G</mi></math>, this means that the binary operation is "closed", so it stays within <math><mi>G</mi></math>.</dd>
+    <dt><b>Axiom 2 : Associativity</b></dt>
+    <dd><math><mo>∀</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo>,</mo><mi>c</mi><mo>∈</mo><mi>G</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mi>a</mi><mo>∙</mo><mo stretchy="false">(</mo><mi>b</mi><mo>∙</mo><mi>c</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">(</mo><mi>a</mi><mo>∙</mo><mi>b</mi><mo stretchy="false">)</mo><mo>∙</mo><mi>c</mi></math>, the binary operation must be associative (but not necessarily commutative).</dd>
+    <dt><b>Axiom 3 : Identity</b></dt>
+    <dd><math><mo>∃</mo><mi>e</mi><mo>∈</mo><mi>G</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mo>∀</mo><mi>a</mi><mo>∈</mo><mi>G</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mi>e</mi><mo>∙</mo><mi>a</mi><mo>=</mo><mi>a</mi><mo>∙</mo><mi>e</mi><mo>=</mo><mi>a</mi></math>, so there must exists an identity element.</dd>
+    <dt><b>Axiom 4 : Inverse</b></dt>
+    <dd><math><mo>∀</mo><mi>a</mi><mo>∈</mo><mi>G</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mo>∃</mo><msup><mi>a</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>∈</mo><mi>G</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mi>a</mi><mo>∙</mo><msup><mi>a</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><msup><mi>a</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>∙</mo><mi>a</mi><mo>=</mo><mi>e</mi></math>, every group element has an identity element.</dd>
+  </dl>
   
   <p>All of this might seem very trivial to talk about, but consider a game that has 20 loading zones (which is not uncommon, and in fact many games have more), then the amount of permutations of 20 is 20 factorial, which is over 2 quintillion permutations, which is approximately 2 million terabytes of information! The growth of the factorial function is very bad, and it would be absurd to brute force this problem.</p>
 
