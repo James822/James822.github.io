@@ -281,9 +281,27 @@
   <math display="block"><mo>⟹</mo><msup><mi>σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>∘</mo><msup><mi>σ</mi><mi>k</mi></msup><mo>=</mo><msup><mi>σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>∘</mo><mi>σ</mi></math>
   <math display="block"><mo>⟹</mo><msup><mi>σ</mi><mrow><mi>k</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><mi>e</mi></math>
 
+  <p>So we can state as a theorem that for every finite permutation, there exists an integer <math><mi>r</mi></math> such that <math><msup><mi>σ</mi><mi>r</mi></msup><mo>=</mo><mi>e</mi></math>. This means that every permutation when repeatedly applied over and over again, will eventually just lead all numbers back to themselves.</p>
+
+  <p>Let us define the set of all self compositions of <math><mi>σ</mi></math> as: <math><mo stretchy="false">⟨</mo><mi>σ</mi><mo stretchy="false">⟩</mo></math>, which is defined as:</p>
+
+  <math display="block"><mo stretchy="false">⟨</mo><mi>σ</mi><mo stretchy="false">⟩</mo><mo>=</mo><mo stretchy="false">{</mo><msup><mi>σ</mi><mi>n</mi></msup><mo lspace="0.2222em" rspace="0.2222em">:</mo><mi>n</mi><mo>≥</mo><mn>0</mn><mo stretchy="false">}</mo></math>
+
+  <p>We restrict <math><mi>n</mi></math> to be greater or equal to 0, but this is not neccessary. We could say it's less than or equal to 0, or we could just let it be any integer. All these choices will create the same set, as the set of self-compositions is cyclic. You could go backwards or forwards but it doesn't matter, you'll get the same results whichever direction you pick and whatever element you start with.</p>
+
+  <p>The <b>order</b> of <math><mo stretchy="false">⟨</mo><mi>σ</mi><mo stretchy="false">⟩</mo></math> is defined as the smallest positive integer <math><mi>k</mi></math> such that <math><msup><mi>σ</mi><mi>k</mi></msup><mo>=</mo><mi>e</mi></math>. The order of <math><mo stretchy="false">⟨</mo><mi>σ</mi><mo stretchy="false">⟩</mo></math> is also the size of the set, so: <math><mi>|</mi><mo stretchy="false">⟨</mo><mi>σ</mi><mo stretchy="false">⟩</mo><mi>|</mi><mo>=</mo><mi>k</mi></math>.</p>
+
 
 
   <br><div class="he">Group Theory Axioms</div>
+  <p>We've now reach a good point where we can actually start talking about group theory proper, and in fact most of our notation and results that we showed with permutations generalizes quite well to any kind of group in general. </p>
+
+  <p>A <b>group</b> is a set <math><mi>G</mi></math> equipped with a binary operation "<math><mo>∙</mo></math>" that satifies the following axioms or properties:</p>
+
+  <ul>
+    <li><math><mo>∙</mo><mo lspace="0.2222em" rspace="0.2222em">:</mo><mi>G</mi><mo>→</mo><mi>G</mi></math>, this means that the binary operation is "closed", so it stays within <math><mi>G</mi></math>.</li>
+  </ul>
+  
   <p>All of this might seem very trivial to talk about, but consider a game that has 20 loading zones (which is not uncommon, and in fact many games have more), then the amount of permutations of 20 is 20 factorial, which is over 2 quintillion permutations, which is approximately 2 million terabytes of information! The growth of the factorial function is very bad, and it would be absurd to brute force this problem.</p>
 
   <p>Of course, most randomization algorithms will just pick permutations at random, but then they might not have certain properties that we would like. The naive approach would be to generate every permutation and search the permutations to find the desirable ones, but our results from group theory (especially k-cycles) makes it easy to select from literally billions of billions of combinations!</p>
