@@ -11,8 +11,8 @@ body {
 .blog_header {
     background-color: hsl(204, 20%, 12%);
     text-align: center;
-    padding-bottom: 40px;
-    padding-top: 120px;
+    padding-bottom: 50px;
+    padding-top: 110px;
 }
 
 .blog_title {

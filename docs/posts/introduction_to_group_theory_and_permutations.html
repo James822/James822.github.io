@@ -40,7 +40,7 @@
       <div class="post_body">
   <div class="post_title">
     <div class="post_title_heading">Introduction to Group Theory and Permutations</div>
-    <div class="post_title_subtext">2025 Mar 07, James Spratt</div>
+    <div class="post_title_subtext">2025 Mar 09, James Spratt</div>
   </div>
   <p>I've recently taken a course in group theory, a branch of abstract algebra that studies the mathematical structures known as <b>groups</b>.</p>
 
@@ -48,7 +48,7 @@
 
   <p>This is why I have come to love abstract algebra as a discpline. At it's core, it is the formal study of mathematical <b>essence</b>. Two structures may have different <b>substance</b>, but if they function exactly the same up to some kind of isomorphism; then they are the <i>essentially</i> the same.</p>
 
-    <p>Groups, the primary study of <i>group theory</i>, happen to be a type of structure that is encountered very frequently in mathematics. Many other structures such as vector spaces, rings, fields, the real numbers; can all be shown to have group-like structures.</p>
+  <p>Groups, the primary study of <i>group theory</i>, happen to be a type of structure that is encountered very frequently in mathematics. Many other structures such as vector spaces, rings, fields, the real numbers; can all be shown to have group-like structures.</p>
 
   <p>Group theory is quite a vast topic, so I'm only going to focus on the study of permutation groups in this post, but this is not without justification. According to <a href="https://en.wikipedia.org/wiki/Cayley's_theorem">Cayley's Theorem</a>, every group is isomorphic to some permutation group. This is another way of saying all groups can be understood in terms of permutations, so it might not be such a bad idea to start there.</p>
   
@@ -67,97 +67,101 @@
 
   <p>Rather than painstakingly write out the function value for each input, we can represent this same exact function in <math><mi>τ</mi></math> in tabular form as the following: </p>
 
-  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
+  <math display="block"><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
 
   <p>This format is known as <a href="https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy">Cauchy's</a> two-line notation, but we will refer to it as tabular form. All entries are read "top-down" per column. In any given column, the element of the top row is "sent" to the element of the bottom row.</p>
 
   <p>More generally, we can represent any permutation with the following form:</p>
 
-  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mi>.</mi><mi>.</mi><mi>.</mi></mtd><mtd><mi>n</mi></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>1</mn></msub></mtd><mtd><msub><mi>a</mi><mn>2</mn></msub></mtd><mtd><msub><mi>a</mi><mn>3</mn></msub></mtd><mtd><mi>.</mi><mi>.</mi><mi>.</mi></mtd><mtd><msub><mi>a</mi><mi>n</mi></msub></mtd></mtr></mtable><mo>)</mo></mrow></math>
+  <math display="block"><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mi>.</mi><mi>.</mi><mi>.</mi></mtd><mtd><mi>n</mi></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>1</mn></msub></mtd><mtd><msub><mi>a</mi><mn>2</mn></msub></mtd><mtd><msub><mi>a</mi><mn>3</mn></msub></mtd><mtd><mi>.</mi><mi>.</mi><mi>.</mi></mtd><mtd><msub><mi>a</mi><mi>n</mi></msub></mtd></mtr></mtable><mo>]</mo></mrow></math>
 
-  <p>And this is read as 1 goes to <math><msub><mi>a</mi><mn>1</mn></msub></math>, 2 goes to <math><msub><mi>a</mi><mn>2</mn></msub></math>, 3 goes to <math><msub><mi>a</mi><mn>3</mn></msub></math>, and so on. Here, <math><mi>n</mi></math> is the number of elements to be permuted, and <math><msub><mi>a</mi><mi>i</mi></msub></math> are the numbers belonging to the set <math><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo></math>, and it also must be the case that <math><msub><mi>a</mi><mi>i</mi></msub><mo>≠</mo><msub><mi>a</mi><mi>j</mi></msub></math> iff <math><mi>i</mi><mo>≠</mo><mi>j</mi></math>. Basically, there can't be any duplicate <math><msub><mi>a</mi><mi>i</mi></msub></math>. Any kind of table that follows this specific format is a valid permutation. So next time you look at your excel sheet, realize that might be looking at a permutation</p>
+  <p>And this is read as 1 goes to <math><msub><mi>a</mi><mn>1</mn></msub></math>, 2 goes to <math><msub><mi>a</mi><mn>2</mn></msub></math>, 3 goes to <math><msub><mi>a</mi><mn>3</mn></msub></math>, and so on. Here, <math><mi>n</mi></math> is the number of elements to be permuted, and <math><msub><mi>a</mi><mi>i</mi></msub></math> are the numbers belonging to the set <math><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo></math>, and it also must be the case that <math><msub><mi>a</mi><mi>i</mi></msub><mo>≠</mo><msub><mi>a</mi><mi>j</mi></msub></math> iff <math><mi>i</mi><mo>≠</mo><mi>j</mi></math>. Basically, there can't be any duplicate <math><msub><mi>a</mi><mi>i</mi></msub></math>. Any kind of table that follows this specific format is a valid permutation.</p>
 
   <p>Notice also that the order of columns does not matter, as we could freely swap them to our liking without changing the permutation. As a matter of style, we typically like to order the columns by the first/top row with 1,2,3,... etc.</p>
 
-  <!-- <p>It turns out that the set of all permutations for a given set <math><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo></math> forms a special kind of group called the <b>Symmetric Group</b>.</p> -->
 
-
+  
   <br><div class="he">Compositions of Permutations</div>
   <p>Since permutations are bijective functions from a set to itself, it is possible to compose any number of permutations we like, as long as the permutations are both of n elements.</p>
 
-  <p>The operation of function composition is given by <math><mi>σ</mi><mo>∘</mo><mi>τ</mi><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo><mo>=</mo><mi>σ</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></math> for two permutations <math><mi>τ</mi></math> and <math><mi>σ</mi></math>. In other words, apply the permutation <math><mi>τ</mi></math> first, and then with the output of that, feed it into σ</p>
-
-  
-  <br><div class="he">Symmetric Group</div>
-  <p>The <b>Symmetric Group</b> for <math><mi>n</mi></math> elements is the set:</p>
-
-  <math display="block"><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mo stretchy="false">{</mo><mi>σ</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mi>σ</mi><mspace width="10px"/><mtext>is a permutation of</mtext><mspace width="10px"/><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo><mo stretchy="false">}</mo></math>
-
-  <p>with the operation of function composition given by <math><mi>σ</mi><mo>∘</mo><mi>τ</mi><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo><mo>=</mo><mi>σ</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></math> for two permutations <math><mi>τ</mi></math> and <math><mi>σ</mi></math>.</p>
+  <p>The operation of function composition is given by <math><mi>σ</mi><mo>∘</mo><mi>τ</mi><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo><mo>=</mo><mi>σ</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></math> for two permutations <math><mi>τ</mi></math> and <math><mi>σ</mi></math>.</p>
 
   <p>For example, if we take two permutations such as these:</p>
 
-  <math display="block"><mi>τ</mi><mo>=</mo><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>)</mo></mrow><mo>,</mo><mi>σ</mi><mo>=</mo><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
+  <math display="block"><mi>τ</mi><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>]</mo></mrow><mo>,</mo><mi>σ</mi><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
 
-  <p>The <b>composition</b> of <math><mi>σ</mi></math> and <math><mi>τ</mi></math> is <math><mi>σ</mi><mo>∘</mo><mi>τ</mi></math>, which means we apply the permutation <math><mi>τ</mi></math> first and then we apply <math><mi>σ</mi></math> second. Composition is read from "right-to-left" which can be confusing.</p>
+  <p>The composition of <math><mi>σ</mi></math> and <math><mi>τ</mi></math> is <math><mi>σ</mi><mo>∘</mo><mi>τ</mi></math>, which means we apply the permutation <math><mi>τ</mi></math> first and then we apply <math><mi>σ</mi></math> second. Composition is read from "right-to-left" which can be confusing.</p>
 
   <p>Let's see where the number "1" goes under the composition of <math><mi>σ</mi><mo>∘</mo><mi>τ</mi></math>: <math><mi>τ</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn></math>, which implies that <math><mi>σ</mi><mo>∘</mo><mi>τ</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mi>σ</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>=</mo><mi>σ</mi><mo stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo></math>, and therefore: <math><mi>σ</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>=</mo><mn>3</mn></math>. A similar process can be performed for "2" and "3" to show that: <math><mi>σ</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn></math>, and <math><mi>σ</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn></math>.</p>
 
-  <p>There is a much easier way to create compositions of permutations by taking it the tabular form as we have been using, and superimpose the first permtuation on top of the second permutation. So take <math><mi>τ</mi></math> and put it on top of <math><mi>σ</mi></math> (order matters here, don't put <math><mi>σ</mi></math> on the top and <math><mi>τ</mi></math> on the bottom), and then you should have this:</p>
+  <p>There is a much easier way to create compositions of permutations by using the tabular form directly. Take the first permutation <math><mi>τ</mi></math> and superimpose it on top of the second permutation <math><mi>τ</mi></math>. (order matters here, don't put <math><mi>σ</mi></math> on the top and <math><mi>τ</mi></math> on the bottom). You should have something like this:</p>
 
-  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
-  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
+  <math display="block"><mi>τ</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
+  <math display="block"><mi>σ</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
 
   <p>Then, rearrange the columns of <math><mi>σ</mi></math> so that the numbers at the top row of <math><mi>σ</mi></math> match the numbers of the bottom row of <math><mi>τ</mi></math>. In this example, all we need to do is swap column 1 and column 2 of <math><mi>σ</mi></math> just like so:</p>
 
-  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
-  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
+  <math display="block"><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
+  <math display="block"><mrow><mo>[</mo><mtable><mtr><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
 
-  <p>We've changed the arrangment of the columns in <math><mi>σ</mi></math>, but notice that this doesn't change the permutation at all! The permutation stays exactly the same, but we visually changed it just as a helper for our next step.</p>
+  <p>We've changed the arrangment of the columns in <math><mi>σ</mi></math>, but as we discussed before this does not change the permutation.</p>
 
   <p>The next step is to simply remove the bottom row of <math><mi>τ</mi></math> and remove the top row of <math><mi>σ</mi></math>. Basically, remove the middle two rows and leave the very top and very bottom row of the whole thing:</p>
 
-  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
+  <math display="block"><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
 
-  <p>But wait, doesn't this just look like another permutation? And in fact it is! You can verify for yourself that we achieved the exact same result as if we evaluated the function for each value. So we've basically proved that the composition of two permutations is also a permutation itself, which is referred to as being <i>closed</i> under the operation of composition.</p>
+  <p>But wait, doesn't this just look like another permutation? And in fact it is! Compositions of permutations are themselves permutations. This may seem trivial, but it is an important fact that we will come back to later.</p>
 
   
-  <br><div class="he">k-cycles</div>
-  <p>Now that we have established that the composition of any number of permutations is a single permutation, we can introduce another concept which will help us create a randomizer. Let us define a specific type of permutation called a k-cycle.</p>
+  <!-- <br><div class="he">Symmetric Group</div> -->
+  <!-- <p>The <b>Symmetric Group</b> for <math><mi>n</mi></math> elements is the set:</p> -->
 
-  <p>A <b>k-cycle</b> is a <i>permutation</i> that takes a collection of <i>distinct</i> numbers in a cycle, leaving all other numbers fixed. For example: 4 -> 2, 2 -> 6, 6 -> 3, 3 -> 4; is a valid cycle because it wraps back around and no number is visited more than once (besides of course the starting number 4, which must be visited twice). The other numbers are left fixed and unchanged.</p>
+  <!-- <math display="block"><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mo stretchy="false">{</mo><mi>σ</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mi>σ</mi><mspace width="10px"/><mtext>is a permutation of</mtext><mspace width="10px"/><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo><mo stretchy="false">}</mo></math> -->
+
+  
+  
+  <br><div class="he">Cycle notation</div>
+  <p>Another way to represent permutations is with something called <b>cycle notation</b>.</p>
+
+  <p>A <b>cycle</b> is a permutation that takes a collection of <i>distinct</i> numbers in a cycle, leaving all other numbers fixed. For example: 4 -> 2, 2 -> 6, 6 -> 3, 3 -> 4; is a valid cycle because it wraps back around and no number is visited more than once (besides of course the starting number 4, which must be visited twice). The other numbers are left fixed and unchanged.</p>
 
   <p>We can represent this example with the following cycle notation: </p>
 
   <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>4</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
 
-  <p>Each number sends you to the next one, and once you reach the end of the list, it wraps back around to the first element. This example is a 4-cycle as there are 4 distinct numbers in the cycle. But what about the numbers 1 and 5? These numbers are not in the cycle, so they map to themselves: 1 goes to 1 and 5 goes to 5, so we just leave it out of the cycle.</p>
-  
-  <p>It also doesn't matter where we start the list as long as we maintain the order, so we could also represent the same 4-cycle as so:</p>
+  <p>Each number sends you to the next one, and once you reach the end of the list, it wraps back around to the first element. This example is a 4-cycle as there are 4 distinct numbers in the cycle. It also doesn't matter where we start the list as long as we maintain the order, so we could also represent the same 4-cycle as so:</p>
 
   <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>2</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
 
   <p>and you can verify that this changes nothing, but we tend to prefer to start cycles with the least element as a matter of style. Since any k-cycle is also a permutation, we can also represent it using our tabular form like before. The numbers 1 and 5 are not in this cycle which means that they stay fixed as we mentioned before, so we can write:</p>
 
-  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>2</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow><mo>=</mo><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd></mtr><mtr><mtd><mn>1</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
-
-  <!-- <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd></mtr><mtr><mtd><mn>1</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>)</mo></mrow></math> -->
+  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>2</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd></mtr><mtr><mtd><mn>1</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
 
   <p>But can <i>any</i> permutation be represented by a k-cycle? Let's investigate this to see if it is true by considering the following permutation:</p>
 
-  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
+  <math display="block"><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
 
   <p>Could we represent this as a single cycle? The answer is no! You can try as hard as you want but there won't be a single k-cycle that can represent this permutation. It turns out however that we <i>can</i> represent this as a composition of 2 cycles, specifically like this:</p>
 
-  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>)</mo></mrow><mo>=</mo><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
+  <math display="block"><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>]</mo></mrow><mo>=</mo><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
 
-  <p>Cycle composition follows the exact same rule as permutation composition like we discussed before, so you first apply the permutation of the first cycle <math><mrow><mo>(</mo><mtable><mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>, and then you apply the permutation of the second cycle: <math><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow></math> (recall that permutation composition is right-to-left). The cycles here are also <i>disjoint</i> as they have no elements in common.</p>
+  <p>Cycle composition follows the exact same rule as permutation composition like we discussed before. Don't forget that a cycle is a permutation, just a different way of representing it. First, apply the permutation of the first cycle <math><mrow><mo>(</mo><mtable><mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>, and then you apply the permutation of the second cycle: <math><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow></math> (recall that permutation composition is right-to-left). The cycles here are also <i>disjoint</i> as they have no elements in common.</p>
 
   <p>It can be proved that every permutation can be represented either as a single cycle, or as a composition of 2 or more <i>disjoint</i> cycles. It is also the case that the order of compositions doesn't matter with disjoint cycles, so the following equality holds for the previous example:</p>
 
   <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>)</mo></mrow><mo>=</mo><mrow><mo>(</mo><mtable><mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
 
-  <p>The idea behind this is that if a composition of any number of cycles are disjoint, then there are no elements in common, so any element will only be "permuted" by one of the cycles that happens to contain that element. The other cycles will leave that element fixed, so therefore it doesn't really matter where we place the cycle in the composition. It is also possible to use compositions of cycles that are NOT disjoint, but we won't be interested in doing that for our purposes as working with disjoint cycles is much easier.</p>
+  <p>The idea is that if a composition of any number of cycles are disjoint, then there are no elements in common. Any element will only be "permuted" by exactly one of the cycles that happens to contain that element. The other cycles will leave that element fixed, so therefore it doesn't really matter where we place the cycle in the composition.</p>
+
+  <p>Also, if we wanted to, we could for example rewrite the cycle <math><mrow><mo>(</mo><mtable><mtr><mtd><mn>3</mn></mtd><mtd><mn>7</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>)</mo></mrow></math> as:</p>
+
+  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mn>2</mn></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mn>3</mn></mtd><mtd><mn>7</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mn>6</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
+
+  <p>but writing all of these extra 1-cycles is redundant, so we usually leave them out.</p>
+
+  <p>If we want to write the <i>identity</i> permutation (that is, the permutation that takes every number to itself), then we can simply write it like so with empty brackets <math><mrow><mo>(</mo><mtable><mtr><mtd></mtd></mtr></mtable><mo>)</mo></mrow></math>. This element is special, and so we give it the letter <math><mi>e</mi></math> (not to be confused with euler's number):</p>
+  
+  <math display="block"><mi>e</mi><mo>=</mo><mrow><mo>(</mo><mtable><mtr><mtd></mtd></mtr></mtable><mo>)</mo></mrow><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mi>.</mi><mi>.</mi><mi>.</mi></mtd><mtd><mi>n</mi></mtd></mtr><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mi>.</mi><mi>.</mi><mi>.</mi></mtd><mtd><mi>n</mi></mtd></mtr></mtable><mo>]</mo></mrow></math>
 
   <br><div class="he">Converting Between Cycle Form and Tabular Form</div>
   <p>There is a straightfoward way to convert from cycle-form to tabular-form so let's take an example composition of disjoint cycles and see how we can convert it to tabular form:</p>
@@ -166,23 +170,23 @@
 
   <p>Since the largest number here is 9, that means that we are dealing with 9 numbers to be permuted, so create an empty table that has numbers 1 through 9 on the top, and leave the bottom row empty:</p>
 
-  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>7</mn></mtd><mtd><mn>8</mn></mtd><mtd><mn>9</mn></mtd></mtr><mtr><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd></mtr></mtable><mo>)</mo></mrow></math>
+  <math display="block"><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>7</mn></mtd><mtd><mn>8</mn></mtd><mtd><mn>9</mn></mtd></mtr><mtr><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd></mtr></mtable><mo>]</mo></mrow></math>
 
   <p>Our goal here is to "fill in the dots" and determine what numbers need to go there. For starters, we observe that the numbers 3 and 8 are not in the cycles whatsoever, so we know that they stay fixed:</p>
 
-  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>7</mn></mtd><mtd><mn>8</mn></mtd><mtd><mn>9</mn></mtd></mtr><mtr><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mn>3</mn></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mn>8</mn></mtd><mtd><mi>.</mi></mtd></mtr></mtable><mo>)</mo></mrow></math>
+  <math display="block"><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>7</mn></mtd><mtd><mn>8</mn></mtd><mtd><mn>9</mn></mtd></mtr><mtr><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mn>3</mn></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mn>8</mn></mtd><mtd><mi>.</mi></mtd></mtr></mtable><mo>]</mo></mrow></math>
 
   <p>Then, we start at the number 1 and see where it maps to. Since the only cycle that 1 belongs to is: <math><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>, we know that 1 maps to 5:</p>
 
-  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>7</mn></mtd><mtd><mn>8</mn></mtd><mtd><mn>9</mn></mtd></mtr><mtr><mtd><mn>5</mn></mtd><mtd><mi>.</mi></mtd><mtd><mn>3</mn></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mn>8</mn></mtd><mtd><mi>.</mi></mtd></mtr></mtable><mo>)</mo></mrow></math>
+  <math display="block"><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>7</mn></mtd><mtd><mn>8</mn></mtd><mtd><mn>9</mn></mtd></mtr><mtr><mtd><mn>5</mn></mtd><mtd><mi>.</mi></mtd><mtd><mn>3</mn></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mn>8</mn></mtd><mtd><mi>.</mi></mtd></mtr></mtable><mo>]</mo></mrow></math>
 
-  <p>Similarly, we can see that 2 maps to 4 because of the cycle <math><mrow><mo>(</mo><mtable><mtr><mtd><mn>2</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>:</p>
+  <p>Similarly, we can see that 2 maps to 4 because of the cycle <math><mrow><mo>(</mo><mtable><mtr><mtd><mn>2</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>6</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>:</p>
 
-  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>7</mn></mtd><mtd><mn>8</mn></mtd><mtd><mn>9</mn></mtd></mtr><mtr><mtd><mn>5</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>3</mn></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mn>8</mn></mtd><mtd><mi>.</mi></mtd></mtr></mtable><mo>)</mo></mrow></math>
+  <math display="block"><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>7</mn></mtd><mtd><mn>8</mn></mtd><mtd><mn>9</mn></mtd></mtr><mtr><mtd><mn>5</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>3</mn></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mi>.</mi></mtd><mtd><mn>8</mn></mtd><mtd><mi>.</mi></mtd></mtr></mtable><mo>]</mo></mrow></math>
 
   <p>And if we continue this process we get for the remaining numbers, then we see that we get the following permutation in tabular form:</p>
 
-  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>7</mn></mtd><mtd><mn>8</mn></mtd><mtd><mn>9</mn></mtd></mtr><mtr><mtd><mn>5</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>9</mn></mtd><mtd><mn>8</mn></mtd><mtd><mn>7</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
+  <math display="block"><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>7</mn></mtd><mtd><mn>8</mn></mtd><mtd><mn>9</mn></mtd></mtr><mtr><mtd><mn>5</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>9</mn></mtd><mtd><mn>8</mn></mtd><mtd><mn>7</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
 
   <p>And you can verify that this is correct.</p>
 
@@ -196,14 +200,63 @@
 
   <p>And then we move to the next number that is not already in a cycle, which is 3; and we see that 3 goes to itself, so we can leave it out.</p>
 
-  <p>Then the next number that we haven't visited yet is 7. The reason why it is 7 and not 4,5 or 6 is because these numbers are already in the cycles that we have written, so we have already visited them. If we follow 7 then we see that 7 goes to 9 and goes to 7, giving us:</p>
+  <p>Then the next number that we haven't visited yet is 7. If we follow 7 then we see that 7 goes to 9 and then goes back to 7, giving us:</p>
 
   <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mn>2</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>6</mn></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mn>7</mn></mtd><mtd><mn>9</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
 
   <p>Finally, the last number we need to visit is 8, but 8 just maps back to itself so we leave it as is.</p>
 
-  <p>The fact that every single permutation is a product of disjoint cycles is a very important result because it means we can control the "flow" of how the randomizer works. For example, if the randomized loading zones contained very long cycles, then the player would have to memorize these long cycles in order to navigate the game world effectively. If there are short cycles however, then the player can take advantage of these shorter cycles to help them navigate more easily. As you can see, the compositions of cycles in a paticular randomized game is very important to consider. We might want to control the lengths of these cycles to get certain desired effects.</p>
+  <p>Using cycle notation is generally preferred over tabular form as it takes up less space, and it also better represent a core feature of the permutation in a better way than tabular form does. Using disjoint cycles is really handy so we will continue with this format primarly, but feel free to use tabular form as well to help you understand cycle form.</p>
 
+
+  <br><div class="he">Inverses and The Identity Permutation</div>
+  <p>Every permutation has an inverse permutation. For every permutation <math><mi>σ</mi></math>, there exists an identity permutation which we denote <math><msup><mi>σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup></math>, such that the following holds:</p>
+
+  <math display="block"><msup><mi>σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>∘</mo><mi>σ</mi><mo>=</mo><mi>σ</mi><mo>∘</mo><msup><mi>σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><mi>e</mi></math>
+
+  <p>The proof that every permutation has an inverse follows from the fact that permutations are bijective functions from a set to itself. Every bijective function has an inverse, and since permutations are from a set to itself; then that inverse is also a permutation.</p>
+
+  <p>Let's take the following permutation <math><mi>σ</mi></math> as an example:</p>
+
+  <math display="block"><mi>σ</mi><mo>=</mo><mrow><mo>(</mo><mtable><mtr><mtd><mn>3</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>7</mn></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
+
+  <p>The inverse of this permutation is <math><msup><mi>σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><mrow><mo>(</mo><mtable><mtr><mtd><mn>5</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>7</mn></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow></math> as:</p>
+
+  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>3</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>7</mn></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mn>5</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>7</mn></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow><mo>=</mo><mi>e</mi></math>
+
+  <p>Recall that cycle composition is from right-to-left. Take every from 1 to 7 and move it from right to left across these 4 cycles, and you will see that the number ends up back at itself.</p>
+
+  <p>For example: 1 goes to 4 in <math><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>, 4 stays fixed in <math><mrow><mo>(</mo><mtable><mtr><mtd><mn>5</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>7</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>, 4 goes to 1 in <math><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>, and 1 stays fixed in <math><mrow><mo>(</mo><mtable><mtr><mtd><mn>3</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>7</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>. So, 1 goes to 1, itself. The same is true for every other number.</p>
+
+  <p>If we go back to using tabular form, then there is similar "trick" to finding out what the inverse of any permutation is. First, let's take this same example and convert it to tabular form:<p>
+
+    <math display="block"><mi>σ</mi><mo>=</mo><mrow><mo>(</mo><mtable><mtr><mtd><mn>5</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>7</mn></mtd></mtr></mtable><mo>)</mo></mrow><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>7</mn></mtd></mtr><mtr><mtd><mn>4</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>7</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
+
+  <p>To find the inverse In tabular form, simply swap the top row and the bottom row of <math><mi>σ</mi></math> which will give you the inverse <math><msup><mi>σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup></math>:</p>
+
+  <math display="block"><msup><mi>σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><msup><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>7</mn></mtd></mtr><mtr><mtd><mn>4</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>7</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>]</mo></mrow><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>4</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>7</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>5</mn></mtd></mtr><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>7</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
+
+  <p>If you want, you can then swap the columns around so that the top rows is ordered from 1,2,3,... and so on, just like this:</p>
+
+  <math display="block"><msup><mi>σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>4</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>7</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>5</mn></mtd></mtr><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>7</mn></mtd></mtr></mtable><mo>]</mo></mrow><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>7</mn></mtd></mtr><mtr><mtd><mn>4</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>5</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>7</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
+
+  <p>You can verify that this indeed does give you the inverse.</p>
+
+  <p>The inverse of an inverse is itself, i.e. <math><mo stretchy="false">(</mo><msup><mi>σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><msup><mo stretchy="false">)</mo><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><mi>σ</mi></math>, and this is true for any function but you can verify for this special case of permutation functions.</p>
+
+  
+
+  <br><div class="he">Extended Compositions</div>
+  <p>An interesting thing we can do is compose a permutation with itself, i.e. <math><mi>σ</mi><mo>∘</mo><mi>σ</mi></math>, which leads to some interesting things. For one, we can write as a shorthand: <math><mi>σ</mi><mo>∘</mo><mi>σ</mi><mo>=</mo><msup><mi>σ</mi><mn>2</mn></msup></math>, understanding that the superscript here refers to composition and NOT exponentiation.</p>
+
+  <p>We can generalize this to any number <math><mi>n</mi></math> so that: </p>
+
+  <math display="block"><msup><mi>σ</mi><mi>n</mi></msup><mo>=</mo><munder><munder><mrow><mi>σ</mi><mo>∘</mo><mi>σ</mi><mo>∘</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>∘</mo><mi>σ</mi></mrow><mo>⏟</mo></munder><mtext>n times</mtext></munder></math>
+
+  <p>This gives us the ability to "treat" compositions similar to exponet rules in normal arthmetic. Be careful, these are absolutely not the same things, but they do share some similar basic properties. We list these out here:</p>
+
+
+  <br><div class="he">Group Theory Axioms</div>
   <p>All of this might seem very trivial to talk about, but consider a game that has 20 loading zones (which is not uncommon, and in fact many games have more), then the amount of permutations of 20 is 20 factorial, which is over 2 quintillion permutations, which is approximately 2 million terabytes of information! The growth of the factorial function is very bad, and it would be absurd to brute force this problem.</p>
 
   <p>Of course, most randomization algorithms will just pick permutations at random, but then they might not have certain properties that we would like. The naive approach would be to generate every permutation and search the permutations to find the desirable ones, but our results from group theory (especially k-cycles) makes it easy to select from literally billions of billions of combinations!</p>
