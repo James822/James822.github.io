@@ -249,11 +249,27 @@
   <br><div class="he">Extended Compositions</div>
   <p>An interesting thing we can do is compose a permutation with itself, i.e. <math><mi>σ</mi><mo>∘</mo><mi>σ</mi></math>, which leads to some interesting things. For one, we can write as a shorthand: <math><mi>σ</mi><mo>∘</mo><mi>σ</mi><mo>=</mo><msup><mi>σ</mi><mn>2</mn></msup></math>, understanding that the superscript here refers to composition and NOT exponentiation.</p>
 
-  <p>We can generalize this to any number <math><mi>n</mi></math> so that: </p>
+  <p>We can generalize this to any integer <math><mi>n</mi><mo>&gt;</mo><mn>0</mn></math> so that: </p>
 
   <math display="block"><msup><mi>σ</mi><mi>n</mi></msup><mo>=</mo><munder><munder><mrow><mi>σ</mi><mo>∘</mo><mi>σ</mi><mo>∘</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>∘</mo><mi>σ</mi></mrow><mo>⏟</mo></munder><mtext>n times</mtext></munder></math>
 
-  <p>This gives us the ability to "treat" compositions similar to exponet rules in normal arthmetic. Be careful, these are absolutely not the same things, but they do share some similar basic properties. We list these out here:</p>
+  <p>We can extend to the number 0 by defining:</p>
+
+  <math display="block"><msup><mi>σ</mi><mn>0</mn></msup><mo>=</mo><mi>e</mi></math>
+
+  <p>And, we can also extend into the negative integers by defining the following:</p>
+
+  <math display="block"><msup><mi>σ</mi><mrow><mo>−</mo><mi>n</mi></mrow></msup><mo>=</mo><mo stretchy="false">(</mo><msup><mi>σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><msup><mo stretchy="false">)</mo><mi>n</mi></msup><mo>=</mo><munder><munder><mrow><msup><mi>σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>∘</mo><msup><mi>σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>∘</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>∘</mo><msup><mi>σ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup></mrow><mo>⏟</mo></munder><mtext>n times</mtext></munder></math>
+
+  <p>where <math><mi>n</mi><mo>&gt;</mo><mn>0</mn></math>.</p>
+
+  <p>With this cool notation, we have found a way to use any integers, negative or non-negative so that the following expression:</p>
+
+  <math display="block"><msup><mi>σ</mi><mi>r</mi></msup><mo>∘</mo><msup><mi>σ</mi><mi>k</mi></msup></math>
+
+  <p>is a well-defined composition of compositions for any integers <math><mi>k</mi></math>, <math><mi>r</mi></math>. </p>
+
+  <p>This gives us the ability to "treat" compositions similar to exponent rules as seen in normal arthmetic. Be careful, these are absolutely not the same things, but they do share some similar basic properties that I'll leave you to prove on your own:</p>
 
 
   <br><div class="he">Group Theory Axioms</div>
