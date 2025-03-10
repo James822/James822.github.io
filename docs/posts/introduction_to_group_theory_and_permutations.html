@@ -2,6 +2,8 @@
 <html lang="en-US">
   <head>
     <link rel="stylesheet" href="/styles.css">
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
     <title>Blog of James Spratt</title>
   </head>
   <body>
@@ -56,29 +58,38 @@
   <p>Group theory is quite a vast topic, so for this part I'm only going to focus on the study of permutations in this post, but this is not without justification. According to <a href="https://en.wikipedia.org/wiki/Cayley's_theorem">Cayley's Theorem</a>, every group is isomorphic to some permutation group. This is another way of saying all groups can be understood in terms of permutations, so it might not be such a bad idea to start there. In the next part we will go over how permutations relate to groups more generally.</p>
   
   <br><div class="he">Permutations</div>
-  <p>A <b>permutation</b> of a set of numbers <math><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo></math> is a bijection from <math><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo></math> to itself. So it is a function of the form:</p>
+  <p>A <b>permutation</b> of \(n\) numbers is a bijection from \(\{1,2,...,n\}\) to itself. So it is a function of the form:</p>
 
-  <math display="block"><mi>τ</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo><mo>→</mo><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo></math>
+  \[ \tau : \{1,2,...,n\} \to \{1,2,...,n\} \]
 
-  <p>As an example, let us define <math><mi>τ</mi></math> with <math><mi>n</mi><mo>=</mo><mn>3</mn></math> to be the following function: </p>
+  <p>As an example, let us define \(\tau\) with \(n=3\) to be the following function:</p>
 
-  <math display="block"><mi>τ</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mo stretchy="false">{</mo><mn>1,2,3</mn><mo stretchy="false">}</mo><mo>→</mo><mo stretchy="false">{</mo><mn>1,2,3</mn><mo stretchy="false">}</mo></math>
-
-  <p style="text-align: center">Given by: <math><mi>τ</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn><mo>,</mo><mi>τ</mi><mo stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo><mo>=</mo><mn>3</mn><mo>,</mo><mi>τ</mi><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn></math>.</p>
+  \[ \tau : \{1,2,3\} \to \{1,2,3\} \]
+  Given by the rule: \[ \tau (1) = 2, \tau (2) = 3, \tau (3) = 1 \]
 
   <p>This means simply that 1 is sent to 2, 2 is sent to 3, and 3 is sent to 1.</p>
 
-  <p>Rather than painstakingly write out the function value for each input, we can represent this same exact function in <math><mi>τ</mi></math> in tabular form as the following: </p>
+  <p>Rather than painstakingly write out the function value for each input, we can represent this same exact function in \(\tau\) in tabular form as the following:</p>
 
-  <math display="block"><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
+  \[
+  \begin{bmatrix}
+  1 & 2 & 3\\
+  2 & 3 & 1
+  \end{bmatrix}
+  \]
 
   <p>This format is known as <a href="https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy">Cauchy's</a> two-line notation, but we will refer to it as tabular form. All entries are read "top-down" per column. In any given column, the element of the top row is "sent" to the element of the bottom row.</p>
 
   <p>More generally, we can represent any permutation with the following form:</p>
 
-  <math display="block"><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mi>.</mi><mi>.</mi><mi>.</mi></mtd><mtd><mi>n</mi></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>1</mn></msub></mtd><mtd><msub><mi>a</mi><mn>2</mn></msub></mtd><mtd><msub><mi>a</mi><mn>3</mn></msub></mtd><mtd><mi>.</mi><mi>.</mi><mi>.</mi></mtd><mtd><msub><mi>a</mi><mi>n</mi></msub></mtd></mtr></mtable><mo>]</mo></mrow></math>
+  \[
+  \begin{bmatrix}
+  1 & 2 & 3 & \cdots & n\\
+  a_1 & a_2 & a_3 & \cdots & a_n
+  \end{bmatrix}
+  \]
 
-  <p>And this is read as 1 goes to <math><msub><mi>a</mi><mn>1</mn></msub></math>, 2 goes to <math><msub><mi>a</mi><mn>2</mn></msub></math>, 3 goes to <math><msub><mi>a</mi><mn>3</mn></msub></math>, and so on. Here, <math><mi>n</mi></math> is the number of elements to be permuted, and <math><msub><mi>a</mi><mi>i</mi></msub></math> are the numbers belonging to the set <math><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo></math>, and it also must be the case that <math><msub><mi>a</mi><mi>i</mi></msub><mo>≠</mo><msub><mi>a</mi><mi>j</mi></msub></math> iff <math><mi>i</mi><mo>≠</mo><mi>j</mi></math>. Basically, there can't be any duplicate <math><msub><mi>a</mi><mi>i</mi></msub></math>. Any kind of table that follows this specific format is a valid permutation.</p>
+  <p>And this is read as 1 goes to \(a_1\), 2 goes to \(a_3\), 3 goes to \(a_3\),..., n goes to \(a_n\). Here, \(n\) is the number of elements to be permuted, and \(a_i\) are the numbers belonging to the set \(\{1,2,...,n\}\), and it also must be the case that \(a_i \neq a_j\) iff \(i \neq j\). Basically, no \(a_i\) can appear more than once. Any kind of table that follows this specific format is a valid permutation.</p>
 
   <p>Notice also that the order of columns does not matter, as we could freely swap them to our liking without changing the permutation. As a matter of style, we typically like to order the columns by the first/top row with 1,2,3,... etc.</p>
 
@@ -87,39 +98,71 @@
   <br><div class="he">Compositions of Permutations</div>
   <p>Since permutations are bijective functions from a set to itself, it is possible to compose any number of permutations we like, as long as the permutations are both of n elements.</p>
 
-  <p>The operation of function composition is given by <math><mi>σ</mi><mo>∘</mo><mi>τ</mi><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo><mo>=</mo><mi>σ</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></math> for two permutations <math><mi>τ</mi></math> and <math><mi>σ</mi></math>.</p>
+  <p>The operation of function composition is given by \(\sigma \circ \tau (a) = \sigma (\tau (a))\) for two permutations \(\tau\) and \(\sigma\).</p>
 
   <p>For example, if we take two permutations such as these:</p>
 
-  <math display="block"><mi>τ</mi><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>]</mo></mrow><mo>,</mo><mi>σ</mi><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
+  \[
+  \tau = 
+  \begin{bmatrix}
+  1 & 2 & 3\\
+  2 & 1 & 3
+  \end{bmatrix}
+  ,
+  \sigma = 
+  \begin{bmatrix}
+  1 & 2 & 3\\
+  2 & 3 & 1
+  \end{bmatrix}
+  \]  
 
-  <p>The composition of <math><mi>σ</mi></math> and <math><mi>τ</mi></math> is <math><mi>σ</mi><mo>∘</mo><mi>τ</mi></math>, which means we apply the permutation <math><mi>τ</mi></math> first and then we apply <math><mi>σ</mi></math> second. Composition is read from "right-to-left" which can be confusing.</p>
+  <p>Again, the composition of \(\sigma\) and \(\tau\) is \(\sigma \circ \tau\), which means we apply the permutation \(\sigma\) first and then we apply \(\tau\) second. Composition is read from "right-to-left" which can be confusing.</p>
 
-  <p>Let's see where the number "1" goes under the composition of <math><mi>σ</mi><mo>∘</mo><mi>τ</mi></math>: <math><mi>τ</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn></math>, which implies that <math><mi>σ</mi><mo>∘</mo><mi>τ</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mi>σ</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>=</mo><mi>σ</mi><mo stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo></math>, and therefore: <math><mi>σ</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>=</mo><mn>3</mn></math>. A similar process can be performed for "2" and "3" to show that: <math><mi>σ</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn></math>, and <math><mi>σ</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn></math>.</p>
+  <p>Let's see where the number "1" goes under the composition of \(\sigma \circ \tau\): \(\tau (1) = 2\), which implies that \(\sigma (\tau (1)) = \sigma(2)\), and \(\sigma (2) = 3\), so that implies that \(\sigma \circ \tau (1) = \sigma (\tau (1)) = 3\). A similar process can be performed for 2 and 3 to show that: \(\sigma (\tau (2)) = 2\) and \(\sigma (\tau (3)) = 1\)</p>
 
-  <p>There is a much easier way to create compositions of permutations by using the tabular form directly. Take the first permutation <math><mi>τ</mi></math> and superimpose it on top of the second permutation <math><mi>σ</mi></math>. (order matters here, don't put <math><mi>σ</mi></math> on the top and <math><mi>τ</mi></math> on the bottom). You should have something like this:</p>
+  <p>There is a much easier way to create compositions of permutations by using the tabular form directly. Using the previous example, Take the first permutation \(\tau\) and superimpose it on top of the second permutation \(\sigma\). (order matters here, don't put \(\sigma\) on the top and \(\tau\) on the bottom). This will create a matrix that has 4 rows, and it should look like this:</p>
 
-  <math display="block"><mi>τ</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
-  <math display="block"><mi>σ</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
+  \[
+  \begin{bmatrix}
+  1 & 2 & 3\\
+  2 & 1 & 3\\
+  - & - & -\\
+  <!-- \end{bmatrix} -->
+  <!-- \] -->
+  <!-- \[ -->
+  <!-- \sigma =  -->
+  <!-- \begin{bmatrix} -->
+  1 & 2 & 3\\
+  2 & 3 & 1
+  \end{bmatrix}
+  \]
 
-  <p>Then, rearrange the columns of <math><mi>σ</mi></math> so that the numbers at the top row of <math><mi>σ</mi></math> match the numbers of the bottom row of <math><mi>τ</mi></math>. In this example, all we need to do is swap column 1 and column 2 of <math><mi>σ</mi></math> just like so:</p>
+  <p>Then, rearrange the columns of the bottom matrix \(\sigma\) so that the numbers at the top row of \(\sigma\) match the numbers of the bottom row of \(\tau\). In this example, all we need to do is swap column 1 and column 2 of \(\sigma\) just like so:</p>
 
-  <math display="block"><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
-  <math display="block"><mrow><mo>[</mo><mtable><mtr><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
+  \[
+  \begin{bmatrix}
+  1 & 2 & 3\\
+  2 & 1 & 3\\
+  - & - & -\\
+  <!-- \end{bmatrix} -->
+  <!-- \] -->
+  <!-- \[ -->
+  <!-- \begin{bmatrix} -->
+  2 & 1 & 3\\
+  3 & 2 & 1
+  \end{bmatrix}
+  \]
 
-  <p>We've changed the arrangment of the columns in <math><mi>σ</mi></math>, but as we discussed before this does not change the permutation.</p>
+  <p>The next step is to simply remove the bottom row of \(\tau\) and remove the top row of \(\sigma\). Basically, remove the middle two rows of the whole matrix and leave the rest:</p>
 
-  <p>The next step is to simply remove the bottom row of <math><mi>τ</mi></math> and remove the top row of <math><mi>σ</mi></math>. Basically, remove the middle two rows and leave the very top and very bottom row of the whole thing:</p>
+  \[
+  \begin{bmatrix}
+  1 & 2 & 3\\
+  3 & 2 & 1
+  \end{bmatrix}
+  \]
 
-  <math display="block"><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
-
-  <p>But wait, doesn't this just look like another permutation? And in fact it is! Compositions of permutations are themselves permutations. This may seem trivial, but it is an important fact that we will come back to later.</p>
-
-  
-  <!-- <br><div class="he">Symmetric Group</div> -->
-  <!-- <p>The <b>Symmetric Group</b> for <math><mi>n</mi></math> elements is the set:</p> -->
-
-  <!-- <math display="block"><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mo stretchy="false">{</mo><mi>σ</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mi>σ</mi><mspace width="10px"/><mtext>is a permutation of</mtext><mspace width="10px"/><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo><mo stretchy="false">}</mo></math> -->
+  <p>But wait, doesn't this just look like another permutation? And in fact it is! Compositions of permutations are themselves permutations! This may seem obvious, but it's an important result that we'll come back to later.</p>
 
   
   
@@ -128,17 +171,36 @@
 
   <p>A <b>cycle</b> is a permutation that takes a collection of <i>distinct</i> numbers in a cycle, leaving all other numbers fixed. For example: 4 -> 2, 2 -> 6, 6 -> 3, 3 -> 4; is a valid cycle because it wraps back around and no number is visited more than once (besides of course the starting number 4, which must be visited twice). The other numbers are left fixed and unchanged.</p>
 
-  <p>We can represent this example with the following cycle notation: </p>
+  <p>We can represent this example with the following cycle notation:</p>
 
-  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>4</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>3</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
+  \[
+  \begin{pmatrix}
+  4 & 2 & 6 & 3
+  \end{pmatrix}
+  \]
 
   <p>Each number sends you to the next one, and once you reach the end of the list, it wraps back around to the first element. This example is a 4-cycle as there are 4 distinct numbers in the cycle. It also doesn't matter where we start the list as long as we maintain the order, so we could also represent the same 4-cycle as so:</p>
 
-  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>2</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow></math>
+  \[
+  \begin{pmatrix}
+  2 & 6 & 3 & 4
+  \end{pmatrix}
+  \]
 
   <p>and you can verify that this changes nothing, but we tend to prefer to start cycles with the least element as a matter of style. Since any k-cycle is also a permutation, we can also represent it using our tabular form like before. The numbers 1 and 5 are not in this cycle which means that they stay fixed as we mentioned before, so we can write:</p>
 
-  <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>2</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd></mtr><mtr><mtd><mn>1</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>]</mo></mrow></math>
+  \[
+  \begin{pmatrix}
+  2 & 6 & 3 & 4
+  \end{pmatrix}
+  =
+  \begin{bmatrix}
+  1 & 2 & 3 & 4 & 5 & 6\\
+  1 & 6 & 4 & 2 & 5 & 3
+  \end{bmatrix}
+  \]
+
+  <!-- <math display="block"><mrow><mo>(</mo><mtable><mtr><mtd><mn>2</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>5</mn></mtd></mtr><mtr><mtd><mn>1</mn></mtd><mtd><mn>6</mn></mtd><mtd><mn>4</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>5</mn></mtd></mtr></mtable><mo>]</mo></mrow></math> -->
 
   <p>But can <i>any</i> permutation be represented by a k-cycle? Let's investigate this to see if it is true by considering the following permutation:</p>
 
@@ -299,21 +361,115 @@
   <p>The <b>order</b> of <math><mo stretchy="false">⟨</mo><mi>σ</mi><mo stretchy="false">⟩</mo></math> is defined as the smallest positive integer <math><mi>k</mi></math> such that <math><msup><mi>σ</mi><mi>k</mi></msup><mo>=</mo><mi>e</mi></math>. The order of <math><mo stretchy="false">⟨</mo><mi>σ</mi><mo stretchy="false">⟩</mo></math> is also the size of the set, so: <math><mi>|</mi><mo stretchy="false">⟨</mo><mi>σ</mi><mo stretchy="false">⟩</mo><mi>|</mi><mo>=</mo><mi>k</mi></math>.</p>
 
 
+  
+  <br><div class="he">Array & ODC Form</div>
+  <p>So far we've mentioned two main ways to represent permutations: tabular form and cycle forme. Both of these representations have the property that there is more than one possible way of representing the same exact permutation.</p>
 
-  <br><div class="he">Symmetric Group</div>
-  <p>Before we even introduce the axioms of groups, we can start talking about a specific type of group called the <b>symmetric group</b>.</p>
+  <p>For example, all of the following permutations in tabular form are equivalent:</p>
 
-  <p>The <b>symmetric group</b> for some non-negative integer <math><mi>n</mi></math> is the set of all permutations of <math><mi>n</mi></math>, and is defined formally as:</p>
+  <p>And here is the same but in cycle form:</p>
 
-  <math display="block"><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mo stretchy="false">{</mo><mi>σ</mi><mi>|</mi><mi>σ</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo><mo>→</mo><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo><mo stretchy="false">}</mo></math>
+  <p>For all of these permutations their <i>representation</i> is not the same, but they are all the exact same functions. The fact that there is mutliple representations for a single permutation is both an advantage and a disadvantage. In order to introduce have a form with a single representation per permutation, we will introduce <b>array form</b> and <b>ordered disjoint cycle form</b>.</p>
 
-  <p>Since the amount of permutations is <math><mi>n</mi><mo>!</mo></math> for any <math><mi>n</mi></math>, then: <math><mi>|</mi><msub><mi>S</mi><mi>n</mi></msub><mi>|</mi><mo>=</mo><mi>n</mi><mo>!</mo></math>, so the size of the symmetric group grows incredibly large even with fairly small values of <math><mi>n</mi></math>.</p>
+  <p>Array form is denoted as so:</p>
 
-  <p>For example, the symmetric group <math><msub><mi>S</mi><mn>20</mn></msub></math> is the number of permutations of the number <math><mi>n</mi><mo>=</mo><mn>20</mn></math>, so we know that <math><mi>|</mi><msub><mi>S</mi><mn>20</mn></msub><mi>|</mi><mo>=</mo><mn>20</mn><mo>!</mo></math>, which is over 2 quintillion permutations! That is approximately 2 million terabytes of information! The growth of the factorial function is very bad, and it would be absurd to brute force check all permutations for even some of the smallest numbers. Group theory can help reduce the complexity of studying permutations of very large numbers.</p>
+  \[
+  \begin{bmatrix}
+  a_1 & a_2 & a_3 & \cdots & a_n
+  \end{bmatrix}
+  \]
 
-  <p>In the next part, we'll start studying group theory proper with the group axioms and deriving properties and results from them.</p>
+  <p>Where \(n\) is the amount of numbers to be permuted, and every \(a_i\) is unique and belongs to the set \(\{1,2,...,n\}\), and the permutation of the array form \(\tau\) is given by:</p>
+
+  \[ \forall i \in \{1,2,...,n\} : \tau(i) = a_i \]
+
+  <p>This can be best understood as imagining that there is a row above the array that has the numbers 1,2,3,...,n in order so that the following is true:</p>
+
+  \[
+  \begin{bmatrix}
+  a_1 & a_2 & a_3 & \cdots & a_n
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+  1 & 2 & 3 & \cdots & n\\
+  a_1 & a_2 & a_3 & \cdots & a_n
+  \end{bmatrix}
+  \]
+
+  <p>This basically just gives us a shorthand as opposed to tabular form. Array form is especially useful for computation as you can simply store vectors all of size \(n\) and easily compute compositions with very simple algorithms. The downside is that array form (like tabular form) is very "wasteful" when we have a lot of 1-cycles. Consider this example:</p>
+
+  \[
+  \begin{pmatrix}
+  4 & 9
+  \end{pmatrix}
+  =
+  \begin{bmatrix}
+  1 & 2 & 3 & 9 & 5 & 6 & 7 & 8 & 4
+  \end{bmatrix}
+  \]
+
+  <p>It's not hard to see how array form could be a huge waste of memory over the much more memory-conservative cycle form. There are ways you could further optimize array form by using some kind of compression like <a href="https://en.wikipedia.org/wiki/Run-length_encoding">run-length encoding</a> for runs of 1-cycles, but we won't go over that in this post.</p>
+
+  <p>We can also use <b>ordered disjoint cycle form</b> or just "ODC" for short, which is simply just using disjoint cycles and ordering the numbers within the cycle by the first element. Since compositions of disjoint cycles can be rearranged, we also order the cycles by least starting element to greatest starting element.</p>
+
+  <p>Take this as an example conversion from normal cycle form to ODC form:</p>
+
+  \[
+  \begin{pmatrix}
+  5 & 3
+  \end{pmatrix}
+  \begin{pmatrix}
+  6 & 2 & 1
+  \end{pmatrix}
+  \begin{pmatrix}
+  4 & 9
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+  1 & 6 & 2
+  \end{pmatrix}
+  \begin{pmatrix}
+  3 & 5
+  \end{pmatrix}
+  \begin{pmatrix}
+  4 & 9
+  \end{pmatrix}
+  \]
+
+  <p>ODC form also has the nice property that there is unique representation for every permutation, so we can compare two permutations in ODC form very easily to see if they are equal by simply iterating linearly over the numbers. The disadvantage with ODC compared to Array form is that with ODC, we need to store a list of lists to represent the cycles, which is more complex than just a single linear array. The tradeoff here is that ODC saves a lot more memory, and compositions with ODC can potentially be computed with significantly less iterations.</p>
 
 
+  
+  <br><div class="he">Transpositions</div>
+  <p>The last thing I want to cover in this post are <b>transpositions</b>, which is simply just another name for a 2-cycle, i.e. \( \begin{pmatrix}a & b\end{pmatrix} \). We give 2-cycles this special name because of a very special property: Every permutation can be represented as a composition of transpositions.</p>
+
+  <p>To prove this, we observe that the following is true:</p>
+
+  \[
+  \begin{pmatrix}
+  a_1 & a_2 & a_3 & \cdots & a_{k-1} & a_{k}
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+  a_1 & a_k
+  \end{pmatrix}
+  \begin{pmatrix}
+  a_1 & a_{k-1}
+  \end{pmatrix}
+  \cdots
+  \begin{pmatrix}
+  a_1 & a_3
+  \end{pmatrix}
+  \begin{pmatrix}
+  a_1 & a_2
+  \end{pmatrix}
+  \]
+
+  <p>The composition of these transpositions certainly aren't <i>disjoint</i> (as \(a_1\) appears in all of them), but they will equal the original cycle.</p>
+
+  <p>The next step in the proof is to realize that every permutation can be represented as a combination of cycles, which we have already implicity assumed. Then, if you take each cycle, simply replace it with it's equivalent composition of transpositions. The whole expression will then be one giant composition of transpositions, and it will be equal to the original permutation!</p>
+
+  
   
 </div>
 

@@ -34,7 +34,7 @@ body {
 
 .main_section {
     /* background-color: hsl(204, 30%, 13%); */
-    width: 840px;
+    width: 850px;
     margin: auto;
     padding-top: 50px;
     padding-bottom: 600px;
@@ -54,10 +54,10 @@ body {
     /* background-color: hsl(204, 35%, 15%); */
     padding: 30px;
     /* border: solid 3px; */
-    border-left: solid 10px;
+    border-left: solid 9px;
     /* border-bottom: solid 1px; */
-    border-color: hsl(204, 28%, 20%);
-    margin-bottom: 30px;
+    border-color: hsl(204, 30%, 19%);
+    margin-bottom: 40px;
 }
 
 .post_title_heading {
@@ -99,8 +99,8 @@ a:link {
     text-decoration: none;
 }
 a:visited {
-    /* color: hsl(180, 90%, 55%); */
-    color: hsl(279, 60%, 55%);
+    color: hsl(180, 90%, 55%);
+    /* color: hsl(279, 60%, 55%); */
     /* color: inherit; */
     background-color: transparent;
     /* text-decoration: underline; */
@@ -121,6 +121,10 @@ p {
 
 math {
     font-size: 17pt;
+}
+
+.MathJax {
+    /* font-size: 135% !important; */
 }
 
 code {

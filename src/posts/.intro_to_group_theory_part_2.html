@@ -32,4 +32,17 @@
   <!-- <br><div class="he">References</div> -->
   <!-- <p>Thanks to Dr. L Hoehn for his course and notes on group theory, of which I used as a reference to create this blog post.</p> -->
 
+    <br><div class="he">Symmetric Group</div>
+  <p>Before we even introduce the axioms of groups, we can start talking about a specific type of group called the <b>symmetric group</b>.</p>
+
+  <p>The <b>symmetric group</b> for some non-negative integer <math><mi>n</mi></math> is the set of all permutations of <math><mi>n</mi></math>, and is defined formally as:</p>
+
+  <math display="block"><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mo stretchy="false">{</mo><mi>σ</mi><mi>|</mi><mi>σ</mi><mo lspace="0.2222em" rspace="0.2222em">:</mo><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo><mo>→</mo><mo stretchy="false">{</mo><mn>1,2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>n</mi><mo stretchy="false">}</mo><mo stretchy="false">}</mo></math>
+
+  <p>Since the amount of permutations is <math><mi>n</mi><mo>!</mo></math> for any <math><mi>n</mi></math>, then: <math><mi>|</mi><msub><mi>S</mi><mi>n</mi></msub><mi>|</mi><mo>=</mo><mi>n</mi><mo>!</mo></math>, so the size of the symmetric group grows incredibly large even with fairly small values of <math><mi>n</mi></math>.</p>
+
+  <p>For example, the symmetric group <math><msub><mi>S</mi><mn>20</mn></msub></math> is the number of permutations of the number <math><mi>n</mi><mo>=</mo><mn>20</mn></math>, so we know that <math><mi>|</mi><msub><mi>S</mi><mn>20</mn></msub><mi>|</mi><mo>=</mo><mn>20</mn><mo>!</mo></math>, which is over 2 quintillion permutations! That is approximately 2 million terabytes of information! The growth of the factorial function is very bad, and it would be absurd to brute force check all permutations for even some of the smallest numbers. Group theory can help reduce the complexity of studying permutations of very large numbers.</p>
+
+  <p>In the next part, we'll start studying group theory proper with the group axioms and deriving properties and results from them.</p>
+
 </div>
