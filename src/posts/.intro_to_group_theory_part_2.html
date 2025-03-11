@@ -32,7 +32,7 @@
   <!-- <br><div class="he">References</div> -->
   <!-- <p>Thanks to Dr. L Hoehn for his course and notes on group theory, of which I used as a reference to create this blog post.</p> -->
 
-    <br><div class="he">Symmetric Group</div>
+  <br><div class="he">Symmetric Group</div>
   <p>Before we even introduce the axioms of groups, we can start talking about a specific type of group called the <b>symmetric group</b>.</p>
 
   <p>The <b>symmetric group</b> for some non-negative integer <math><mi>n</mi></math> is the set of all permutations of <math><mi>n</mi></math>, and is defined formally as:</p>
@@ -44,5 +44,31 @@
   <p>For example, the symmetric group <math><msub><mi>S</mi><mn>20</mn></msub></math> is the number of permutations of the number <math><mi>n</mi><mo>=</mo><mn>20</mn></math>, so we know that <math><mi>|</mi><msub><mi>S</mi><mn>20</mn></msub><mi>|</mi><mo>=</mo><mn>20</mn><mo>!</mo></math>, which is over 2 quintillion permutations! That is approximately 2 million terabytes of information! The growth of the factorial function is very bad, and it would be absurd to brute force check all permutations for even some of the smallest numbers. Group theory can help reduce the complexity of studying permutations of very large numbers.</p>
 
   <p>In the next part, we'll start studying group theory proper with the group axioms and deriving properties and results from them.</p>
+
+  <p>In fact, the elements of the set \( \langle \sigma \rangle\ \) behave the same as something we've seen before... cycles! We can even represent the elements of \( \langle \sigma \rangle\ \) as:</p>
+
+  \[ \langle \sigma \rangle = \{e, \sigma^1, \sigma^2, \cdots, \sigma^{k-1}, \sigma^k \}\]
+
+  <p>where \( \sigma^{k} = \sigma^{-1} \), so \( \sigma^{k+1} = e \). With this, we can consider the elements to be in a "cycle", writing them like this:</p>
+
+  \[
+  \begin{pmatrix}
+  e & \sigma^1 & \sigma^2 & \cdots & \sigma^{k-1} & \sigma^{k}
+  \end{pmatrix}
+  \]
+
+  <p>So each element is mapped to the next element by the rules:</p>
+
+  \[ \sigma^r \mapsto \sigma^{r+1} \text{ if: } 0 \leq r < k, \sigma^r \mapsto e \text{ if: } r = k \]
+
+  <p>This rule is amazing because it gives us a 1-to-1 correspondence with the the numbers \(r\) and the permutations \(\sigma^r\). We can represent this one-to-one correspondence as:</p>
+
+  \[
+  \begin{matrix}
+  e & \sigma^1 & \sigma^2 & \cdots & \sigma^{k-1} & \sigma^{k}\\
+  \updownarrow & \updownarrow & \updownarrow & \cdots & \updownarrow & \updownarrow\\
+  0 & 1 & 2 & \cdots & k-1 & k
+  \end{matrix}
+  \]  
 
 </div>
