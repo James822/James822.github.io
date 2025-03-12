@@ -1,9 +1,9 @@
 body {
     margin: 0px; /* this ensures that there is no default whitespace so my website can actually cover the entire page */
-    background-color: hsl(204, 42%, 14%);
+    background-color: hsl(204, 38%, 15%);
     font-family: "Arial";
     font-size: 14pt;
-    color: hsl(186, 0%, 95%);
+    color: hsl(186, 0%, 92%);
 
     /* the following default settings are set so that we get consistency across platforms */
     line-height: 1.0;
@@ -14,7 +14,7 @@ body {
 
 
 .blog_header {
-    background-color: hsl(212, 30%, 05%);
+    background-color: hsl(210, 25%, 05%);
     text-align: center;
     padding-bottom: 60px;
     padding-top: 120px;
@@ -41,8 +41,8 @@ body {
 
 
 .main_section {
-    /* background-color: hsl(204, 30%, 13%); */
     width: 840px;
+    /* width: 44vw; */
     margin: auto;
     padding-top: 50px;
     padding-bottom: 600px;
@@ -58,21 +58,23 @@ body {
 }
 
 .post_title {
-    padding: 30px;
-    border-left: solid 8px;
-    /* border-bottom: solid 2px; */
-    /* border-radius: 0px 0px 0px 10px; */
+    padding: 20px;
+    border-left: solid 10px;
+    border-bottom: solid 2px;
+    /* border-radius: 0px 0px 0px 06px; */
     border-color: hsl(200, 35%, 25%);
     margin-bottom: 40px;
     /* background-color: hsl(200, 40%, 15%); */
 }
 
 .post_title_heading {
-    font-size: 1.5em;
+    /* font-size: 1.5em; */
+    font-size: 20pt;
     font-weight: bold;
     line-height: 1.4;
     color: hsl(190, 90%, 80%);
     /* color: hsl(185, 100%, 85%); */
+    margin-bottom: 8px;
 }
 
 .post_title_subtext {
@@ -83,7 +85,7 @@ body {
     font-weight: bold;
     font-size: 1.2em;
     color: hsl(185, 95%, 65%);
-    border-bottom: solid 0.1em;
+    border-bottom: solid 1px;
     padding-bottom: 7px;
     border-color: hsl(195, 20%, 30%);
 }
