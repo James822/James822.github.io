@@ -1,6 +1,6 @@
 body {
     margin: 0px; /* this ensures that there is no default whitespace so my website can actually cover the entire page */
-    background-color: hsl(204, 40%, 14%);
+    background-color: hsl(204, 42%, 14%);
     font-family: "Arial";
     font-size: 14pt;
     color: hsl(186, 100%, 100%);
@@ -14,19 +14,19 @@ body {
 
 
 .blog_header {
-    background-color: hsl(210, 30%, 07%);
+    background-color: hsl(212, 30%, 05%);
     text-align: center;
     padding-bottom: 60px;
     padding-top: 120px;
-    border-bottom: solid 5px;
-    border-color: hsl(207, 30%, 08%);
+    border-bottom: solid 2px;
+    border-color: hsl(211, 30%, 08%);
 }
 
 .blog_title {
-    color: hsl(195, 90%, 78%);
-    word-spacing: 15px;
-    letter-spacing: 6px;
-    font-size: 45pt;
+    color: hsl(195, 100%, 82%);
+    word-spacing: 7px;
+    letter-spacing: 9px;
+    font-size: 36pt;
     font-family: "Times New Roman";
     padding-bottom: 10px;
 }
@@ -82,7 +82,10 @@ body {
 .he {
     font-weight: bold;
     font-size: 1.2em;
-    color: hsl(185, 90%, 65%);
+    color: hsl(185, 95%, 65%);
+    border-bottom: solid 0.1em;
+    padding-bottom: 7px;
+    border-color: hsl(195, 20%, 30%);
 }
 
 .hes {
