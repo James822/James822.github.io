@@ -3,7 +3,7 @@ body {
     background-color: hsl(204, 42%, 14%);
     font-family: "Arial";
     font-size: 14pt;
-    color: hsl(186, 100%, 100%);
+    color: hsl(186, 0%, 95%);
 
     /* the following default settings are set so that we get consistency across platforms */
     line-height: 1.0;
@@ -18,15 +18,15 @@ body {
     text-align: center;
     padding-bottom: 60px;
     padding-top: 120px;
-    border-bottom: solid 2px;
-    border-color: hsl(211, 30%, 08%);
+    /* border-bottom: solid 2px; */
+    /* border-color: hsl(211, 30%, 08%); */
 }
 
 .blog_title {
     color: hsl(195, 100%, 82%);
     word-spacing: 7px;
     letter-spacing: 9px;
-    font-size: 36pt;
+    font-size: 48px;
     font-family: "Times New Roman";
     padding-bottom: 10px;
 }
