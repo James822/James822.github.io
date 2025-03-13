@@ -13,7 +13,7 @@
 
   <p>Group theory is quite a vast topic, so for this part I'm only going to focus on the study of permutations in this post, but this is not without justification. According to <a href="https://en.wikipedia.org/wiki/Cayley's_theorem">Cayley's Theorem</a>, every group is isomorphic to some permutation group. This is another way of saying all groups can be understood in terms of permutations, so it might not be such a bad idea to start there. In the next part we will go over how permutations relate to groups more generally.</p>
   
-  <br><div class="he">Permutations</div>
+  <div class="he">Permutations</div>
   <p>A <b>permutation</b> of \(n\) numbers is a bijection from \(\{1,2,...,n\}\) to itself. So it is a surjective function of the form:</p>
 
   \[ \tau : \{1,2,...,n\} \to \{1,2,...,n\} \]
@@ -53,7 +53,7 @@
 
 
   
-  <br><div class="he">Compositions of Permutations</div>
+  <div class="he">Compositions of Permutations</div>
   <p>Since permutations are bijective functions from a set to itself, it is possible to compose any number of permutations we like, as long as the permutations are both of \(n\) elements.</p>
 
   <p>The operation of function composition is given by \(\sigma \circ \tau (a) = \sigma (\tau (a))\) for two permutations \(\tau\) and \(\sigma\). This means we apply the permutation \(\tau\) first, and then we apply \(\sigma\) second. Composition is read from "right-to-left" which can be confusing.
@@ -123,7 +123,7 @@
 
   
   
-  <br><div class="he">Cycle notation</div>
+  <div class="he">Cycle notation</div>
   <p>Another way to represent permutations is with something called <b>cycle notation</b>.</p>
 
   <p>A <b>cycle</b> is a permutation that takes a collection of <i>distinct</i> numbers in a cycle, leaving all other numbers fixed. For example: 4 -> 2, 2 -> 6, 6 -> 3, 3 -> 4; is a valid cycle because it wraps back around and no number is visited more than once (besides of course the starting number 4, which must be visited twice). The other numbers are left fixed and unchanged.</p>
@@ -262,7 +262,7 @@
 
 
   
-  <br><div class="he">Converting Between Cycle Form and Tabular Form</div>
+  <div class="he">Converting Between Cycle Form and Tabular Form</div>
   <p>There is a straightforward way to convert from cycle-form to tabular-form so let's take an example composition of disjoint cycles and see how we can convert it to tabular form:</p>
 
   \[
@@ -374,7 +374,7 @@
   <p>Using cycle notation is generally preferred over tabular form as it takes up less space, and it also represents a core feature of the permutation in a better way. Using disjoint cycles is really handy so we will continue with this format primarly, but feel free to use tabular form as well to help you understand cycle form. Note also that compositions of non-disjoint cycles is perfectly valid too, but we prefer to use disjoint cycles whenever possible.</p>
 
 
-  <br><div class="he">Inverses and The Identity Permutation</div>
+  <div class="he">Inverses and the Identity Permutation</div>
   <p>Every permutation has an inverse permutation. For every permutation \(\sigma\), there exists an identity permutation which we denote \(\sigma^{-1}\), such that the following holds:</p>
 
   \[ \sigma^{-1} \circ \sigma = \sigma \circ \sigma^{-1} = e \]
@@ -467,7 +467,7 @@
 
 
   
-  <br><div class="he">Extended Compositions</div>
+  <div class="he">Extended Compositions</div>
   <p>One thing we can do is compose a permutation with itself, i.e. \(\sigma \circ \sigma\), which leads to some interesting results. As a shorthand we write: \(\sigma \circ \sigma = \sigma^2\), understanding that the superscript here refers to composition and NOT exponentiation.</p>
 
   <p>We can generalize this to any integer \(n > 0\) so that: </p>
@@ -532,7 +532,7 @@
 
 
   
-  <br><div class="he">Array & ODC Form</div>
+  <div class="he">Array & ODC Form</div>
   <p>So far we've mentioned two main ways to represent permutations: tabular form and cycle form. Both of these representations have the property that there is more than one possible way of representing the same exact permutation.</p>
 
   <p>In tabular form, it is possible to reorder columns freely without changing the permutation. In cycle form, we observed that disjoint cycles compose in any order that we like. Not only that, but the numbers within cycles can be re-ordered to start at any of the elements.</p>
@@ -608,7 +608,7 @@
 
 
   
-  <br><div class="he">Transpositions</div>
+  <div class="he">Transpositions</div>
   <p>The last thing I want to cover in this post are <b>transpositions</b>, which is simply just another name for a 2-cycle, i.e. \( \begin{pmatrix}a & b\end{pmatrix} \). We give 2-cycles this special name because of a very special property: <i>every permutation can be represented as a composition of transpositions</i>.</p>
 
   <p>To prove this, we observe that the following is true for any k-cycle:</p>

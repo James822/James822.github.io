@@ -1,6 +1,6 @@
 body {
     margin: 0px; /* this ensures that there is no default whitespace so my website can actually cover the entire page */
-    background-color: hsl(204, 38%, 15%);
+    background-color: hsl(204, 38%, 16%);
     font-family: "Arial";
     font-size: 14pt;
     color: hsl(186, 0%, 92%);
@@ -14,19 +14,20 @@ body {
 
 
 .blog_header {
-    background-color: hsl(210, 25%, 05%);
+    background-color: hsl(210, 25%, 04%);
     text-align: center;
     padding-bottom: 60px;
     padding-top: 120px;
-    /* border-bottom: solid 2px; */
-    /* border-color: hsl(211, 30%, 08%); */
+    /* border-left: solid 500px; */
+    /* border-right: solid 500px; */
+    /* border-color: hsl(204, 38%, 16%); *\/ */
 }
 
 .blog_title {
     color: hsl(195, 100%, 82%);
     word-spacing: 7px;
     letter-spacing: 9px;
-    font-size: 48px;
+    font-size: 46px;
     font-family: "Times New Roman";
     padding-bottom: 10px;
 }
@@ -42,12 +43,13 @@ body {
 
 .main_section {
     width: 840px;
-    /* width: 44vw; */
     margin: auto;
     padding-top: 50px;
     padding-bottom: 600px;
-    /* padding-top: 0.01px; /\* stupid trick to prevent margin collapse of .post_body*\/ */
     line-height: 1.7;
+    /* background-color: hsl(204, 38%, 19%); */
+    /* padding-left: 60px; */
+    /* padding-right: 60px; */
 }
 
 
@@ -58,13 +60,9 @@ body {
 }
 
 .post_title {
-    padding: 20px;
-    border-left: solid 10px;
+    padding-bottom: 20px;
     border-bottom: solid 2px;
-    /* border-radius: 0px 0px 0px 06px; */
-    border-color: hsl(200, 35%, 25%);
-    margin-bottom: 40px;
-    /* background-color: hsl(200, 40%, 15%); */
+    border-color: hsl(200, 25%, 35%);
 }
 
 .post_title_heading {
@@ -85,9 +83,9 @@ body {
     font-weight: bold;
     font-size: 1.2em;
     color: hsl(185, 95%, 65%);
-    border-bottom: solid 1px;
-    padding-bottom: 7px;
-    border-color: hsl(195, 20%, 30%);
+    border-bottom: solid 2px;
+    padding-bottom: 3px;
+    border-color: hsl(195, 30%, 35%);
 }
 
 .hes {
@@ -98,7 +96,7 @@ body {
 .code_block {
     font-size: 12pt;
     color: hsl(170, 100%, 90%);
-    background-color: hsl(198, 30%, 19%);
+    background-color: hsl(198, 30%, 16%);
     padding: 20px;
     margin-left: 40px;
     margin-right: 90px;
