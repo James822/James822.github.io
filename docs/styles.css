@@ -1,39 +1,41 @@
 body {
     margin: 0px; /* this ensures that there is no default whitespace so my website can actually cover the entire page */
-    background-color: hsl(204, 38%, 16%);
+    /* background-color: hsl(204, 17%, 06%); */
+    background-color: hsl(202, 12%, 17%);
     font-family: "Arial";
-    font-size: 14pt;
+    font-size: 13pt;
     color: hsl(186, 0%, 92%);
 
     /* the following default settings are set so that we get consistency across platforms */
     line-height: 1.0;
     text-align: left;
-    text-indent: 0px;
+    text-indent: 0px;    
 }
 
 
 
 .blog_header {
-    background-color: hsl(210, 25%, 04%);
+    /* background-color: hsl(210, 10%, 12%); */
+    background-color: hsl(210, 10%, 07%);
     text-align: center;
     padding-bottom: 60px;
-    padding-top: 120px;
+    padding-top: 100px;
     /* border-left: solid 500px; */
     /* border-right: solid 500px; */
     /* border-color: hsl(204, 38%, 16%); *\/ */
 }
 
 .blog_title {
-    color: hsl(195, 100%, 82%);
-    word-spacing: 7px;
-    letter-spacing: 9px;
-    font-size: 46px;
+    color: hsl(185, 100%, 87%);
+    word-spacing: 12px;
+    letter-spacing: 5px;
+    font-size: 26pt;
     font-family: "Times New Roman";
-    padding-bottom: 10px;
+    padding-bottom: 7px;
 }
 
 .header_text {
-    padding-top: 10px;
+    padding-top: 5px;
     display: flex;
     justify-content: center;
     font-size: 11pt;
@@ -44,25 +46,24 @@ body {
 .main_section {
     width: 840px;
     margin: auto;
-    padding-top: 50px;
     padding-bottom: 600px;
     line-height: 1.7;
-    /* background-color: hsl(204, 38%, 19%); */
-    /* padding-left: 60px; */
-    /* padding-right: 60px; */
+    padding-top: 50px;
+    /* background-color: hsl(202, 16%, 17%); */
+    padding-left: 50px;
+    padding-right: 50px;
 }
 
-
-
-.post_body {
-    /* background-color: hsl(204, 30%, 40%); */
-    margin-bottom: 80px;
-}
 
 .post_title {
+    /* padding: 20px; */
+    /* padding-left: 20px; */
     padding-bottom: 20px;
     border-bottom: solid 2px;
-    border-color: hsl(200, 25%, 35%);
+    /* border-left: solid 2px; */
+    border-color: hsl(200, 15%, 35%);
+    /* background-color: hsl(199, 17%, 19%); */
+    /* margin-bottom: 40px; */
 }
 
 .post_title_heading {
@@ -70,7 +71,7 @@ body {
     font-size: 20pt;
     font-weight: bold;
     line-height: 1.4;
-    color: hsl(190, 90%, 80%);
+    color: hsl(175, 90%, 75%);
     /* color: hsl(185, 100%, 85%); */
     margin-bottom: 8px;
 }
@@ -79,27 +80,63 @@ body {
     font-size: 0.8em;
 }
 
+
+.post_body {
+    margin-bottom: 80px;
+}
+
 .he {
     font-weight: bold;
-    font-size: 1.2em;
-    color: hsl(185, 95%, 65%);
-    border-bottom: solid 2px;
-    padding-bottom: 3px;
-    border-color: hsl(195, 30%, 35%);
+    font-size: 1.3em;
+    color: hsl(175, 60%, 69%);
+    /* border-bottom: solid 2px; */
+    padding-bottom: 0px;
+    border-color: hsl(202, 13%, 35%);
 }
 
 .hes {
     font-weight: bold;
-    font-size: 18px;
+    font-size: 14pt;
 }
 
 .code_block {
+    font-family: "Courier New";
+    font-size: 11pt;
+    color: hsl(165, 60%, 79%);
+    background-color: hsl(200, 16%, 16%);
+    padding: 10px;
+    padding-right: 0px; /* so that word-wrap (pre-wrap) makes more sense */
+    /* word-wrap: break-word; */
+    white-space: pre-wrap;
+    border: solid 1px;
+    border-color: hsl(202, 12%, 32%);
+}
+
+.code_inline {
+    font-family: "Courier New";
     font-size: 12pt;
-    color: hsl(170, 100%, 90%);
-    background-color: hsl(198, 30%, 16%);
-    padding: 20px;
-    margin-left: 40px;
-    margin-right: 90px;
+    color: hsl(155, 70%, 69%);
+    padding: 1px;
+    /* white-space: pre-wrap; */
+    white-space: nowrap;
+}
+
+.qte {
+    width: 90%;
+    margin: auto;
+    border-left: solid 4px;
+    border-color: hsl(200, 15%, 23%);
+    padding-left: 14px;
+    /* font-style: italic; */
+    color: hsl(186, 0%, 82%);
+}
+
+.theorem {
+    /* width: 86%; */
+    /* width: 40em; */
+    margin-left: 2.0em;
+    margin-right: 2.0em;
+    /* margin: auto; */
 }
 
 
@@ -123,14 +160,6 @@ a.special_link {
   color: red;
 }
 
-ul {
-    margin-top: 0px;
-}
-
-p {
-    /* margin-top: 0px; */
-}
-
 math {
     font-size: 17pt;
 }
@@ -142,6 +171,7 @@ math {
 code {
     font-size: 12pt;
 }
+
 
 /* table, th, td { */
 /*     border: 1px solid hsl(186, 70%, 95%); */

@@ -1,18 +1,60 @@
-<div class="post_body">
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/styles.css">
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <title>Blog of James Spratt</title>
+  </head>
+  <body>
+    
+    <div class="blog_header">
+      <div class="blog_title">
+	<a style="color: inherit; text-decoration: none;" href="/index.html">Blog of James Spratt</a>
+      </div>
+      <hr style="width:587px; border: 1px solid hsl(210, 20%, 12%);">
+      <div class="header_text">
+	<div style="flex: 0 0 95px; color: hsl(202, 15%, 35%);">|</div>
+	<div style="flex: 0 0 95px"><a style="color: inherit;" href="/index.html">Categories</a></div>
+	<div style="flex: 0 0 95px; color: hsl(202, 15%, 35%);">|</div>
+	<div style="flex: 0 0 95px"><a style="color: inherit;" href="/project_page.html">Projects</a></div>
+	<div style="flex: 0 0 95px; color: hsl(202, 15%, 35%);">|</div>
+	<div style="flex: 0 0 95px"><a style="color: inherit;" href="/about_page.html">About</a></div>
+	<div style="flex: 0 0 95px; color: hsl(202, 15%, 35%);">|</div>
+      </div>
+    </div>
+
+
+    <div class="main_section">
+      
+      <!-- <div class="panel_body"> -->
+      <!-- 	<div class="panel_inner"> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	  <a href="index.html">Recent Posts</a> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	  <a href="categories_page.html">Post Categories</a> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	  <a href="index.html">Projects</a> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	  <a href="about_page.html">About</a> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	</div> -->
+      <!-- </div> -->
+
+      <div class="post_body">
   <div class="post_title">
     <div class="post_title_heading">Introduction to Group Theory Part 2: Groups</div>
-    <div class="post_title_subtext">2025 Mar 13, James Spratt</div>
-    <div class="post_title_subtext">Category: <a href="/index.html">Mathematics</a></div>
-    <!-- <div class="post_title_subtext">Previous Post | Next Post</div> -->
+    <div class="post_title_subtext">2025 Mar 13, James Spratt <br> Category: <a href="/index.html">Mathematics</a></div>
   </div>
 
-  <p>In the <a href="/posts/introduction_to_group_theory_and_permutations.html">last post</a> we introduced permutations and developed some basic results and theorems, especially with <i>compositions</i> of permutations. It turns out that many of the results that were developed for permutations can be generalized to other kinds of structures.</p>
+  <p>In the <a href="/posts/introduction_to_group_theory_and_permutations.html">last post</a> we introduced permutations and developed some basic results and theorems, especially with <i>compositions</i> of permutations. Many of the results that were developed for permutations can be generalized to other kinds of structures.</p>
 
   <p>As an example, we might want to consider doing "clock arithmetic", which is adding numbers on a 12-hour clock. This system of addition is not like the usual system of addition with integer numbers, as the numbers wrap around after 12. In this altered form of arithmetic, we get odd results such as 9 + 4 = 1 and 10 + 7 = 5. We also have "normal" equalities such as 3 + 2 = 5 and 5 + 6 = 11.</p>
 
   <p>Another example is the operations performed on a rubik's cube. We can rotate many of the pieces and move the colors around on the faces of the cube. We can also think about compositions of operations, and ask certain question about their properties.</p>
 
-  <p>Permutations, clocks, and a rubik's cube have more in common than you might first think. All of these seemingly unrelated things can be understood as the same kind of structure; they share a common <b>essence</b>. This common essence is exactly that they are all groups! But what are groups? Let's give the group axioms and start talking about what they are.</p>
+  <p>Permutations, clocks, and a rubik's cube have more in common than you might first think. All of these seemingly unrelated things can be understood to the same kind of structure; they share a common <b>essence</b>. This common essence is exactly that they are all groups! But what are groups? Let's give the group axioms and start talking about what they are.</p>
 
   
   
@@ -41,9 +83,16 @@
 
   <p><b>Axiom 4</b> means that for every element in \(G\), there is an inverse element that takes it back to the identity element with the group operation. At this point we cannot say if the inverse is unique to each element, or if there is one global inverse, but we know each element has at least one inverse.</p>
 
-  <p>The word "Axiom" is somewhat abused here as these properties aren't just assumed to be true arbitrarily. Rather, if we find some kind of structure that <i>satisfies</i> these axioms, then we call that structure a group. This structure may also have other properties, but it certainly has the properties of a group structure.</p>
-
   <p>With just these 4 simple axioms, everything surrounding group theory follows from these basic properties. I find it rather elegant that so much nuance and complexity can be boiled down to very simple elements.</p>
+
+  
+
+  <div class="he">Examples of Groups</div>
+  <p>Even just with these four axioms, some of these properties should look familiar with respect to permutations. We'll prove that permutations are a group along with "clock arithmetic" as two major examples.</p>
+
+  <p>First, we are going to prove that the set of permutations form a group under the operation of function composition "\(\circ\)":</p>
+
+  
 
 
   
@@ -51,80 +100,47 @@
   <p>There are number of important and basic results that we can prove from these axioms. We'll rigorously prove some of the basic theorems:</p>
 
   <div class="theorem">
-    <p><b>THEOREM 1:</b> The identity element \(e\) is unique, meaning per group there is exactly one identity element \(e\).</p>
-    <p><i>proof:</i> Let us assume that the there are two identity elements \(e_1\) and \(e_2\). Therefore by Axiom 3, for every \(a \in G\): \(a \bullet e_1 = a \bullet e_2 = a\):</p>
-    \[ \begin{alignat*}{2}
-    && a \bullet e_{1} &= a \bullet e_{2} && \quad \textrm{by our assumption}\\
-    \Longrightarrow \quad && a^{-1} \bullet (a \bullet e_{1}) &= a^{-1} \bullet (a \bullet e_{2}) && \quad \text{rules of equality}\\
-    \Longrightarrow \quad && (a^{-1} \bullet a) \bullet e_{1} &= (a^{-1} \bullet a) \bullet e_{2} && \quad \text{Axiom 2 - Associativity}\\
-    \Longrightarrow \quad && e_{1} \bullet e_{1} &= e_{1} \bullet e_{2} && \quad \text{Axiom 4 - Inverse}\\
-    \Longrightarrow \quad && e_{1} &= e_{2} && \quad \text{Axiom 3 - Identity}\\
-    \end{alignat*} \]
+    <p><b>THEOREM 1:</b> The binary operation "\(\bullet\)" is surjective, meaning that for every \(g \in G \), there exists \(a,b \in G\) such that \(a \bullet b = g\).</p>
+    <p><i>proof:</i> By Axiom 3, for every element \(g \in G\), there exists an element \(e \in G\) so that \(g \bullet e = g\).</p>
     <p style="text-align: right;">\( \square \)</p>
   </div>
 
-  <p>It may seem confusing in the proof why we can just pick \(a^{-1} \bullet a = e_1\), rather than \(a^{-1} \bullet a = e_2\). The answer is that both of these are correct because we assumed that there are two inverses, so we can freely choose which one we want, but either way it doesn't matter.</p>
+  <p><b>THEOREM 2:</b> The identity element \(e\) is unique, meaning per group there is exactly one identity element \(e\).</p>
+  <p><i>proof:</i> Let us assume that the there are two identity elements \(e_1\) and \(e_2\). Therefore by Axiom 3, for every \(a \in G\): \(a \bullet e_1 = a \bullet e_2 = a\):</p>
+  \[ \begin{alignat*}{2}
+  && a \bullet e_{1} &= a \bullet e_{2} && \quad \textrm{by our assumption}\\
+  \Longrightarrow \quad && a^{-1} \bullet (a \bullet e_{1}) &= a^{-1} \bullet (a \bullet e_{2}) && \quad \text{rules of equality}\\
+  \Longrightarrow \quad && (a^{-1} \bullet a) \bullet e_{1} &= (a^{-1} \bullet a) \bullet e_{2} && \quad \text{Axiom 2 - Associativity}\\
+  \Longrightarrow \quad && e_{1} \bullet e_{1} &= e_{1} \bullet e_{2} && \quad \text{Axiom 4 - Inverse}\\
+  \Longrightarrow \quad && e_{1} &= e_{2} && \quad \text{Axiom 3 - Identity}\\
+  \end{alignat*} \]
+  <p style="text-align: right;">\( \square \)</p>
 
-  <div class="theorem">
-    <p><b>THEOREM 2:</b> The inverse of each element is unique to that element. So for any \(a \in G\) : \([a \bullet (a^{-1})_1 = a \bullet (a^{-1})_2 = e] \Longrightarrow [(a^{-1})_1 = (a^{-1})_2]\)</p>
-    <p><i>proof:</i> Let us assume that \(a \bullet (a^{-1})_1 = a \bullet (a^{-1})_2 = e\):</p>
-    \[ \begin{alignat*}{2}
-    && a \bullet (a^{-1})_1 &= a \bullet (a^{-1})_2\\
-    \Longrightarrow && (a^{-1})_1 \bullet a \bullet (a^{-1})_1 &= (a^{-1})_1 \bullet a \bullet (a^{-1})_2\\
-    \Longrightarrow && e \bullet (a^{-1})_1 &= e \bullet (a^{-1})_2\\
-    \Longrightarrow && (a^{-1})_1 &= (a^{-1})_2
-    \end{alignat*} \]
-    <p style="text-align: right;">\( \square \)</p>
-  </div>
+  <p><b>THEOREM 3:</b> The inverse of each element is unique to that element. So for any \(a \in G\) : \([a \bullet (a^{-1})_1 = a \bullet (a^{-1})_2 = e] \Longrightarrow [(a^{-1})_1 = (a^{-1})_2]\)</p>
+  <p><i>proof:</i> Let us assume that \(a \bullet a^{-1}_1 = a \bullet a^{-1}_2\):</p>
+  \[ \begin{alignat*}{2}
+  && a \bullet a^{-1}_1 &= a \bullet a^{-1}_2\\
+  \Longrightarrow && a^{-1}_1 \bullet a \bullet a^{-1}_1 &= a^{-1}_1 \bullet a \bullet a^{-1}_2\\
+  \end{alignat*} \]
+  <p style="text-align: right;">\( \square \)</p>
 
-  <div class="theorem">
-    <p><b>THEOREM 3:</b> No two elements have the same inverse. For any \(a,b \in G\) with \(a \neq b\): if \(a \bullet a^{-1} = e\) and \(b \bullet b^{-1} = e\), then: \(a^{-1} \neq b^{-1}\).</p>
-    <p><i>proof:</i> Let us assume that \(a \bullet a^{-1}_1 = a \bullet a^{-1}_2\):</p>
-    \[ \begin{alignat*}{2}
-    && a \bullet a^{-1}_1 &= a \bullet a^{-1}_2\\
-    \Longrightarrow && a^{-1}_1 \bullet a \bullet a^{-1}_1 &= a^{-1}_1 \bullet a \bullet a^{-1}_2\\
-    \end{alignat*} \]
-    <p style="text-align: right;">\( \square \)</p>
-  </div>
+  <p><b>THEOREM 4:</b> No two elements have the same inverse. For any \(a,b \in G\) with \(a \neq b\): if \(a \bullet a^{-1} = e\) and \(b \bullet b^{-1} = e\), then: \(a^{-1} \neq b^{-1}\).</p>
+  <p><i>proof:</i> Let us assume that \(a \bullet a^{-1}_1 = a \bullet a^{-1}_2\):</p>
+  \[ \begin{alignat*}{2}
+  && a \bullet a^{-1}_1 &= a \bullet a^{-1}_2\\
+  \Longrightarrow && a^{-1}_1 \bullet a \bullet a^{-1}_1 &= a^{-1}_1 \bullet a \bullet a^{-1}_2\\
+  \end{alignat*} \]
+  <p style="text-align: right;">\( \square \)</p>
 
-  <p>Theorems 2 & 3 imply that there is a bijective correspondence between the elements of \(G\) and the inverse elements. This means that there exists an invertible function that can give you the inverse of any element, and the existence of this invertible function implies that every element is an inverse of some other element. Basically, \((a^{-1})^{-1} = a\) for any \(a \in G\), because the inverse of \(a^{-1}\) is \(a\) as \(a \bullet a^{-1} = e\).</p>
- 
-  <p>Now that we have established some of these previous theorems, we can establish a very important result in theorem 6. We define the <i>coset of \(G\)</i> to be the following set:</p>
-
-  \[ aG = \{a \bullet g : g \text{ is an element of } G \} \]
-
-  <p>The next theorem shows that this set is also a group, and it is also the exact same group as \(G\):</p>
-
-  <div class="theorem">
-    <p><b>THEOREM 4:</b>The set of group elements \(G\) is equal to the set \(\{a \bullet b | b \in G\}\) for some element \(b\). More specifically, there is a bijective correspondence wit</p>
-    <p><i>proof:</i> the proof is trivial as \(a \bullet a^{-1} = a^{-1} \bullet a = e\), so \((a^{-1})^{-1} = a\).</p>
-    <p style="text-align: right;">\( \square \)</p>
-  </div>
+  <p><b>THEOREM 5:</b> Every element \(a \in G\) is an inverse of another element, so there exists \(b \in G\) so that \(a \bullet b = e\). More specifically, \(b = a^{-1}\) and \((a^{-1})^{-1} = a\)</p>
+  <p><i>proof:</i> the proof is trivial as \(a \bullet a^{-1} = a^{-1} \bullet a = e\), so \((a^{-1})^{-1} = a\).</p>
+  <p style="text-align: right;">\( \square \)</p>
 
   <p>Even though in different form, all of these axioms should seem familiar with respect to the permutations we have been discussing.</p>
   
   <p>All of this might seem very trivial to talk about, but consider a game that has 20 loading zones (which is not uncommon, and in fact many games have more), then the amount of permutations of 20 is 20 factorial, which is over 2 quintillion permutations, which is approximately 2 million terabytes of information! The growth of the factorial function is very bad, and it would be absurd to brute force this problem.</p>
 
   <p>Of course, most randomization algorithms will just pick permutations at random, but then they might not have certain properties that we would like. The naive approach would be to generate every permutation and search the permutations to find the desirable ones, but our results from group theory (especially k-cycles) makes it easy to select from literally billions of billions of combinations!</p>
-
-
-  
-  <div class="he">Symmetric Group</div>
-  <p>We mentioned before two examples of group structures: permutations and clock arithmetic. The former was already talked about in length in the previous post in this series, so I'll assume you're familiar with permutations. What we didn't do is prove that permutations (under composition) form a group, which we will now do.</p>
-
-  <p>The <b>Symmetric Group</b> of \(n\) elements is the set of permutations of \(n\) numbers under the operation of function composition "\(\circ\)", defined as so:</p>
-
-  \[ S_n = \{ \sigma : \sigma \text{ is a permutation of } n \text{ elements} \} \]
-
-  <p>This is indeed a group, and we will go through each of the four axioms to prove that it conforms to them:</p>
-
-  <p><b>Axiom 1: </b>A composition of two permutations takes two permtuations to another one, so it is obviously closed.</p>
-
-  <p><b>Axiom 2: </b>Associativity follows from the fact that function composition is associative, so we get associativity as a byproduct of the fact that permutation compositions are function compositions.</p>
-
-  <p><b>Axiom 3: </b>The identity element is the empty permutation \(() = e\) that takes every number to itself as discussed in the previous post, and it satisfies the property that \(\sigma \circ e = e \circ \sigma = \sigma\).</p>
-
-  <p><b>Axiom 4: </b>Every permutation \(\sigma\) has an inverse permutation \(\sigma^{-1}\) that can be constructed easily. Let \(\sigma (i) = a_i\), then let \(\sigma^{-1} (a_i) = i\), so then: \(\sigma^{-1} \circ \sigma (i) = \sigma^{-1} (\sigma (i) ) = \sigma^{-1} (a_i) = i\). Therefore, \(\sigma \circ \sigma^{-1} = e\) as required. This construction follows from the fact that permutations are bijective functions by definition, so an inverse always exists.</p>
 
   <div class="he">Further Applications</div>
   <p>In the case that several loading zones belong to the same area, we can treat them as a group.</p>
@@ -172,3 +188,9 @@
   \]  
 
 </div>
+
+
+    </div>
+
+  </body>
+</html>
