@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/styles.css">
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <title>Blog of James Spratt</title>
+  </head>
+  <body>
+    
+    <div class="blog_header">
+      <div class="blog_title">
+	<a style="color: inherit; text-decoration: none;" href="/index.html">Blog of James Spratt</a>
+      </div>
+      <hr style="width:430px; border: 1px solid hsl(202, 12%, 20%);">
+      <div class="header_text">
+	<div style="flex: 0 0 70px; color: hsl(202, 15%, 35%);">|</div>
+	<div style="flex: 0 0 70px"><a style="color: inherit;" href="/index.html">Categories</a></div>
+	<div style="flex: 0 0 70px; color: hsl(202, 15%, 35%);">|</div>
+	<div style="flex: 0 0 70px"><a style="color: inherit;" href="/project_page.html">Projects</a></div>
+	<div style="flex: 0 0 70px; color: hsl(202, 15%, 35%);">|</div>
+	<div style="flex: 0 0 70px"><a style="color: inherit;" href="/about_page.html">About</a></div>
+	<div style="flex: 0 0 70px; color: hsl(202, 15%, 35%);">|</div>
+      </div>
+    </div>
+
+
+    <div class="main_section">
+      
+      <!-- <div class="panel_body"> -->
+      <!-- 	<div class="panel_inner"> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	  <a href="index.html">Recent Posts</a> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	  <a href="categories_page.html">Post Categories</a> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	  <a href="index.html">Projects</a> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	  <a href="about_page.html">About</a> -->
+      <!-- 	  <span class="divider">|</span> -->
+      <!-- 	</div> -->
+      <!-- </div> -->
+
+      <div class="post_title">
+  <div class="post_title_heading">Build Setup</div>
+  <div class="post_title_subtext">James Spratt, 2025 Apr 07</div>
+</div>
+
+
+
+
+<div class="post_body">
+  <p>Development of <i>The Mirror</i> is targeting Microsoft Windows and Linux so far as the main platforms. I don't have plans or the means to support OSX, but I might consider that in the future.</p>
+
+  <p>I don't have a sophisticated setup, just a single machine dual-booting both Windows 10 and Debian Linux. Each OS has access to an NTFS formatted 2TB drive which has a folder on it called <span class="code_inline">SHARED_ACCESS</span>. Within this folder are a number of git repositories, one of them being the main repository for <i>The Mirror</i>. Each OS has a local copy of the repos that they both pull from.</p>
+
+  <p>This solution works for now, I could even move the repo to the cloud or even Github/Gitlab, but for now, I'm just keeping it on my local machine. I do my own personal backups so I'm not concerned about losing data. Also, if anyone else wants to work on the code then it won't be hard to move it to the cloud. Nothing about my workflow will change, just the repo will be in a different location.</p>
+
+  <p>Orginally I was just manually syncing the files between each OS by using <span class="code_inline">rsync</span>, but that was just temporary before I started using a proper solution. git is a great tool and I think every programmer should be familiar with it, although limiting yourself to a restricted subset of the features is probably best.</p>
+
+
+  
+  <div class="he">X11 & GLX</div>
+  <p>To talk about opening a native window on any platform we need to understand what the native windowing system is. In the case of Microsoft *Windows*, the windowing system is built into the general platform API known as win32. In the case of linux, windowing systems are seperate from the kernel (properly speaking, seperate from linux itself), but the most widely used windowing system across different linux distributions is <b>X11</b> by far. Wayland is another option, but I won't be touching that.</p>
+
+  <p>Anyways, start with this C code, and name it something like "x11_window.c":</p>
+
+<div class="code_block">#include &lt;stdio.h&gt;
+
+#define TRUE 1
+#define FALSE 0
+  
+int main()
+{
+      printf("Hello World!\n");
+      return 0;
+}</div>
+
+
+  <p>then, compile with this command:</p>
+
+<div class="code_block">gcc x11_window.c -o x11_window</div>
+
+  <p>run it with:</p>
+
+  <div class="code_block">./x11_window</div>
+
+  <p>and you should get "Hello World!" as output.</p>
+
+  <p>Also, at the end of the main function add a cleanup section like this:</p>
+
+  <div class="code_block">#include &lt;stdio.h&gt;
+
+#define TRUE 1
+#define FALSE 0
+    
+int main()
+{
+      printf("Hello World!\n");
+
+
+ CLEANUP_AND_EXIT:
+      return 0;
+}</div>
+
+  <p>And that's that</p>
+
+
+
+  
+</div>
+ 
+
+
+    </div>
+
+  </body>
+</html>
