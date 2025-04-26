@@ -1,0 +1,128 @@
+# TODO:
+  - look into using MSIX to package applications, also add a section on deployment in general
+#
+
+
+
+
+USING/BUILDING/COMPILING WITH MSVC ON THE COMMAND LINE:
+===============================
+
+Unlike using GCC on linux which is blissfully simple and easy to manage, compiling with msvc on windows is a godforsaken nightmare. This tutorial will demonstrate how to setup a build environment for the command line to use MSVC (MicroSoft Visual C++) to compile C projects. Confusingly, it is named the compiler for C++ but it is also for C. Much of the microsoft (MSDN) documentation refers to C++, but C is also included.
+
+For this tutorial, the primary reference will be this MSDN documentation: "https://learn.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=msvc-170"
+
+The first thing you need to do is grab the build tools for visual studio which is referenced in the MSDN doc, and can be found here: "https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2022"
+You're going to want to select the "Desktop development with C++", which is poorly named, considering that it also gives us access to just plain C development tools. This install option is most likely all you'll need, but check the other options to see if you need something else. Again, just like we stated before, many of the tutorials/docs are named for C++ but are also for C as well. Blame Microsoft for being inconsistent, but not me.
+
+In order for the build tools to work, a lot of environment variables need to be set correctly, which In my opinion is a very bad design decision on the behalf of windows. Thankfully, they at least provided a fix for this issue by giving us our choice of specific developer CMDs, or by using a vcvars<>.bat shell script to setup and configure any CMD for proper use in compiling with MSVC. We will go with the vcvars<>.bat option for this tutorial, but you can also just use one of the developer command prompts which does the same thing.
+
+Unfortunately, all these configurations and environment variables are specific to the machine/installation that you are building on, so you can't just copy the vcvars<>.bat over to another machine/installation and expect it to work, because it probably won't. So basically, this process needs to be repeated for everyone who wants to develop like this. The vcvars<>.bat files can also vary from version to version, so from one VS version to the next, the location of the file and contents of the file might change. That being said, major version updates for VS don't come too often, but you should be looking to keep this process up to date at least 1-3 times per year.
+
+The location of these vcvars<>.bat files is dependent, but I found mine for VS 2022 in the following location: "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build", in the "Build" folder. The location can also be in many different places, such as the "Progam Files" without the x86, but this one is the correct one because it is under the "BuildTools" directory which corresponds to the Build Tools that I just referenced earlier in this tutorial for you to make sure to install. Again, windows is awful for this as there's multiple locations for these build files.
+
+We'll use the "vcvars64.bat" one because according to the MSDN docL "Use the 64-bit x64-native tools to build 64-bit x64 code", so it builds us 64-bit code. DO NOT cut or copy this file anywhere else, just run it from this location with "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat" from whatever CMD you are using. These files are so delicate and I fear that even running the file from a different location could screw it up because of how delicate these things are. The cwd doesn't seem to matter at least, but do not mess with these files as they are incredibly delicate as we will see soon.
+
+Create a little batch script called "run_vcvars.bat" or something like that, and run it only ONCE in the CMD you are using, then you can use cl. The vcvars<>.bat files are NOT meant to be run any more than ONE time in a given CMD, otherwise they will screw up the PATH environement variable among other environment varibales. They will just add to it instead of properly changing it, so you can only run one of these per CMD window/instance and not more than once. A good idea would be to write a script that sets varibale to see if it has been run in your CMD ready, so that it only runs it once.
+
+# @TODO: figure out how to ensure that the vcvars<>.bat file only runs once #
+
+Once this is done in your CMD, MSVC is now avaible to run with "cl" or "cl.exe" as the compiler, and "link" or "link.exe" as the linker. These will be valid for the rest of the lifetime of the CMD you are in.
+
+That's it for the build environment setup so far, but there's more to go over.
+
+
+
+
+WINDOWS SDK & MANUALLY INSTALLING HEADERS
+===============================
+The latest Windows SDK (also confusingly called "Windows Kits" for god knows what reason) is usually installed on your system when you install the Build Tools for Visual Studio as outlined above. The SDK contains many headers, such as OpenGL headers.
+
+OpenGL extension headers are not included for whatever reason (glext.h, wglext.h, etc.), so you need to manually install them yourselves. Any headers you want to install can be done manually with this method:
+
+Find the location of the Windows SDK, which at the time of writing is installed in the location: "C:\Program Files (x86)\Windows Kits\" which is confusing as the use the name "Windows Kits" instead of what should be "Windows SDK".
+
+I found the headers in the "10" subfolder which probably refers to Windows 10 (as that is the OS being used at the time of writing this documentation). The headers, library files, and many other important files are here for windows development.
+
+For example, the OpenGL headers are in the location: "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\gl\" where "10.0.22621.0" is the latest SDK that was installed when installing the Build Tools for Visual Studio. You can drag and drop extension headers such as "glext.h" or "wglext.h"  in here, and then it will add it to your system headers which will be recognized as <gl/glext.h> and <gl/wglext.h>. (NOTE: Windows/NTFS doesn't care about case in filenames, so "Windows.h" = "windows.h" = "WINDOWS.h", etc. By default, prefer lowercase)
+
+You'll need to add the khrplatform.h header as well to your system as glext.h depends on <khr/khrplatform.h> being a valid location. This is easy, just create a "khr" folder in the "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\" directory and then place the khrplatform.h file in that folder so that the location looks like this: "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\khr\khrplatform.h". Then, the system include <khr/khrplatform.h> or equivalently <KHR/khrplatform.h> will be recognized by MSVC.
+
+You can also just place your headers in your local project folder, and then add the path to MSVC with the "/I" flag, but I prefer this method with installing it manually in the Windows SDK (or "Windows Kits") location as it keeps it all in one place, and is current to the specific version of the SDK you use. If you get a new SDK version, you'll need to repeat this process so that's a downside, but it's barely any work.
+
+
+
+
+DEBUGGING WITH VISUAL STUDIO
+===============================
+We can use the debugging capabilites of visual studio without having to use the rest of visual studio. Using the "devenv.exe" program that we can launch from the command line, we can debug any output executable built from MSVC. devenv will launch visual studio for us and setup a debugging environment automatically.
+
+First we need to add the "devenv.exe" to our PATH. The location for Visual Studio 2022 is: "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\devenv.exe". To add it to your PATH, you can add the following folder: "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE" to the PATH env variable in windows settings. Just search for "PATH" in the settings search and it should bring it up. Once you add the path, you may need to restart the CMD instance in order for it to take effect.
+
+One that is done, "devenv" as a command-line command will work, and you can debug programs with:
+> devenv program.exe
+Where "program.exe" is your MSVC compiled program that has debugging information. You need to compile with debug flags like /Zi (/DEBUG) in order to generate debug information, and the debug info will also be placed in a .pdb file.
+
+Using "devenv" to launch Visual Studio will create a hidden .vs folder in the working directory you launched it in, which is annoying because we don't need it. Unfortunately, there doesn't seem to be a way to turn this off, so we just have to work around it. Our solution is to just to only run "devenv" in the debug build folder, so that the .vs folder is only created in there. You could also write a wrapper script to devenv called "debug.bat" or something that deletes the .vs folder, but we'll leave it there. Also, we add any folder called ".vs" to the .gitignore as well.
+
+Also, Here is the MSDN docs for devenv command line options, although we don't really need any "https://learn.microsoft.com/en-us/visualstudio/ide/reference/devenv-command-line-switches?view=vs-2022"
+
+
+
+
+WINDOWS BATCH SCRIPTING:
+===============================
+
+There are a couple of important tips to remember when scripting with batch in windows:
+
+when setting variables use the syntax:
+      > set "VAR=thing\path\wut"
+rather than:
+      > set VAR="thing\path\wut"
+as the latter option will include the quotes within the variable which is no good and causes a lot of formatting headaches for using this variable. The former option is what we want.
+
+
+
+
+DEPLOYING YOUR APPLICATION ON WINDOWS:
+===============================
+
+
+
+
+USEFUL LINKS FOR WINDOWS/WIN32 PROGRAMMING AND BUILDING IN C/C++ :
+===============================
+
+- this is the main MSDN link for which all C/C++ and MSVC related things are, most if not all of the other references here are under this: "https://learn.microsoft.com/en-us/cpp/overview/visual-cpp-in-visual-studio?view=msvc-170"
+
+- this MSDN tutorial series "Projects and Build Systems" is for C/C++ projects and building with Visual Studio (MSVC), and is the main reference for all building/compiling/linking and and other related things: "https://learn.microsoft.com/en-us/cpp/build/projects-and-build-systems-cpp?view=msvc-170"
+  - probably the most important subsection is "Use the MSVC toolset from the command-line", which is the primary reference we use. It can be accessed from this link: "https://learn.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=msvc-170"
+  - also in that same sub-section is "Walkthrough: Compile a C program on the command line", which is a good reference to use to test your MSVC build setup on the command line. It can be also accessed at this link: "https://learn.microsoft.com/en-us/cpp/build/walkthrough-compile-a-c-program-on-the-command-line?view=msvc-170"
+  - the MSVC reference can also be found here, both the cl.exe and linker options. The link for compiler options can be foudnd here: "https://learn.microsoft.com/en-us/cpp/build/reference/compiler-options?view=msvc-170", and the link for linker options can be found here: "https://learn.microsoft.com/en-us/cpp/build/reference/linker-options?view=msvc-170"
+
+- this MSDN reference is "Build desktop Windows apps using the Win32 API" which can be found here: "https://learn.microsoft.com/en-us/windows/win32/"
+  - a subsection is the "Programming reference for the Win32 API" found here: "https://learn.microsoft.com/en-us/windows/win32/api/"
+  - an important subsection of this is "Get started with desktop Windows apps that use the Win32 API": "https://learn.microsoft.com/en-us/windows/win32/desktop-programming#learn-how-to-create-desktop-apps-using-the-win32-api"
+    - a subsection of this subsection is this MSDN tutorial which contains a good setup for a basic win32 window application, and also introduces important concepts to program with win32: "https://learn.microsoft.com/en-us/windows/win32/learnwin32/learn-to-program-for-windows"
+
+- this MSDN reference is for "Windows Desktop Development", and can be found here: "https://learn.microsoft.com/en-us/cpp/windows/overview-of-windows-programming-in-cpp?view=msvc-170"
+  - there's also an important subsection on development found here: "https://learn.microsoft.com/en-us/cpp/windows/deploying-native-desktop-applications-visual-cpp?view=msvc-170"
+    - of paticular interest as a subsection to this subsection is "Universal CRT deployment" which is found here: "https://learn.microsoft.com/en-us/cpp/windows/universal-crt-deployment?view=msvc-170"
+
+- this "Windows Classic samples" repository contains a lot of win32 sample projects, and could be useful to look into to see how to program with win32: "https://github.com/microsoft/Windows-classic-samples"
+
+- list of compiler/build/runtime or other kinds of errors with MSVC or whatnot: "https://learn.microsoft.com/en-us/cpp/error-messages/compiler-errors-1/c-cpp-build-errors?view=msvc-170"
+
+- devenv command-line options: "https://learn.microsoft.com/en-us/visualstudio/ide/reference/devenv-command-line-switches?view=vs-2022"
+
+- all about windows (the GUI construct, not the OS) and messages: "https://learn.microsoft.com/en-us/windows/win32/winmsg/windowing"
+
+
+
+
+
+
+
+
+
+
