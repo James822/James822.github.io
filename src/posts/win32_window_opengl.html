@@ -1,0 +1,290 @@
+<div class="post_title">
+  <div class="post_title_heading">Creating a win32 Window and OpenGL Context on Windows From Scratch</div>
+  <div class="post_title_subtext">James Spratt, 2025 Apr 27</div>
+  <!-- <div class="post_title_subtext">Category: <a href="/index.html">Programming</a></div> -->
+</div>
+
+
+
+
+<div class="post_body">
+  <p>In a <a href="/posts/x11_window_opengl.html">previous post</a> I made a tutorial showing how to get a window open on linux/X11 with an OpenGL context. I'd like to make the same tutorial but for windows now, so here it is.</p>
+
+  <p>This tutorial follows the same format as the last one, so I won't really go into too much detail on things that I've already covered. I'm moreso only going to outline the windows/win32 aspects here, but don't worry, the full source code is available <a href="https://github.com/James822/win32-opengl-window">here</a> in my github repository.</p>
+
+  <p>Just like the last tutorial, we'll be using C to do everything, but you can also follow along in C++ with only a few modifications.</p>
+
+
+
+  
+  <div class="he">Win32</div>
+  <p>Unlike linux, everything we'll need for this tutorial is under the win32 API. The win32 API is the programming interface to the windows operating system. It gives us the ability to perform file I/O, allocate memory, and namely: create windows.</p>
+
+  <p>As opposed to linux (or rather linux distributions), the windowing system is not seperate from the kernel or OS interface, but is provided as an integral part of win32. We'll shortly see the functions we can use to create and manage windows.</p>
+
+  <p>If you had already read my previous tutorial for making a window on linux with GLX and X11, then win32 essentially combines all these things together into one interface. The equivalent to GLX on windows is called "WGL", or the "Windows Extension to OpenGL". There is no equivalent to a windowing system like X11 or wayland, as the windowing system is an integral part of win32.</p>
+
+
+
+  
+  <div class="he">MSDN Documentation</div>
+  <p>The primary source of documentation is MSDN (Microsoft Developer Network). Technically, MSDN was removed and integrated into a new space called "Microsoft Learn", but everyone still refers to this portion of Microsoft Learn as what it used to be, which is MSDN.</p>
+
+  <p>Unfortunately, Microsft Learn/MSDN is about as disorganized as it can possibly be. I have never seen anything as clutter, overcomplicated, and as poorly organized as this. I would provide you a link, but that would be more unhelpeful than just providing a few select links on specific topics. A set of MSDN link is provided in the "References" section at the end of this post, but I'll provide links to them as needed.</p>
+  
+
+
+
+  <div class="he">Compiling/Building on Windows with MSVC</div>
+  <p>MSVC or the "Microsoft Visual C++" compiler is the main C/C++ compiler for windows which we will be using. Even though it only has "C++" in the title, it also supports C compilation. When it comes to microsoft, almost nothing is named what it should be, and everything seems to be almost deliberately confusing. Bear with me, as it only gets worse the further into it you go. Many of the MSDN docs will refer to "C++" tutorials or references, but these also apply to plain C as well.</p>
+
+  <p>MSVC is the compiler used in Visual Studio, and typically, people invoke it when they use the Visual Studio IDE. If you want to use VS that's up to you, but I'll demonstrate how to use MSVC from the command line directly which is much easier and simple to use and customize. For this section, the primary reference will be this <a href="https://learn.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=msvc-170">MSDN documentation</a>.</p>
+
+  <p>The first thing you need to do is grab the build tools for visual studio which is referenced in the MSDN doc, and can be found <a href="https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2022">here</a>. This will give you the Visual Studio installer, which you should launch. You're going to want to select the "Desktop development with C++" install package, which is again poorly named, considering that it also gives us access to just plain C development tools. This install option is most likely all you'll need, but check the other options to see if you need something else. Again, just like we stated before, many of the tutorials/docs are named for C++ but are also for C as well. Blame Microsoft for being inconsistent, but not me.</p>
+
+  <p>In order for these build tools to work, a lot of environment variables need to be set correctly, which in my opinion is a very bad design decision on the behalf of windows. Thankfully, they at least provided a fix for this issue by giving us our choice of specific developer CMDs, or by using a vcvars<>.bat shell script to setup and configure any CMD for proper use in compiling with MSVC. We will go with the vcvars<>.bat option for this tutorial, but you can also just use one of the developer command prompts which does the same thing.</p>
+
+  <p>Unfortunately, all these configurations and environment variables are specific to the machine/installation that you are building on, so you can't just copy the developer command prompts or vcvars<>.bat files over to another machine/installation and expect it to work, because it probably won't. So basically, this process needs to be repeated for everyone who wants to develop like this. The vcvars<>.bat files can also vary from version to version, so from one VS version to the next, the location of the file and contents of the file might change. That being said, major version updates for VS don't come too often, but you should be looking to keep this process up to date at least a couple times per year.</p>
+
+  <p>The location of these vcvars<>.bat files is dependent, but I found mine for VS 2022 in the following location: "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build", in the "Build" folder. The location can also be in many different places, such as the "Progam Files" without the x86, but this one is the correct one because it is under the "BuildTools" directory which corresponds to the Build Tools that I just referenced earlier in this tutorial for you to make sure to install. Again, windows is awful for this as there's multiple locations for these build files.</p>
+
+  <p>We'll use the "vcvars64.bat" one because according to the MSDN docs: "Use the 64-bit x64-native tools to build 64-bit x64 code", so it builds us 64-bit code. DO NOT cut or copy this file anywhere else, just run it from this location with "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat" from whatever CMD you are using. These files are so delicate and I fear that even running the file from a different location could screw it up because of how delicate these things are. The cwd doesn't seem to matter at least, but do not mess with these files as they are incredibly delicate as we will see soon.</p>
+
+  <p>Create a little batch script called "run_vcvars.bat" or something like that, and run it only ONCE in the CMD you are using, then you can use the MSVC compiler. The vcvars<>.bat files are NOT meant to be run any more than ONE time in a given CMD, otherwise they will screw up the PATH environment variable among other environment variables. They will just add to it instead of properly changing it, so you can only run ONE of these per CMD window/instance and not more than once. A good idea would be to write a script that sets a varibale to see if it has been run in your CMD ready, so that it only runs it once.</p>
+
+  <p>Once this is done in your CMD, MSVC is now avaible to run with "cl" or "cl.exe" as the compiler, and "link" or "link.exe" as the linker. These will be valid for the rest of the lifetime of the CMD you are in.</p>
+
+
+  
+
+  <div class="he">Windows SDK and Installing (OpenGL) Headers</div>
+  <p>Before we do anything else, we should also install headers.</p>
+
+  <p>The latest Windows SDK (also confusingly called "Windows Kits" for who knows what reason) is usually installed on your system when you install the Build Tools for Visual Studio as outlined above. The SDK contains many headers, such as the OpenGL headers, which we will need for this tutorial.</p>
+
+  <p>OpenGL extension headers are not included for whatever reason (glext.h, wglext.h, etc.), so you need to manually install them yourself. Any headers you want to install can be done manually with this method:</p>
+
+  <p>Find the location of the Windows SDK, which on my machine is installed in the location: <span class="code_inline">C:\Program Files (x86)\Windows Kits\</span>, which is confusing as they use the name "Windows Kits" instead of what should be "Windows SDK".</p>
+
+  <p>I found the headers in the <span class="code_inline">C:\Program Files (x86)\Windows Kits\10\</span> subfolder which probably refers to Windows 10 (as that is the OS being used at the time of writing this post). The headers, library files, and many other important files are here for windows development.<p>
+
+  <p>For example, the OpenGL headers are in the location: <span class="code_inline">C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\gl\</span> where <span class="code_inline">10.0.22621.0</span> is the latest SDK that was installed when installing the Build Tools for Visual Studio. You can drag and drop extension headers such as <span class="code_inline">glext.h</span> or <span class="code_inline">wglext.h</span> in here, and then it will add it to your system headers which will be recognized as <span class="code_inline">&lt;gl/glext.h&gt;</span> and <span class="code_inline">&lt;gl/wglext.h&gt;</span>. (NOTE: Windows/NTFS doesn't care about case in filenames, so "Windows.h" = "windows.h" = "WINDOWS.h", etc. By default, prefer lowercase).</p>
+
+  <p>You'll need to add the <span class="code_inline">khrplatform.h</span> header as well to your system as <span class="code_inline">glext.h</span> depends on <span class="code_inline">&lt;khr/khrplatform.h&gt;</span> being a valid location. This is easy, just create a <span class="code_inline">khr</span> folder in the <span class="code_inline">C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\</span> directory and then place the <span class="code_inline">khrplatform.h</span> file in that folder so that the location looks like this: <span class="code_inline">C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\khr\khrplatform.h</span>. Then, the system include <span class="code_inline">&lt;khr/khrplatform.h&gt;</span> or equivalently <span class="code_inline">&lt;KHR/khrplatform.h&gt;</span> will be recognized by MSVC.</p>
+
+  <p>You can also just place your headers in your local project folder, and then add the path to MSVC with the <span class="code_inline">/I</span> flag, but I prefer this method with installing it manually in the Windows SDK (or "Windows Kits") location as it keeps it all in one place, and is current to the specific version of the SDK you use. If you get a new SDK version, you'll need to repeat this process.</p>
+
+
+
+  
+  <div class="he">Starter Code and Compilation with cl.exe (MSVC)</div>
+  <p>Once you have the headers installed and a CMD open and have run the vcvars<>.bat file (or if you have a developer command prompt, which does the same thing), type <span class="code_inline">cl</span> or <span class="code_inline">cl.exe</span> in your CMD and you should get output like this:</p>
+
+<div class="code_block">Microsoft (R) C/C++ Optimizing Compiler Version 19.43.34809 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+usage: cl [ option... ] filename... [ /link linkoption... ]</div>
+
+  <p>Otherwise, if you get some kind of error like this:</p>
+
+<div class="code_block">'cl' is not recognized as an internal or external command,
+operable program or batch file.</div>
+
+  <p>Then that means you haven't run the vcvars<>.bat file (or you aren't using a developer CMD).</p>
+
+  <p>Once you have cl.exe available an ready, we can finally compile a basic start "Hello World" program to make sure everything is setup correctly. Start with this C code and name it something like "win32_window.c":</p>
+
+<div class="code_block">/*
+Windows window and WGL/OpenGL example program.
+*/
+
+
+/* @@ we have to ignore all these errors because the windows.h header itself won't even compile without error with "/Wall" in MSVC, which is quite ironic that microsoft's own headers don't compile without warning in their compiler. */
+#pragma warning( push )
+#pragma warning( disable : 4668 )
+#include &lt;windows.h&gt;
+#include &lt;windowsx.h&gt;
+#pragma warning( pop )
+/* @! */
+
+#include &lt;stdio.h&gt;
+
+#include &lt;gl/gl.h&gt;
+
+/* these two headers need to manually installed, windows only provides "gl/gl.h" as part of the Windows SDK (installed when you install the Build Tools for Visual Studio). You can grab both of these headers from the OpenGL registry: https://registry.khronos.org/OpenGL/index_gl.php */
+#include &lt;gl/glext.h&gt;
+#include &lt;gl/wglext.h&gt;
+
+
+int main(void)
+{
+      printf("Hello World!\n");
+  
+      HINSTANCE hInstance = GetModuleHandleA(NULL); /* since we aren't using wWinMain() or WinMain(), we need to grab the HINSTANCE with this function. */
+      int program_running = 1;
+      int fullscreen = 1; /* set to '1' if you want fullscreen, '0' if you don't */
+
+      /* @@ user variables */
+      const char* window_name = "win32 window";
+      int window_width = 960;
+      int window_height = 540;
+      /* @! */
+  
+      return 0;
+}</div>
+
+
+  <p>then, compile with this command:</p>
+
+  <div class="code_block">cl User32.lib Gdi32.lib Opengl32.lib win32_window.c</div>
+
+  <p>Then run it with:</p>
+
+  <div class="code_block">win32_window.exe</div>
+
+  <p>and you should get "Hello World!" as output.</p>
+
+  <p>The libraries <span class="code_inline">User32.lib</span> <span class="code_inline">Gdi32.lib</span> and <span class="code_inline">Opengl32.lib</span> are all required for what we are going to do. <span class="code_inline">User32.lib</span> is neccessary for some basic win32 functions, and the remaining two are necessary for creating an OpenGL context.</p>
+
+
+  
+
+  <div class="he">Dummy Window/Context</div>
+  <p>Before we jump into anything else, I need to make something clear about a certain quirk on windows that you need to be aware of when it comes to OpenGL.</p>
+  
+  <p>For 2 reasons on windows, it is neccessary to create a "dummy" window that we will eventually get rid of. We will need to first create the dummy window, get a dummy OpenGL context, and then use that dummy GL context to load the necessary extension procedures.</p>
+
+  <p>The procedure that we need to create a modern core-profile OpenGL context is mainly <span class="code_inline">wglCreateContextAttribsARB</span>, and also a few others. The problem here is that we can't load these extension procedures unless we <i>already</i> have an OpenGL context! The procedure loading function on windows is <span class="code_inline">wglGetProcAddress</span>, and it requires a context to be current in order to function properly. In fact, the MSDN docs say that the function pointers returned by <span class="code_inline">wglGetProcAddress</span> are only valid given a current-context, and it may not be valid for any other contexts.</p>
+
+  <p>So how do we solve this apparent Catch-22? The answer is that we are still able to create a <i>legacy</i> OpenGL context as windows provides legacy GL functions to do so, namely <span class="code_inline">wglCreateContext</span>. Once we have this GL context and have made it current, we can then use it to query for and load procedures that we use to create the new or <i>modern</i> OpenGL context, and then we can get rid of the old one.</p>
+
+  <p>Along with that, windows only allows us to set the pixel format of a window once. If we want to change the pixel format, we will need to create a new window. When we create the legacy or dummy GL context, we also need to set a pixel format for the window used for that context. Since there are extension functions provided such as <span class="code_inline">wglChoosePixelFormatARB</span> to give us more options for pixel formats, we also find that it is necessary to create a new window to take advantage of new pixel formats that come with modern GL.</p>
+
+  <p>So in short, because of both the nature of loading procedures requiring an existing context AND pixel formats only being able to be set once; we need a dummy window AND a dummy GL context, of which both we will destroy once we have the "real" window and "real" GL context.</p>
+
+
+
+  
+  <div class="he">Dummy Window/Context Creation</div>
+  <p>Finally we can start doing some real work!</p>
+
+  <p>In order to create the dummy window and dummy GL context, you can use this code:</p>
+
+<div class="code_block">/* @@ creating dummy GL window */
+const char* dummygl_window_class_name = "DUMMYGL_WINDOW_CLASS";
+WNDCLASSA dummygl_wnd_class;
+dummygl_wnd_class.style = CS_OWNDC;
+dummygl_wnd_class.lpfnWndProc = DummyGL_WindowProc;
+dummygl_wnd_class.cbClsExtra = 0;
+dummygl_wnd_class.cbWndExtra = 0;
+dummygl_wnd_class.hInstance = hInstance;
+dummygl_wnd_class.hIcon = NULL;
+dummygl_wnd_class.hCursor = NULL;
+dummygl_wnd_class.hbrBackground = 0;
+dummygl_wnd_class.lpszMenuName = NULL;
+dummygl_wnd_class.lpszClassName = dummygl_window_class_name;
+if(RegisterClassA(&dummygl_wnd_class) == 0) {
+      DWORD win32_error_val = GetLastError();
+      printf("ERROR: RegisterClassA() failed to register window class: %s - win32 error code: %ld\n", dummygl_window_class_name, win32_error_val);
+}
+
+HWND dummygl_window_handle = CreateWindowA
+      (dummygl_window_class_name,
+       "dummygl_window",
+       WS_DISABLED,
+       CW_USEDEFAULT,
+       CW_USEDEFAULT,
+       CW_USEDEFAULT,
+       CW_USEDEFAULT,
+       NULL,
+       NULL,
+       hInstance,
+       NULL);
+if(dummygl_window_handle == NULL) {
+      DWORD win32_error_val = GetLastError();
+      printf("ERROR: CreateWindowA() failed to create dummygl window - win32 error code: %ld\n", win32_error_val);
+      return 1;
+}
+
+HDC dummygl_DC = GetDC(dummygl_window_handle);
+if(dummygl_DC == NULL) {
+      printf("ERROR: GetDC() failed to get DC for dummygl window\n");
+      return 1;
+}
+/* @! */
+
+
+
+
+/* @@ creating dummy GL context */
+
+/* it doesn't matter what the pixel format descriptor members are, just as long as this gets us a context, so we just pick members that would give us a high chance of getting a context on every possible system */
+PIXELFORMATDESCRIPTOR dummygl_pfd;
+dummygl_pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
+dummygl_pfd.nVersion = 1;
+dummygl_pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
+dummygl_pfd.iPixelType = PFD_TYPE_RGBA;
+dummygl_pfd.cColorBits = 32;
+dummygl_pfd.cRedBits = 0;
+dummygl_pfd.cRedShift = 0;
+dummygl_pfd.cGreenBits = 0;
+dummygl_pfd.cGreenShift = 0;
+dummygl_pfd.cBlueBits = 0;
+dummygl_pfd.cBlueShift = 0;
+dummygl_pfd.cAlphaBits = 0;
+dummygl_pfd.cAlphaShift = 0;
+dummygl_pfd.cAccumBits = 0;
+dummygl_pfd.cAccumRedBits = 0;
+dummygl_pfd.cAccumGreenBits = 0;
+dummygl_pfd.cAccumBlueBits = 0;
+dummygl_pfd.cAccumAlphaBits = 0;
+dummygl_pfd.cDepthBits = 24;
+dummygl_pfd.cStencilBits = 8;
+dummygl_pfd.cAuxBuffers = 0;
+dummygl_pfd.iLayerType = PFD_MAIN_PLANE;
+dummygl_pfd.bReserved = 0;
+dummygl_pfd.dwLayerMask = 0;
+dummygl_pfd.dwVisibleMask = 0;
+dummygl_pfd.dwDamageMask = 0;
+
+int dummygl_pixelformat_index = ChoosePixelFormat(dummygl_DC, &dummygl_pfd);
+if(dummygl_pixelformat_index == 0) {
+      DWORD win32_error_val = GetLastError();
+      printf("ERROR: ChoosePixelFormat() failed to get a pixel format that matched - win32 error code: %ld\n", win32_error_val);
+      return 1;
+}
+
+if(SetPixelFormat(dummygl_DC, dummygl_pixelformat_index, &dummygl_pfd) != TRUE) {
+      DWORD win32_error_val = GetLastError();
+      printf("ERROR: SetPixelFormat() failed to set the pixel format - win32 error code: %ld\n", win32_error_val);
+      return 1;
+}
+
+HGLRC dummygl_context = wglCreateContext(dummygl_DC);
+if(dummygl_context == NULL) {
+      DWORD win32_error_val = GetLastError();
+      printf("ERROR: wglCreateContext() failed to create a dummy GL context - win32 error code: %ld\n", win32_error_val);
+      return 1;
+}
+if(wglMakeCurrent(dummygl_DC, dummygl_context) != TRUE) {
+      DWORD win32_error_val = GetLastError();
+      printf("ERROR: wglMakeCurrent() failed to make context current - win32 error code: %ld\n", win32_error_val);
+      return 1;
+}
+/* @! */</div>
+
+  
+<div class="he">References</div>
+<ul>
+  <li>MSDN tutorial for using MSVC on the command line: <a href="https://learn.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=msvc-170">https://learn.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=msvc-170</a></li>
+  <li>Build Tools for Visual Studio: <a href="https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2022">https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2022</a></li>
+  <li>Khronos OpenGL registry: <a href="https://registry.khronos.org/OpenGL/index_gl.php">https://registry.khronos.org/OpenGL/index_gl.php</a></li>
+  <li>Khronos Opengl Context Creation Tutorial: <a href="https://www.khronos.org/opengl/wiki/Tutorial:_OpenGL_3.0_Context_Creation_(GLX)">https://www.khronos.org/opengl/wiki/Tutorial:_OpenGL_3.0_Context_Creation_(GLX)</a></li>
+  <li>Khronos tutorial on loading OpenGL functions: <a href="https://www.khronos.org/opengl/wiki/Load_OpenGL_Functions">https://www.khronos.org/opengl/wiki/Load_OpenGL_Functions</a></li>
+  <li>The amazing and classic learnOpenGL tutorial: <a href="https://learnopengl.com/">https://learnopengl.com/</a></li>
+</ul>
+
+
+
+
+</div>
