@@ -1,6 +1,6 @@
 body {
     margin: 0px; /* this ensures that there is no default whitespace so my website can actually cover the entire page */
-    background-color: hsl(206, 15%, 14%);
+    background-color: hsl(206, 10%, 5%);
     font-family: "Arial";
     font-size: 13pt;
     color: hsl(186, 0%, 92%);
@@ -12,71 +12,78 @@ body {
 }
 
 
+.main_column {
+    background-color: hsl(206, 12%, 14%);
+    /* width: 940px; */
+    width: 1220px;
+    margin: auto;
+    padding-bottom: 600px;
+}
+
 
 .blog_header {
-    /* background-color: hsl(210, 10%, 12%); */
-    background-color: hsl(210, 10%, 07%);
-    text-align: center;
-    padding-bottom: 60px;
-    padding-top: 100px;
-    /* border-left: solid 500px; */
-    /* border-right: solid 500px; */
-    /* border-color: hsl(204, 38%, 16%); *\/ */
+    background-color: hsl(206, 10%, 10%);
+    padding-left: 50px;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    border-bottom: solid 1px;
+    border-color: hsl(202, 13%, 35%);
 }
 
 .blog_title {
-    color: hsl(200, 40%, 77%);
-    word-spacing: 12px;
-    letter-spacing: 5px;
-    font-size: 26pt;
+    color: hsl(200, 30%, 80%);
+    word-spacing: 4px;
+    letter-spacing: 3px;
+    font-size: 22pt;
     font-family: "Times New Roman";
-    padding-bottom: 7px;
 }
 
-.header_text {
-    padding-top: 5px;
-    display: flex;
-    justify-content: center;
+.blog_header_text {
+    font-family: "Times New Roman";
     font-size: 11pt;
+    color: hsl(207, 10%, 50%);
 }
 
 
+.sub_header {
+    display: grid;
+    grid-template-columns: 940px 230px;
+}
 
 .main_section {
-    width: 840px;
-    margin: auto;
-    margin-top: 40px;
-    padding-bottom: 600px;
     line-height: 1.7;
     padding-left: 50px;
     padding-right: 50px;
 }
 
+.sidebar {
+}
+
+
+
 
 .post_title {
-    padding: 20px;
-    padding-left: 20px;
-    padding-bottom: 20px;
-    /* border-bottom: solid 2px; */
-    border-left: solid 12px;
-    border-color: hsl(200, 25%, 25%);
-    background-color: hsl(199, 16%, 19%);
-    /* margin-bottom: 40px; */
+    margin-top: 50px;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px;
+    border-color: hsl(202, 13%, 35%);
 }
 
 .post_title_heading {
-    /* font-size: 1.5em; */
-    font-size: 1.4em;
+    font-size: 1.6em;
     font-weight: bold;
-    line-height: 1.4;
+    line-height: 1.3;
     color: hsl(193, 60%, 80%);
-    /* color: hsl(185, 100%, 85%); */
-    margin-bottom: 8px;
+    padding-bottom: 5px;
 }
 
 .post_title_subtext {
+    color: hsl(193, 07%, 50%);
     font-size: 0.8em;
 }
+
+
 
 
 .post_body {
@@ -87,7 +94,8 @@ body {
     margin-top: 40px;
     font-weight: bold;
     font-size: 1.2em;
-    color: hsl(193, 90%, 70%);
+    /* color: hsl(193, 90%, 70%); */
+    color: hsl(193, 60%, 80%);
     border-bottom: solid 1px;
     padding-bottom: 0px;
     border-color: hsl(202, 13%, 35%);
