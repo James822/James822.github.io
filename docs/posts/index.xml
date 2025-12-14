@@ -2,31 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on James Spratt</title>
-    <link>http://localhost:1313/posts/</link>
+    <link>https://james822.github.io/posts/</link>
     <description>Recent content in Posts on James Spratt</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <managingEditor>JamesSpratt.business@protonmail.com (James Spratt)</managingEditor>
     <webMaster>JamesSpratt.business@protonmail.com (James Spratt)</webMaster>
     <copyright>© 2025 James Spratt</copyright>
-    <lastBuildDate>Sun, 14 Dec 2025 16:17:42 -0500</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 14 Dec 2025 16:17:42 -0500</lastBuildDate><atom:link href="https://james822.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Introduction to Group Theory Part 1: Permutations</title>
-      <link>http://localhost:1313/posts/example_post/</link>
-      <pubDate>Sun, 14 Dec 2025 16:17:42 -0500</pubDate>
-      <author>JamesSpratt.business@protonmail.com (James Spratt)</author>
-      <guid>http://localhost:1313/posts/example_post/</guid>
-      <description></description>
-      
-    </item>
-    
-    <item>
-      <title>Introduction to Group Theory Part 1: Permutations</title>
-      <link>http://localhost:1313/posts/group_theory_part_1/</link>
+      <link>https://james822.github.io/posts/group_theory_part_1/</link>
       <pubDate>Sun, 09 Mar 2025 00:00:00 +0000</pubDate>
       <author>JamesSpratt.business@protonmail.com (James Spratt)</author>
-      <guid>http://localhost:1313/posts/group_theory_part_1/</guid>
+      <guid>https://james822.github.io/posts/group_theory_part_1/</guid>
       <description></description>
       
     </item>
