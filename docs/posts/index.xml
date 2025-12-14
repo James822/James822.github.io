@@ -4,16 +4,22 @@
     <title>Posts on James Spratt</title>
     <link>https://james822.github.io/posts/</link>
     <description>Recent content in Posts on James Spratt</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sun, 09 Mar 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://james822.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>JamesSpratt.business@protonmail.com (James Spratt)</managingEditor>
+    <webMaster>JamesSpratt.business@protonmail.com (James Spratt)</webMaster>
+    <copyright>© 2025 James Spratt</copyright>
+    <lastBuildDate>Sun, 14 Dec 2025 16:17:42 -0500</lastBuildDate><atom:link href="https://james822.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    
     <item>
       <title>Introduction to Group Theory Part 1: Permutations</title>
       <link>https://james822.github.io/posts/group_theory_part_1/</link>
       <pubDate>Sun, 09 Mar 2025 00:00:00 +0000</pubDate>
+      <author>JamesSpratt.business@protonmail.com (James Spratt)</author>
       <guid>https://james822.github.io/posts/group_theory_part_1/</guid>
-      <description>&lt;p&gt;I&amp;rsquo;ve recently taken a course in group theory, a branch of abstract algebra that studies the mathematical structures known as &lt;strong&gt;groups&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Abstract algebra is a fascinating study in mathematics, as it unifies concepts previously scattered in different areas. Boolean algbera for example is the mathematical structure that underlies working with operations on any kind of binary system. Propositional logic, digital circuit design (logic gates), and even set operations are all forms of boolean algebra. Set operations, propositonal logic, and the design of combinational circuits may seem disparate; but their structure is essentially the same.&lt;/p&gt;</description>
+      <description></description>
+      
     </item>
+    
   </channel>
 </rss>

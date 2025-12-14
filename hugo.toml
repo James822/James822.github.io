@@ -1,5 +1,0 @@
-baseURL = 'https://james822.github.io/'
-languageCode = 'en-us'
-title = 'James Spratt'
-theme = 'ananke'
-publishDir = 'docs'

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://james822.github.io/sitemap.xml
