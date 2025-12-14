@@ -17,9 +17,9 @@ title = "James Spratt"
 [params.author]
   name = "James Spratt"
   email = "JamesSpratt.business@protonmail.com"
-  image = "img/blowfish_logo.png"
+  image = "img/final.png"
   imageQuality = 96
-  headline = "Aspiring Game Developer"
+  headline = "Graphics Programmer, Designer, Creator"
   bio = "Placeholder Bio"
   links = [
     { email = "JamesSpratt.business@protonmail.com" },

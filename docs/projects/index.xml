@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Projects on James Spratt</title>
+    <link>http://localhost:1313/projects/</link>
+    <description>Recent content in Projects on James Spratt</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>JamesSpratt.business@protonmail.com (James Spratt)</managingEditor>
+    <webMaster>JamesSpratt.business@protonmail.com (James Spratt)</webMaster>
+    <copyright>© 2025 James Spratt</copyright>
+    <lastBuildDate>Sun, 14 Dec 2025 17:54:24 -0500</lastBuildDate><atom:link href="http://localhost:1313/projects/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Interest Simulator</title>
+      <link>http://localhost:1313/projects/interest_simulator/</link>
+      <pubDate>Sun, 14 Dec 2025 17:54:24 -0500</pubDate>
+      <author>JamesSpratt.business@protonmail.com (James Spratt)</author>
+      <guid>http://localhost:1313/projects/interest_simulator/</guid>
+      <description></description>
+      
+    </item>
+    
+  </channel>
+</rss>
