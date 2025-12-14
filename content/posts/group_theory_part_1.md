@@ -1,6 +1,6 @@
 +++
 date = '2025-03-09'
-draft = true
+draft = false
 title = 'Introduction to Group Theory Part 1: Permutations'
 +++
 
