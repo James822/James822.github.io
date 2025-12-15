@@ -1,16 +1,25 @@
-html {
-    font-size: 12pt;
-}
+/* html { */
+/*     font-size: 12pt; */
+/* } */
 
 .max-w-7xl {
-    max-width: 85rem !important;
+    max-width: 1400px !important;
+}
+
+.prose {
+    font-size: 12pt;
+    /* line-height: 1.75rem; */
 }
 
 .max-w-prose {
-    max-width: 50rem;
+    max-width: 840px;
     /* 	       max-w-full */
     /* width: a; */
     /* max-width: 50rem !important; */
+}
+
+code {
+    text-wrap: wrap;
 }
 
 /* .prose { */

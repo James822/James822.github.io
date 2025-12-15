@@ -1,0 +1,1642 @@
+<!doctype html>
+<html
+  lang="en"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="light"
+  data-auto-appearance="true"><head>
+  <meta charset="utf-8">
+  
+    <meta http-equiv="content-language" content="en">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color">
+
+  
+  
+    <title>Creating an X11 Window and OpenGL Context on Linux From Scratch &middot; James Spratt</title>
+    <meta name="title" content="Creating an X11 Window and OpenGL Context on Linux From Scratch &middot; James Spratt">
+  
+
+  
+  
+  
+  
+  
+  <link rel="canonical" href="https://james822.github.io/posts/x11_window_opengl/">
+  
+
+  
+  
+    <meta name="author" content="James Spratt">
+  
+  
+    
+      
+        
+          <link href="JamesSpratt.business@protonmail.com" rel="me">
+        
+      
+    
+      
+        
+          <link href="https://github.com/james822" rel="me">
+        
+      
+    
+      
+        
+          <link href="https://linkedin.com/in/james-spratt-b4b619203" rel="me">
+        
+      
+    
+  
+
+  
+  <meta property="og:url" content="https://james822.github.io/posts/x11_window_opengl/">
+  <meta property="og:site_name" content="James Spratt">
+  <meta property="og:title" content="Creating an X11 Window and OpenGL Context on Linux From Scratch">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-04-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-04-05T00:00:00+00:00">
+
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Creating an X11 Window and OpenGL Context on Linux From Scratch">
+
+  
+  
+  
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+  
+    
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.66c506a5c4f6511d889183b31701ff2539c3b74c87f6941ac97de8ae693436d96d1a28c111af25968dc239d84011f367293a7f5707e3274c70dcdcd411a4d4c4.css"
+    integrity="sha512-ZsUGpcT2UR2IkYOzFwH/JTnDt0yH9pQayX3ormk0NtltGijBEa8llo3COdhAEfNnKTp/VwfjJ0xw3NzUEaTUxA==">
+
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/appearance.min.6f41174b3a05b680820fe08cadbfa5fb7a7ca347b76a0955cdc68b9d8aca1ce24f0547e138cea33bcc7904d551a90afcb1cc7f2d9fe8557075d501419046c08c.js"
+    integrity="sha512-b0EXSzoFtoCCD&#43;CMrb&#43;l&#43;3p8o0e3aglVzcaLnYrKHOJPBUfhOM6jO8x5BNVRqQr8scx/LZ/oVXB11QFBkEbAjA=="></script>
+  
+  
+  
+  
+  
+  
+    
+    <script src="/lib/zoom/zoom.min.umd.a527109b68c082a70f3697716dd72a9d5aa8b545cf800cecbbc7399f2ca6f6e0ce3e431f2062b48bbfa47c9ea42822714060bef309be073f49b9c0e30d318d7b.js" integrity="sha512-pScQm2jAgqcPNpdxbdcqnVqotUXPgAzsu8c5nyym9uDOPkMfIGK0i7&#43;kfJ6kKCJxQGC&#43;8wm&#43;Bz9JucDjDTGNew=="></script>
+  
+
+  
+  
+  
+    
+  
+  
+    
+  
+  
+  
+  
+  
+  
+  
+    
+    <script
+      defer
+      type="text/javascript"
+      id="script-bundle"
+      src="/js/main.bundle.min.9df4fc14d50efcc9aa4cfc2b6f348e365f421f5ad491278f8f48c0360cf2f93f08882fda6da162d7ace8e5add57c2df4ac46bd3861306b1d4c452cd31f448d64.js"
+      integrity="sha512-nfT8FNUO/MmqTPwrbzSONl9CH1rUkSePj0jANgzy&#43;T8IiC/abaFi16zo5a3VfC30rEa9OGEwax1MRSzTH0SNZA=="
+      data-copy="Copy"
+      data-copied="Copied"></script>
+  
+
+  
+  
+
+<script src="/lib/jquery/jquery.slim.min.b0dca576e87d7eaa5850ae4e61759c065786cdb6489d68fcc82240539eebd5da522bdb4fda085ffd245808c8fe2acb2516408eb774ef26b5f6015fc6737c0ea8.js" integrity="sha512-sNylduh9fqpYUK5OYXWcBleGzbZInWj8yCJAU57r1dpSK9tP2ghf/SRYCMj&#43;KsslFkCOt3TvJrX2AV/Gc3wOqA=="></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+  
+  
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+  
+
+  
+  <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "Posts",
+    "name": "Creating an X11 Window and OpenGL Context on Linux From Scratch",
+    "headline": "Creating an X11 Window and OpenGL Context on Linux From Scratch",
+    
+    
+    "inLanguage": "en",
+    "url" : "https://james822.github.io/posts/x11_window_opengl/",
+    "author" : {
+      "@type": "Person",
+      "name": "James Spratt"
+    },
+    "copyrightYear": "2025",
+    "dateCreated": "2025-04-05T00:00:00\u002b00:00",
+    "datePublished": "2025-04-05T00:00:00\u002b00:00",
+    
+    "dateModified": "2025-04-05T00:00:00\u002b00:00",
+    
+    
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "6863"
+  }]
+  </script>
+
+
+
+  
+  
+    
+
+
+
+
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <body class="flex flex-col h-screen m-auto leading-7 max-w-7xl px-6 sm:px-14 md:px-24 lg:px-32 text-lg bg-neutral text-neutral-900 dark:bg-neutral-800 dark:text-neutral scrollbar-thin scrollbar-track-neutral-200 scrollbar-thumb-neutral-400 dark:scrollbar-track-neutral-800 dark:scrollbar-thumb-neutral-600">
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 focus:translate-y-0 dark:bg-neutral-600"
+        href="#main-content">
+        <span class="font-bold text-primary-600 pe-2 dark:text-primary-400">&darr;</span>
+        Skip to main content
+      </a>
+    </div>
+    
+    
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div
+  class="main-menu flex items-center justify-between py-6 md:justify-start gap-x-3 pt-[2px] pr-2 md:pr-4 pb-[3px] pl-0">
+  
+  
+
+  <div class="flex flex-1 items-center justify-between">
+    <nav class="flex space-x-3">
+      
+        <a href="/" class="text-base font-medium">
+          James Spratt
+        </a>
+      
+    </nav>
+    
+  <nav class="hidden md:flex items-center gap-x-5 md:ml-12 h-12">
+    
+      
+        
+  <a
+  href="/posts/"
+  
+  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+  aria-label="Recent Posts"
+  title="Posts">
+  
+  
+    <p class="text-base font-medium">
+      Recent Posts
+    </p>
+  
+</a>
+
+
+
+      
+        
+  <a
+  href="/projects/"
+  
+  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+  aria-label="Projects"
+  title="Projects">
+  
+  
+    <p class="text-base font-medium">
+      Projects
+    </p>
+  
+</a>
+
+
+
+      
+    
+
+    
+
+    
+
+    
+      <button
+        id="search-button"
+        aria-label="Search"
+        class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+        title="Search (/)">
+        <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+      </button>
+    
+
+    
+      <div class=" flex items-center">
+        <button
+          id="appearance-switcher"
+          aria-label="Dark mode switcher"
+          type="button"
+          class="text-base hover:text-primary-600 dark:hover:text-primary-400">
+          <div class="flex items-center justify-center dark:hidden">
+            <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+</span>
+          </div>
+          <div class="items-center justify-center hidden dark:flex">
+            <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+</span>
+          </div>
+        </button>
+      </div>
+    
+  </nav>
+
+    
+  <div class="flex md:hidden items-center gap-x-5 md:ml-12 h-12">
+    <span></span>
+
+    
+
+    
+
+    
+      <button
+        id="search-button-mobile"
+        aria-label="Search"
+        class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+        title="Search (/)">
+        <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+      </button>
+    
+
+    
+      <button
+        id="appearance-switcher-mobile"
+        aria-label="Dark mode switcher"
+        type="button"
+        class="text-base hover:text-primary-600 dark:hover:text-primary-400 me-1">
+        <div class="flex items-center justify-center dark:hidden">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+</span>
+        </div>
+        <div class="items-center justify-center hidden dark:flex">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+</span>
+        </div>
+      </button>
+    
+  </div>
+
+  </div>
+  
+  <div class="-my-2 md:hidden">
+    <div id="menu-button" class="block">
+      
+        <div class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+</span>
+        </div>
+        <div
+          id="menu-wrapper"
+          class="fixed inset-0 z-30 invisible w-screen h-screen m-0 overflow-auto transition-opacity opacity-0 cursor-default bg-neutral-100/50 backdrop-blur-sm dark:bg-neutral-900/50 pt-[5px]">
+          <ul
+            class="flex space-y-2 mt-3 flex-col items-end w-full px-6 py-6 mx-auto overflow-visible list-none text-end max-w-7xl">
+            <li id="menu-close-button">
+              <span
+                class="cursor-pointer inline-block align-text-bottom hover:text-primary-600 dark:hover:text-primary-400">
+                <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span>
+              </span>
+            </li>
+
+            
+              
+  <li class="mt-1">
+  <a
+    href="/posts/"
+    
+    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+    aria-label="Recent Posts"
+    title="Posts">
+    
+    
+      <p class="text-bg font-bg">
+        Recent Posts
+      </p>
+    
+  </a>
+</li>
+
+
+
+            
+              
+  <li class="mt-1">
+  <a
+    href="/projects/"
+    
+    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+    aria-label="Projects"
+    title="Projects">
+    
+    
+      <p class="text-bg font-bg">
+        Projects
+      </p>
+    
+  </a>
+</li>
+
+
+
+            
+
+          </ul>
+          
+        </div>
+      
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+    
+    <div class="relative flex flex-col grow">
+      <main id="main-content" class="grow">
+        
+  
+  <article>
+    
+    
+
+    
+    <header id="single_header" class="mt-5 max-w-prose">
+      
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        Creating an X11 Window and OpenGL Context on Linux From Scratch
+      </h1>
+      <div class="mt-1 mb-6 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+        
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2025-04-05T00:00:00&#43;00:00">5 April 2025</time>
+    
+
+    
+    
+  </div>
+
+  
+
+  
+  
+
+  
+  
+
+
+
+      </div>
+      
+        
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+      
+    </header>
+
+    
+    <section class="flex flex-col max-w-full mt-0 prose dark:prose-invert lg:flex-row">
+      
+      
+      
+      
+      
+        <div class="order-first lg:ml-auto px-0 lg:order-last lg:ps-8 lg:max-w-2xs">
+          <div class="toc ps-5 print:hidden lg:sticky lg:top-10">
+            
+              <details
+  open
+  id="TOCView"
+  class="toc-right mt-0 overflow-y-auto overscroll-contain scrollbar-thin scrollbar-track-neutral-200 scrollbar-thumb-neutral-400 dark:scrollbar-track-neutral-800 dark:scrollbar-thumb-neutral-600 rounded-lg -ms-5 ps-5 pe-2 hidden lg:block">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 -ms-5 ps-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
+    Table of Contents
+  </summary>
+  <div
+    class="min-w-[220px] py-2 border-dotted border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#x11--glx">X11 &amp; GLX</a>
+      <ul>
+        <li><a href="#documentation-for-x11xlib-and-glx">Documentation for X11/Xlib and GLX</a></li>
+      </ul>
+    </li>
+    <li><a href="#starter-program-and-compilation-with-gcc">Starter Program and Compilation with GCC</a></li>
+    <li><a href="#setting-up-x11-display">Setting up X11 Display</a></li>
+    <li><a href="#setting-up-glx">Setting up GLX</a>
+      <ul>
+        <li><a href="#checking-for-glx-extensions">Checking for GLX extensions</a></li>
+        <li><a href="#loading-glx-extension-procedures">Loading GLX extension procedures</a></li>
+        <li><a href="#selecting-glx-framebuffer-config">Selecting GLX framebuffer config</a></li>
+      </ul>
+    </li>
+    <li><a href="#creating-an-x11-window-and-glx-window">Creating an X11 Window and GLX Window</a></li>
+    <li><a href="#creating-a-glx-context-opengl-context-and-making-it-current">Creating a GLX Context (OpenGL context) and making it current</a>
+      <ul>
+        <li><a href="#loading-opengl-procedures">Loading OpenGL procedures</a></li>
+      </ul>
+    </li>
+    <li><a href="#configuring-windowframebuffer-settings">Configuring Window/Framebuffer Settings</a></li>
+    <li><a href="#basic-opengl-hello-triangle">Basic OpenGL Hello Triangle</a>
+      <ul>
+        <li><a href="#x-event-loop--basic-rendering">X Event Loop &amp; Basic Rendering</a></li>
+      </ul>
+    </li>
+    <li><a href="#addendums">Addendums</a>
+      <ul>
+        <li><a href="#glxgetprocaddress-vs-glxgetprocaddressarb">glXGetProcAddress vs glXGetProcAddressARB</a></li>
+        <li><a href="#glxwindow-vs-x-window">GLXWindow vs X Window</a></li>
+      </ul>
+    </li>
+    <li><a href="#source-code-and-gcc-options">Source Code and GCC Options</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+<details class="toc-inside mt-0 overflow-hidden rounded-lg -ms-5 ps-5 lg:hidden">
+  <summary
+    class="py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 -ms-5 ps-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
+    Table of Contents
+  </summary>
+  <div
+    class="py-2 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#x11--glx">X11 &amp; GLX</a>
+      <ul>
+        <li><a href="#documentation-for-x11xlib-and-glx">Documentation for X11/Xlib and GLX</a></li>
+      </ul>
+    </li>
+    <li><a href="#starter-program-and-compilation-with-gcc">Starter Program and Compilation with GCC</a></li>
+    <li><a href="#setting-up-x11-display">Setting up X11 Display</a></li>
+    <li><a href="#setting-up-glx">Setting up GLX</a>
+      <ul>
+        <li><a href="#checking-for-glx-extensions">Checking for GLX extensions</a></li>
+        <li><a href="#loading-glx-extension-procedures">Loading GLX extension procedures</a></li>
+        <li><a href="#selecting-glx-framebuffer-config">Selecting GLX framebuffer config</a></li>
+      </ul>
+    </li>
+    <li><a href="#creating-an-x11-window-and-glx-window">Creating an X11 Window and GLX Window</a></li>
+    <li><a href="#creating-a-glx-context-opengl-context-and-making-it-current">Creating a GLX Context (OpenGL context) and making it current</a>
+      <ul>
+        <li><a href="#loading-opengl-procedures">Loading OpenGL procedures</a></li>
+      </ul>
+    </li>
+    <li><a href="#configuring-windowframebuffer-settings">Configuring Window/Framebuffer Settings</a></li>
+    <li><a href="#basic-opengl-hello-triangle">Basic OpenGL Hello Triangle</a>
+      <ul>
+        <li><a href="#x-event-loop--basic-rendering">X Event Loop &amp; Basic Rendering</a></li>
+      </ul>
+    </li>
+    <li><a href="#addendums">Addendums</a>
+      <ul>
+        <li><a href="#glxgetprocaddress-vs-glxgetprocaddressarb">glXGetProcAddress vs glXGetProcAddressARB</a></li>
+        <li><a href="#glxwindow-vs-x-window">GLXWindow vs X Window</a></li>
+      </ul>
+    </li>
+    <li><a href="#source-code-and-gcc-options">Source Code and GCC Options</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+
+
+            
+          </div>
+        </div>
+      
+
+
+      <div class="min-w-0 min-h-0 max-w-fit">
+        
+
+        <div class="article-content max-w-prose mb-20">
+          <p>Let me start off by saying that it&rsquo;s not that difficult to open a native window with no libraries or other extra help. Sure, it&rsquo;s not as easy as using a library like SDL, but it&rsquo;s also not so complicated that you can&rsquo;t at least understand how it works. Don&rsquo;t get me wrong, I&rsquo;m all for SDL and other similar libraries such as GLFW, but it&rsquo;s certainly a good thing to at least understand how these libraries operate.</p>
+<p>Chances are that if you&rsquo;re here, you&rsquo;re already pursuing something plenty difficult enough that manually opening a native window and creating an OpenGL context is not something that deters you anyways, but I still emphasize that it is not difficult to do so. I also consider the proposition that doing this is a &ldquo;waste of time&rdquo; to be absurd, and one that could only come from a place of ignorance, perpetrated by people who lack understanding of how to do it themselves.</p>
+<p>In fact, this generally negative attitude towards &ldquo;low-level&rdquo; programming among the software people community is the exact reason why documentation is generally scarce on this subject, precisely because everyone just uses a library and thus few people know how to do it manually. It&rsquo;s quite sad that new and curious programmers are discouraged to delve into native programming by so-called &ldquo;senior software engineers&rdquo;, who themselves only issue these warnings out of their own ignorance and incompetence. Either way, it is the sparsity of documentation surrounding this subject that has prompted me to write this tutorial and give a full overview of what is needed to get started.</p>
+<p>Furthermore, an important reason why I am making this tutorial is because the existing ones surrounding this subject are also full of error. I claim to have found some important errors that would set back new developers quite a bit, and I&rsquo;ll go over exactly what these errors are in this tutorial. Still, I&rsquo;m grateful for the tutorials that exist and have referenced them extensively in this post.</p>
+<p>Alright, let&rsquo;s actually get into to it!</p>
+
+<h2 class="relative group">X11 &amp; GLX
+    <div id="x11--glx" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#x11--glx" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>To talk about opening a native window on any platform we need to understand what the native windowing system is. In the case of Microsoft Windows, the windowing system is built into the general platform API known as win32. In the case of linux, windowing systems are seperate from the kernel (properly speaking, seperate from linux itself), but the most widely used windowing system across different linux distributions is <strong>X11</strong> by far. Wayland is another option, but I won&rsquo;t be touching that.</p>
+<p>X11, or <em>The X Window system</em> is a bitmap display system based on a client-server architecture with a specified protocol called the &ldquo;X Protocol&rdquo;. Applications communicate to the X Sever (which may be on the same device, or across a network) with commands to peform actions.</p>
+<p>Programming X11 is therefore writing a client application that can communicate with an X11 server, via the X Protocol. Typically, the X sever is on the same device as the client, and in fact we will be counting on that in our OpenGL application as we don&rsquo;t want to consider networked graphics applications.</p>
+<p>It is within possibility to learn the X Protocol and manually implement it within your client application, but this is beyond what I would consider practical. Rather than that, Xlib is provided for us as a C library that implements the X Protocol so that we can communicate between server and client with an API interface. This is the option I will be going with for this tutorial, but the X protocol is standardized and you absolutely could go look at it for yourself.</p>
+<p>In order to create and use an OpenGL context, we will need an extension to X11/Xlib called <strong>GLX</strong>, or the <em>OpenGL extension to the X Window System</em>, which is what allows us to create a framebuffer and use it within an OpenGL context. If we were on windows, we would use win32/WGL. GLX is what allows us to do most of the important work to link our X11 Window and OpenGL context so that we can start doing graphics rendering.</p>
+
+<h3 class="relative group">Documentation for X11/Xlib and GLX
+    <div id="documentation-for-x11xlib-and-glx" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#documentation-for-x11xlib-and-glx" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>It&rsquo;s important to be aware of the documentation for the two main APIs involved here, X11/Xlib, and GLX, of which GLX is really just an API extension to Xlib.</p>
+<p>Unfortunately, the documentation for creating a window and GL context with Xlib/GLX is rather spread out all over the place. Further, the documentation that does exist is poor and outdated in some areas, which is part of the motivation for me making this tutorial.</p>
+<p>The Xlib documentation is found here: <a
+  href="https://www.x.org/wiki/ProgrammingDocumentation/"
+    target="_blank"
+  >https://www.x.org/wiki/ProgrammingDocumentation/</a> <a href=""></a>, and the GLX documentation is found within the Khronos OpenGL registry here: <a
+  href="https://registry.khronos.org/OpenGL/index_gl.php"
+    target="_blank"
+  >https://registry.khronos.org/OpenGL/index_gl.php</a>. Even though GLX is a library extension to Xlib, it is listed in the OpenGL Registry which can be somewhat confusing. Out of all the documentation cited in this post, GLX is easily the worst, so I&rsquo;ll do my best to explain it. You should really grab the documentation for Xlib, GLX, and also the OpenGL core spec as well, which can also be found in the Khronos OpenGL registry.</p>
+<p>GLX 1.4 is the latest version and the one we will be using, but the documentation for it is outdated and flawed in many ways. It appears that the maintainers have given up on updating it since probably the early 2010s. For example, this documentation here: <a
+  href="https://registry.khronos.org/OpenGL/extensions/EXT/GLX_EXT_swap_control_tear.txt"
+    target="_blank"
+  >https://registry.khronos.org/OpenGL/extensions/EXT/GLX_EXT_swap_control_tear.txt</a> suggests edits and additions to the GLX 1.4 spec that are not actually present. If you grab the latest spec you won&rsquo;t find these additions or changes anywhere. There are several other examples where these proposed &ldquo;additions&rdquo; are not to be found anywhere with the GLX 1.4 spec found in the Khronos OpenGL registery. It&rsquo;s possible that these extensions were intended for the next version of GLX, so &ldquo;GLX 1.5&rdquo;, but that never came so we are left with somewhat of a mess.</p>
+<p>What this really means for us is that we just need to read the extension documentation alongside the GLX 1.4 spec, which is not really that bad.</p>
+
+<h2 class="relative group">Starter Program and Compilation with GCC
+    <div id="starter-program-and-compilation-with-gcc" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#starter-program-and-compilation-with-gcc" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>I&rsquo;m going to be compiling with GCC and be using C, but you can also follow along in C++ with only a few modificaitions. If you read the Xlib documentation you&rsquo;ll note that most functions are provided as Macros, this is exactly so that either C or C++ can use the macro and get the right function. I just call the functions directly personally.</p>
+<p>Anyways, start with this C code, and name it something like &ldquo;x11_window.c&rdquo;:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#define TRUE 1
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define FALSE 0
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Hello World!</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>then, compile with this command:</p>
+<pre tabindex="0"><code>gcc x11_window.c -o x11_window
+</code></pre><p>run it with:</p>
+<pre tabindex="0"><code>./x11_window
+</code></pre><p>and you should get &ldquo;Hello World!&rdquo; as output.</p>
+<p>Also, at the end of the main function add a cleanup section like this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#define TRUE 1
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define FALSE 0
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>    
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Hello World!</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> <span class="nl">CLEANUP_AND_EXIT</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>for now the cleanup section just returns from the main function. We&rsquo;ll be referring back to this cleanup section later.</p>
+
+<h2 class="relative group">Setting up X11 Display
+    <div id="setting-up-x11-display" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#setting-up-x11-display" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>The first task is to open a connection to the X11 Display Server, the <em>X Server</em>. If no server exists on the host machine (or on the network if we specify a device across the network), then this will fail and we will have no way of displaying anything. We NEED an X server to have an X window, so either prompt the user to install/run the X server or something else.</p>
+<p>Anyways, we can open a connection to the X server and get a Display back using the <code>XOpenDisplay()</code> function.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cm">/* @@ opening connection to X server */</span>
+</span></span><span class="line"><span class="cl"><span class="n">Display</span><span class="o">*</span> <span class="n">display</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">display_exists</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">default_screen_id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">display</span> <span class="o">=</span> <span class="nf">XOpenDisplay</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="n">display</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;ERROR: failed to open X11 display, display name: </span><span class="se">\&#34;</span><span class="s">%s</span><span class="se">\&#34;\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="nf">XDisplayName</span><span class="p">(</span><span class="nb">NULL</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">      <span class="k">goto</span> <span class="n">CLEANUP_AND_EXIT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">display_exists</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">default_screen_id</span> <span class="o">=</span> <span class="nf">XDefaultScreen</span><span class="p">(</span><span class="n">display</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* @! */</span>
+</span></span></code></pre></div><p>make sure to also have <code>#include &lt;X11/Xlib.h&gt;</code> and also link to X11 with GCC by adding the flag: <code>-lX11</code>.</p>
+<p>This code snippet opens a connection to the X Server, and if it succeeds, also grabs the screen ID which we will need later. <code>NULL</code> is passed in to <code>XOpenDisplay()</code> which will give us the default display and screen of the device we are on.</p>
+<p>In the cleanup section, we need to close the display with <code>XCloseDisplay()</code> like this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cm">/* @@ cleanup and program exit */</span>
+</span></span><span class="line"><span class="cl"><span class="nl">CLEANUP_AND_EXIT</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">     <span class="k">if</span><span class="p">(</span><span class="n">display_exists</span> <span class="o">==</span> <span class="n">TRUE</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	   <span class="nf">XCloseDisplay</span><span class="p">(</span><span class="n">display</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">     <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="cm">/* @! */</span>
+</span></span></code></pre></div><p>And that&rsquo;s it for now.</p>
+
+<h2 class="relative group">Setting up GLX
+    <div id="setting-up-glx" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#setting-up-glx" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>Before we open an X11 window or do anything else, we should query X to see if GLX is supported. We do that using the <code>glXQueryExtension()</code> function, and we also need to include GLX with: <code>#include &lt;GL/glx.h&gt;</code>. We also need to link to GLX with GCC using: <code>-lGLX</code>.</p>
+<p>The basic code for setting up GLX is like this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cm">/* @@ glx initial setup */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">error_base</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">event_base</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nf">glXQueryExtension</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">error_base</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">event_base</span><span class="p">)</span> <span class="o">!=</span> <span class="n">True</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;ERROR: GLX extension not supported for this X Server</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">goto</span> <span class="n">CLEANUP_AND_EXIT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">glx_major_version</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">glx_minor_version</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nf">glXQueryVersion</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">glx_major_version</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">glx_minor_version</span><span class="p">)</span> <span class="o">!=</span> <span class="n">True</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;ERROR: glXQueryVersion() failed</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">goto</span> <span class="n">CLEANUP_AND_EXIT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span> <span class="n">glx_major_version</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">||</span> <span class="p">(</span><span class="n">glx_major_version</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">glx_minor_version</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="cm">/* The reason why we require GLX 1.4 (or higher, although it&#39;s doubtful a new version will be released) is because the GLX_ARB_create_context/GLX_ARB_create_context_profile extensions (which we need) requires GLX 1.4, and we need this extension in order to create a modern OpenGL context, which is what we are doing. &#34;Modern&#34; is somewhat of an outdated term as GLX 1.4 was released in 2005/2006, so there&#39;s nothing really unportable as we require the user to have hardware that can at least support this &#34;modern&#34; OpenGL. */</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;ERROR: GLX version is less than 1.4</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">goto</span> <span class="n">CLEANUP_AND_EXIT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* @! */</span>
+</span></span></code></pre></div><p>With this code snippet, we query to see if the GLX extension to X11 is available for this X display using <code>glXQueryExtension()</code>. Then, we check which version of GLX is supported and we make sure it is at least 1.4, otherwise we won&rsquo;t be able to create a modern OpenGL context due to the <code>GLX_ARB_create_context_profile</code> extension requiring GLX 1.4, according to the documentation for the extension found <a
+  href="https://registry.khronos.org/OpenGL/extensions/ARB/GLX_ARB_create_context.txt"
+    target="_blank"
+  >here</a>.</p>
+<p>I won&rsquo;t be considering supporting old or legacy OpenGL in this tutorial, as I view that is a niche topic with less practical application.</p>
+
+<h3 class="relative group">Checking for GLX extensions
+    <div id="checking-for-glx-extensions" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#checking-for-glx-extensions" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>After having made sure we have GLX 1.4 supported, we then need to check to see what extensions are supported. Some extensions are mandatory for creating a modern OpenGL context, but some are also very useful such as querying for swap control which gives us access to double-buffered vsync swapping. Note that GLX extensions are NOT the same thing as OpenGL or GL extensions, they are mutually exclusive with some exceptions. GLX extensions are properly extensions to GLX itself that gives you greater functionality, one of these extensions is <code>GLX_ARB_create_context_profile</code> which is necessary for a core OpenGL profile.</p>
+<p>To query for extensions we use the <code>glXQueryExtensionsString()</code> function, which gives us a space-seperated list of extensions that we can check through. It&rsquo;s a good idea to print out this string and check each extension for yourself to see what kinds of things GLX extensions accomplish.</p>
+<p>For our interests, we only care about two other extensions besides <code>GLX_ARB_create_context_profile</code>, which are <code>GLX_EXT_swap_control</code> and <code>GLX_EXT_swap_control_tear</code>. These two swap control extensions give us normal vsync and adaptive vsync respectively. We don&rsquo;t strictly need them, so you can decide whether they are required for your application or not.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cm">/* @@ Checking for GLX extensions */</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">glx_extensions_string</span> <span class="o">=</span> <span class="nf">glXQueryExtensionsString</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">default_screen_id</span><span class="p">);</span>      
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* @NOTE: GLX_ARB_create_context_profile is absolutely neccessary in order to create a GL context, we cannot proceed without it. Technically, we need only check if GLX_ARB_create_context is supported rather than GLX_ARB_create_context_profile, because the former implies the latter is supported, IF the implementation supports OpenGL 3.2 or later, but we are definitely using a version higher than OpenGL 3.2, version 4 actually. Still, just in case, we explicity check if GLX_ARB_create_context_profile is supported to be as robust as possible. See this documentation for more details: https://registry.khronos.org/OpenGL/extensions/ARB/GLX_ARB_create_context.txt, specifically check the &#34;Dependencies on OpenGL 3.2 and later OpenGL versions&#34; section. */</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nf">search_str_in_str</span><span class="p">(</span><span class="n">glx_extensions_string</span><span class="p">,</span> <span class="s">&#34;GLX_ARB_create_context_profile&#34;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">TRUE</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;ERROR: </span><span class="se">\&#34;</span><span class="s">GLX_ARB_create_context</span><span class="se">\&#34;</span><span class="s"> extension not supported, cannot create GL context!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">goto</span> <span class="n">CLEANUP_AND_EXIT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* EXT_swap_control give us the ability to synchronize the swap (v-sync) by an integer amount of frames greater or equal to 0. */</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nf">search_str_in_str</span><span class="p">(</span><span class="n">glx_extensions_string</span><span class="p">,</span> <span class="s">&#34;GLX_EXT_swap_control&#34;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">TRUE</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;ERROR: </span><span class="se">\&#34;</span><span class="s">GLX_EXT_swap_control</span><span class="se">\&#34;</span><span class="s"> extension not supported!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">goto</span> <span class="n">CLEANUP_AND_EXIT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* This allows us to use adaptive v-sync for when we miss a swap by specifying negative integer intervals. Adaptive vsync is a generally a good compromise with double-buffering. This extension depends upon the GLX_EXT_swap_control extension to be available/supported. */</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nf">search_str_in_str</span><span class="p">(</span><span class="n">glx_extensions_string</span><span class="p">,</span> <span class="s">&#34;GLX_EXT_swap_control_tear&#34;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">TRUE</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;ERROR: </span><span class="se">\&#34;</span><span class="s">GLX_EXT_swap_control_tear</span><span class="se">\&#34;</span><span class="s"> extension not supported!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">goto</span> <span class="n">CLEANUP_AND_EXIT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* @! */</span>
+</span></span></code></pre></div><p>The <code>search_str_in_str()</code> function can be whatever you want, but all it does is find if a string is contained within another string.</p>
+<p>Otherwise, that&rsquo;s basically it for searching for GLX extensions. You can check for any other additional extensions if you like, but we&rsquo;ll be sticking with these three.</p>
+
+<h3 class="relative group">Loading GLX extension procedures
+    <div id="loading-glx-extension-procedures" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#loading-glx-extension-procedures" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>All GLX/GL extensions add functionality in one way or another. Some of them just change how things work, but some of them add new procedures that we have to load at runtime. These are not available at runtime precisely because they are extensions, so depending on the platform, they may or may not be available. Not only that, but the way they are implemented is also different depending on the driver&rsquo;s implementation.</p>
+<p>Supposedly, extensions should function as they are described by the standards, but in reality, there is not universal consistency and sometimes things don&rsquo;t work as expected. This is annoying, but we have to deal with this as graphics programmers and just do our best.</p>
+<p>The most important extension is the <code>GLX_ARB_create_context_profile</code> extension which gives us the function <code>glXCreateContextAttribsARB()</code>, which is what we need to use to create a modern (core profile) OpenGL context.</p>
+<p>Since <code>glXCreateContextAttribsARB()</code> is an extension procedure, we need to load it with function pointers. But how can we load this function? It turns out, GLX provides us with a function <code>glXGetProcAddress()</code> which allows us to load both GLX extension procedures AND OpenGL (GL) extension procedures. There is also the similar <code>glXGetProcAddressARB()</code> function, which only differs in the &ldquo;ARB&rdquo; suffix. The ARB function is the extension function, as this used to be an extension to GLX but is now integrated into GLX 1.4 as a main function.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cm">/* @@ loading GLX extension procedures (we need the &#34;glxext.h&#34; header for the function typedefs and declarations). */</span>
+</span></span><span class="line"><span class="cl"><span class="n">PFNGLXCREATECONTEXTATTRIBSARBPROC</span> <span class="n">glXCreateContextAttribsARB</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PFNGLXSWAPINTERVALEXTPROC</span> <span class="n">glXSwapIntervalEXT</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">glXCreateContextAttribsARB</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFNGLXCREATECONTEXTATTRIBSARBPROC</span><span class="p">)</span><span class="nf">glXGetProcAddress</span><span class="p">((</span><span class="k">const</span> <span class="n">GLubyte</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;glXCreateContextAttribsARB&#34;</span><span class="p">);</span>      
+</span></span><span class="line"><span class="cl"><span class="n">glXSwapIntervalEXT</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFNGLXSWAPINTERVALEXTPROC</span><span class="p">)</span><span class="nf">glXGetProcAddress</span><span class="p">((</span><span class="k">const</span> <span class="n">GLubyte</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;glXSwapIntervalEXT&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="n">glXCreateContextAttribsARB</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;ERROR: glXCreateContextAttribsARB() function pointer NULL, cannot create GL context!</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">goto</span> <span class="n">CLEANUP_AND_EXIT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="n">glXSwapIntervalEXT</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;ERROR: </span><span class="se">\&#34;</span><span class="s">glXSwapIntervalEXT</span><span class="se">\&#34;</span><span class="s"> function pointer NULL</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">goto</span> <span class="n">CLEANUP_AND_EXIT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* @! */</span>
+</span></span></code></pre></div><p>Along with loading the <code>glXCreateContextAttribsARB()</code> proc, we also load the <code>glXSwapIntervalEXT()</code> proc which allows us to specify a swap interval, giving us the ability to control vsync. Of course, since drivers can override this feature (such as if a user forcibly disables vsync in their control panel for their graphics card), then we can&rsquo;t ensure that it actually works exactly as we request it.</p>
+<p>Also, make sure you add <code>#include &lt;GL/glxext&gt;</code> which is the extension header for GLX that gives us the extension procedure typedefs and many other useful things. Make sure to include it AFTER the <code>#include &lt;GL/glx.h&gt;</code> otherwise it won&rsquo;t compile.</p>
+
+<h3 class="relative group">Selecting GLX framebuffer config
+    <div id="selecting-glx-framebuffer-config" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#selecting-glx-framebuffer-config" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>Now that we have the GLX extension procedure(s) loaded, we need to start thinking about creating a window or framebuffer. We need to create an X11 window that is also compatible with OpenGL rendering, specifically with things like double buffering and other information.</p>
+<p>To accomplish this, GLX provides something called a <em>framebuffer config</em> or <code>GLXFBConfig</code>, which encapsulates the information we need to create a consistent window/framebuffer between OpenGL and X11.</p>
+<p>Our task is therefore to select a suitable <code>GLXFBConfig</code>, and we can ask for specific settings such as the size of the GL depth buffer, color-bit depth, double-buffering enabled, etc., to get a set of fb configs that match our desired settings:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cm">/* @@ selecting a GLX FB Config */</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* This fbc attrib array is what specifies the kind of framebuffer we will get, so it&#39;s important to specify everything we need and not leave anything to defaults (unless we don&#39;t care what it is). It&#39;s possible that we specify a configuration that isn&#39;t supported, which means either we need to choose another one that is supported, or we deem the platform to be unsupported by our application. */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">fbc_attribs</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_LEVEL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_DOUBLEBUFFER</span><span class="p">,</span> <span class="n">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_STEREO</span><span class="p">,</span> <span class="n">False</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_RED_SIZE</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_GREEN_SIZE</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_BLUE_SIZE</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_ALPHA_SIZE</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_DEPTH_SIZE</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_STENCIL_SIZE</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_RENDER_TYPE</span><span class="p">,</span> <span class="n">GLX_RGBA_BIT</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_DRAWABLE_TYPE</span><span class="p">,</span> <span class="n">GLX_WINDOW_BIT</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_X_RENDERABLE</span><span class="p">,</span> <span class="n">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_X_VISUAL_TYPE</span><span class="p">,</span> <span class="n">GLX_TRUE_COLOR</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_CONFIG_CAVEAT</span><span class="p">,</span> <span class="n">GLX_NONE</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_TRANSPARENT_TYPE</span><span class="p">,</span> <span class="n">GLX_NONE</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">None</span> <span class="cm">/* we must put this &#34;None&#34; value here as this array is passed in with no size parameter */</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">num_fb_configs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">GLXFBConfig</span> <span class="o">*</span><span class="n">fb_configs</span> <span class="o">=</span> <span class="nf">glXChooseFBConfig</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">default_screen_id</span><span class="p">,</span> <span class="n">fbc_attribs</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">num_fb_configs</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="n">fb_configs</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="o">||</span> <span class="n">num_fb_configs</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;ERROR: glXChooseFBConfig() failed, or it returned no matching fb configs</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">goto</span> <span class="n">CLEANUP_AND_EXIT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">GLXFBConfig</span> <span class="n">best_fb_config</span> <span class="o">=</span> <span class="n">fb_configs</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="cm">/* for now we are just picking the first FBConfig in the array, but you may want to actually sort through the array and select the one to your liking. */</span>
+</span></span><span class="line"><span class="cl"><span class="nf">XFree</span><span class="p">(</span><span class="n">fb_configs</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* @! */</span>
+</span></span></code></pre></div><p>The <code>fbc_attribs</code> is an array of pairs, where the first item is a symbolic constant specifying the attribute, and the second item is the value for that attribute.</p>
+<p>There are many attributes here, I won&rsquo;t go over all of them but some are important which I will detail here:</p>
+<ul>
+<li><code>GLX_DOUBLEBUFFER</code> is a boolean setting for whether we want to have doublebuffering or not. We set it to True because we want double buffering, which is generally what you want.</li>
+<li><code>GLX_RED_SIZE</code>, <code>GLX_GREEN_SIZE</code>, and <code>GLX_BLUE_SIZE</code> set the bit-depth of the red, green, and blue color channels respectively. We want 8-bit color here which is fairly normal, so we set all channels to 8.</li>
+<li><code>GLX_DEPTH_SIZE</code>, and <code>GLX_STENCIL_SIZE</code>, are the sizes of the depth buffer and stencil buffer respectively, which we set to 24 and 8, for a total of 32-bits.</li>
+</ul>
+<p>The other settings are important too, check the GLX/Xlib documentation to see what they mean and to see what the other attribs are.</p>
+<p>Once we have our attrib array, we need to pass that into the <code>glXChooseFBConfig()</code> function and see if there are any framebuffer configs on the system that matches our requested attributes. The call to <code>glXChooseFBConfig()</code> will return a list of GLXFBConfigs or NULL on failure. Then, we just pick the first <code>GLXFBConfig</code> out of the list and save it for later.</p>
+<p>Once we are done, we can free the <code>fb_config</code> array with <code>XFree()</code>. If you&rsquo;re wondering why you can&rsquo;t find <code>XFree()</code> in the GLX 1.4 spec, it&rsquo;s because it&rsquo;s not there. <code>XFree()</code> is an Xlib function, which may seem weird as to why we&rsquo;re using an Xlib function for an array returned by a GLX function. But don&rsquo;t forget, GLX is just an <em>extension</em> to Xlib/X11, so it operates on the same basic inherited things that Xlib does, such as memory mangament in this case. Another thing GLX inherits are the Xlib boolean definitions <code>True</code> and <code>False</code>, which are seperate from my own personal <code>TRUE</code> and <code>FALSE</code>.</p>
+
+<h2 class="relative group">Creating an X11 Window and GLX Window
+    <div id="creating-an-x11-window-and-glx-window" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#creating-an-x11-window-and-glx-window" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>Finally we have what we need to create the Window, the main subject of this tutorial along with an OpenGL context.</p>
+<p>To create an X11 window, we need to use the framebuffer config from before, and we also need to configure some other X11 attributes. We also need to create a GLX window after, which is basically just a pointer to the X11 window that we have, but it does accomplish some specific things. I&rsquo;ve seen tutorials and people on the internet claim that the <code>GLXWindow</code> type is essentially useless, but this is far from true. More on that later anyways.</p>
+<p>The code to do all this is:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cm">/* @@ creating X11 Window and GLX window */</span>
+</span></span><span class="line"><span class="cl"><span class="n">Window</span> <span class="n">parent_window</span> <span class="o">=</span> <span class="nf">XDefaultRootWindow</span><span class="p">(</span><span class="n">display</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">Window</span> <span class="n">window</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">window_width</span> <span class="o">=</span> <span class="mi">960</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">window_height</span> <span class="o">=</span> <span class="mi">540</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">XVisualInfo</span><span class="o">*</span> <span class="n">visual_info</span> <span class="o">=</span> <span class="nf">glXGetVisualFromFBConfig</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">best_fb_config</span><span class="p">);</span> <span class="cm">/* this GLX function gives us the structure we need to pass into X11 window create function so that our GLX fb config is consistent with the X11 window config. */</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="n">visual_info</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;ERROR: glXGetVisualFromFBConfig() failed to get a XVisualInfo struct</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">goto</span> <span class="n">CLEANUP_AND_EXIT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">XSetWindowAttributes</span> <span class="n">window_attributes</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">window_attributes</span><span class="p">.</span><span class="n">background_pixmap</span> <span class="o">=</span> <span class="n">None</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">window_attributes</span><span class="p">.</span><span class="n">background_pixel</span> <span class="o">=</span> <span class="nf">XWhitePixel</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">default_screen_id</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Colormap</span> <span class="n">cmap</span> <span class="o">=</span> <span class="nf">XCreateColormap</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">parent_window</span><span class="p">,</span> <span class="n">visual_info</span><span class="o">-&gt;</span><span class="n">visual</span><span class="p">,</span> <span class="n">AllocNone</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">window_attributes</span><span class="p">.</span><span class="n">colormap</span> <span class="o">=</span> <span class="n">cmap</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">window</span> <span class="o">=</span> <span class="nf">XCreateWindow</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">parent_window</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">window_width</span><span class="p">,</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">window_height</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">visual_info</span><span class="o">-&gt;</span><span class="n">depth</span><span class="p">,</span> <span class="n">InputOutput</span><span class="p">,</span> <span class="n">visual_info</span><span class="o">-&gt;</span><span class="n">visual</span><span class="p">,</span> <span class="n">CWBackPixmap</span> <span class="o">|</span> <span class="n">CWBackPixel</span> <span class="o">|</span> <span class="n">CWColormap</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">window_attributes</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">window_exists</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nf">XFree</span><span class="p">(</span><span class="n">visual_info</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* now we create the GLX window which is basically just a handle to our X11 window, but it does accomplish very important things so we absolutely need it */</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* we need to use the same exact FB config as used to create the context AND to create the X11 window, so we just pass that in here as well. */</span>
+</span></span><span class="line"><span class="cl"><span class="n">GLXWindow</span> <span class="n">glx_window</span> <span class="o">=</span> <span class="nf">glXCreateWindow</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">best_fb_config</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">glx_window_exists</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* from now we use glx_window instead of window for any GLX/GL functions. For normal X functions, we continue to use the normal X window. */</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* @! */</span>
+</span></span></code></pre></div><p>Firstly, we need to get a X11 Visual Config from our previous fb config with the <code>glXGetVisualFromFBConfig()</code> function. It may seem pointless that we have the fb config in the first place when we just convert it to an <code>XVisualInfo</code> struct, but the GLX fb config is necessary for the GLX window, and especially for creating an OpenGL context.</p>
+<p>Then, we need to fill out a <code>XSetWindowAttributes</code> struct which contains some basic properties. I&rsquo;ve only set some basic stuff here like making the window white by default, and getting rid of a backgound pixmap which we don&rsquo;t need.</p>
+<p>We also need a colormap which can be created by a call to <code>XCreateColormap()</code>. I just use the default colormap which is just taken from the parent window. We also need to pass in the <code>visual</code> attribute from the <code>visual_info</code> struct we created from the GLX fb config.</p>
+<p>With those set, we can pass those into the <code>XCreateWindow()</code> function and finally get our window. We also pass in other settings, like the window width and height. Once we have the window we can free the <code>visual_info</code> struct with <code>XFree()</code>.</p>
+<p>Along with the X window, we also need to create a GLX window which is very simple and only requires a call to <code>glXCreateWindow()</code>, and we need to pass in our GLX fb config which we created earlier, as well as the X window we just created.</p>
+<p>From then on, any GLX functions should only use the <code>glx_window</code> variable instead of the X window variable. Use of the latter instead of the former is incorrect, but that is what is commonly seen in many tutorials such as these. Later, I&rsquo;ll go into depth as to why this is necessary. For Xlib functions, use the X window rather than the GLX window.</p>
+<p>Also, since we created the X window and GLX window, we should clean them up in the cleanup section which will now look like this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">     <span class="cm">/* @@ cleanup and program exit */</span>
+</span></span><span class="line"><span class="cl"><span class="nl">CLEANUP_AND_EXIT</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">     <span class="k">if</span><span class="p">(</span><span class="n">glx_window_exists</span> <span class="o">==</span> <span class="n">TRUE</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	   <span class="nf">glXDestroyWindow</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">glx_window</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">     <span class="p">}</span>
+</span></span><span class="line"><span class="cl">     <span class="k">if</span><span class="p">(</span><span class="n">window_exists</span> <span class="o">==</span> <span class="n">TRUE</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	   <span class="nf">XDestroyWindow</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">window</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">     <span class="p">}</span>
+</span></span><span class="line"><span class="cl">     <span class="k">if</span><span class="p">(</span><span class="n">display_exists</span> <span class="o">==</span> <span class="n">TRUE</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	   <span class="nf">XCloseDisplay</span><span class="p">(</span><span class="n">display</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">     <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="cm">/* @! */</span>
+</span></span></code></pre></div><p>If you compile the code, the window won&rsquo;t be visible yet because we haven&rsquo;t made the neccessary call to <code>XMapRaised(display, window)</code> which will display our window and raise it to the top. Even doing this won&rsquo;t work because the X server hasn&rsquo;t synced it&rsquo;s request, so we need to do that with the call: <code>XSync(display, False)</code>, but even then you won&rsquo;t see the window just yet. The window will close as soon as it opens, so we need to add a sleep() call or something like that to see the window.</p>
+<p>You could do this if you want to see the window and make sure that it is working, but delete that code for later because we&rsquo;ll handle this in a different way.</p>
+
+<h2 class="relative group">Creating a GLX Context (OpenGL context) and making it current
+    <div id="creating-a-glx-context-opengl-context-and-making-it-current" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#creating-a-glx-context-opengl-context-and-making-it-current" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>Now we can create an OpenGL context, and we do this with GLX. If it&rsquo;s confusing as to why an OpenGL context is created with GLX rather than OpenGL itself, that&rsquo;s because OpenGL doesn&rsquo;t &ldquo;exist&rdquo; at this point without a context, so something that doesn&rsquo;t exist cannot create itself. Sure, we can include the GL headers, but the actual context state has not been created yet. Furthermore, much about the context or context state is implementation or platform dependent, so it must be created at runtime, hence the need to create a GL context.</p>
+<p>Creating a <em>modern</em> OpenGL context or <em>core profile</em> context is only supported as a (GLX) extension, specifically, the <code>GLX_ARB_create_context_profile</code> we queried for earlier is needed to do so. The Windows equivalent for this is <code>WGL_ARB_create_context_profile</code>.</p>
+<p>The <code>GLX_ARB_create_context_profile</code> gives us the extension procedure <code>glXCreateContextAttribsARB()</code> which is what we need to use for a modern or core profile OpenGL. GLX also provides the functions <code>glXCreateNewContext()</code> and <code>glXCreateContext()</code>, but these functions are for OLD pre-modern OpenGL, so we don&rsquo;t want to use them.</p>
+<p>To create the context, we use the <code>glXCreateContextAttribsARB()</code> function as so:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cm">/* @@ Creating GLX (GL) context, and making context current. */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">context_attribs</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="cm">/* @@ with GLX_CONTEXT_MAJOR_VERSION_ARB and GLX_CONTEXT_MAJOR_MINOR_VERSION, the context creation function may actually give us a higher version as long as it is backwards compatible, so we need to query the real OpenGL version with glGet. If we ask for 4.6, it&#39;s unlikely we&#39;ll get a higher version as they probably won&#39;t update OpenGL further. */</span>
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_CONTEXT_MAJOR_VERSION_ARB</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_CONTEXT_MINOR_VERSION_ARB</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="cm">/* @! */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_CONTEXT_PROFILE_MASK_ARB</span><span class="p">,</span> <span class="n">GLX_CONTEXT_CORE_PROFILE_BIT_ARB</span><span class="p">,</span>	    
+</span></span><span class="line"><span class="cl">      <span class="n">GLX_CONTEXT_FLAGS_ARB</span><span class="p">,</span> <span class="n">GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB</span><span class="p">,</span> <span class="cm">/* @@ Forward compatible bit is set so that we avoid deprecated functions. This is optional and won&#39;t really change anything since OpenGL isn&#39;t going to change. */</span>
+</span></span><span class="line"><span class="cl">      <span class="n">None</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">GLXContext</span> <span class="n">glx_context</span> <span class="o">=</span> <span class="nf">glXCreateContextAttribsARB</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">best_fb_config</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">True</span><span class="p">,</span> <span class="n">context_attribs</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="n">glx_context</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;ERROR: failed to create glx context with glXCreateContextAttribsARB()</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">goto</span> <span class="n">CLEANUP_AND_EXIT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">glx_context_exists</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nf">glXIsDirect</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">glx_context</span><span class="p">)</span> <span class="o">!=</span> <span class="n">True</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;ERROR: OpenGL Context was NOT created in direct mode (DRI). It is not supported to run a networked X server setup with the client and server not on the same device. Otherwise, some other error occured.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">goto</span> <span class="n">CLEANUP_AND_EXIT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nf">glXMakeCurrent</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">glx_window</span><span class="p">,</span> <span class="n">glx_context</span><span class="p">)</span> <span class="o">!=</span> <span class="n">True</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;ERROR: failed to make context current</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>	    
+</span></span><span class="line"><span class="cl">      <span class="k">goto</span> <span class="n">CLEANUP_AND_EXIT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">glx_context_current</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* @! */</span>
+</span></span></code></pre></div><p>First, we fill in an array of attribs <code>context_attribs</code>, which mostly just sets the OpenGL profile major and minor version. Then we pass that, along with our fb_config and some other variables into <code>glXCreateContextAttribsARB()</code>. The <code>NULL</code> is passed in because we don&rsquo;t want to use any shared contexts (we only want one context for this application), and the <code>True</code> is passed in to indicate that we want a Direct Rendering context which is very imporant, we need that if we want any chance of having decent performance.</p>
+<p>Next, we check to make sure using <code>glXIsDirect()</code> that our context is indeed direct, otherwise we exit with failure. Reasons for failing include that the display is not a local X server, or that there are other contexts on the system taking up the max amount of direct contexts supported.</p>
+<p>Finally, we make the context current by a call to <code>glXMakeCurrent()</code> passing in our context, GLX window, and display. This will not work properly with a normal X window, you need to create and use a GLX window.</p>
+<p>Lastly, we need to add this to our cleanup section:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">     <span class="cm">/* @@ cleanup and program exit */</span>
+</span></span><span class="line"><span class="cl"><span class="nl">CLEANUP_AND_EXIT</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">     <span class="k">if</span><span class="p">(</span><span class="n">glx_context_current</span> <span class="o">==</span> <span class="n">TRUE</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">           <span class="cm">/* This function releases the current context when called with appropriate parameters, we have to first make the context not current or released/unbound to be able to destroy it properly */</span>
+</span></span><span class="line"><span class="cl">	   <span class="nf">glXMakeContextCurrent</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">None</span><span class="p">,</span> <span class="n">None</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">     <span class="p">}</span>
+</span></span><span class="line"><span class="cl">     <span class="k">if</span><span class="p">(</span><span class="n">glx_context_exists</span> <span class="o">==</span> <span class="n">TRUE</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	   <span class="nf">glXDestroyContext</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">glx_context</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">     <span class="p">}</span>
+</span></span><span class="line"><span class="cl">     <span class="k">if</span><span class="p">(</span><span class="n">glx_window_exists</span> <span class="o">==</span> <span class="n">TRUE</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	   <span class="nf">glXDestroyWindow</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">glx_window</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">     <span class="p">}</span>
+</span></span><span class="line"><span class="cl">     <span class="k">if</span><span class="p">(</span><span class="n">window_exists</span> <span class="o">==</span> <span class="n">TRUE</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	   <span class="nf">XDestroyWindow</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">window</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">     <span class="p">}</span>
+</span></span><span class="line"><span class="cl">     <span class="k">if</span><span class="p">(</span><span class="n">display_exists</span> <span class="o">==</span> <span class="n">TRUE</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	   <span class="nf">XCloseDisplay</span><span class="p">(</span><span class="n">display</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">     <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="cm">/* @! */</span>
+</span></span></code></pre></div><p>We just added here to make the context uncurrent and then destroy it.</p>
+<p>At this point we are technically done, but there are still a couple of other things.</p>
+
+<h3 class="relative group">Loading OpenGL procedures
+    <div id="loading-opengl-procedures" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#loading-opengl-procedures" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>To use many of the OpenGL procedures, they need to be loaded at runtime. We load GL procedures just like GLX procedures, and there is also a similar extension header to include that is <code>&lt;GL/glext.h&gt;</code>, but we also need to include the headers for OpenGL itself which is <code>&lt;GL/gl.h&gt;</code>, and we also need to link to GL with <code>-lGL</code> in GCC.</p>
+<p>Once that is done, we can load GL procedures with the following code. I haven&rsquo;t loaded every function, but these are a couple of functions that we&rsquo;ll be using for the rest of the tutorial along with some others:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cm">/* @@ loading OpenGL procedures (we need the &#34;glext.h&#34; header for the function typedefs and declarations, &#34;glext.h&#34; and &#34;glxext.h&#34; are NOT the same, they are spelled very similar but the former is for OpenGL and the latter is for GLX). */</span>
+</span></span><span class="line"><span class="cl"><span class="n">PFNGLGETSTRINGIPROC</span> <span class="n">glGetStringi</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PFNGLGENBUFFERSPROC</span> <span class="n">glGenBuffers</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PFNGLBINDBUFFERPROC</span> <span class="n">glBindBuffer</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PFNGLBUFFERDATAPROC</span> <span class="n">glBufferData</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PFNGLCREATESHADERPROC</span> <span class="n">glCreateShader</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PFNGLSHADERSOURCEPROC</span> <span class="n">glShaderSource</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PFNGLCOMPILESHADERPROC</span> <span class="n">glCompileShader</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PFNGLCREATEPROGRAMPROC</span> <span class="n">glCreateProgram</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PFNGLATTACHSHADERPROC</span> <span class="n">glAttachShader</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PFNGLLINKPROGRAMPROC</span> <span class="n">glLinkProgram</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PFNGLDELETESHADERPROC</span> <span class="n">glDeleteShader</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PFNGLUSEPROGRAMPROC</span> <span class="n">glUseProgram</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PFNGLVERTEXATTRIBPOINTERPROC</span> <span class="n">glVertexAttribPointer</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PFNGLENABLEVERTEXATTRIBARRAYPROC</span> <span class="n">glEnableVertexAttribArray</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PFNGLGENVERTEXARRAYSPROC</span> <span class="n">glGenVertexArrays</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PFNGLBINDVERTEXARRAYPROC</span> <span class="n">glBindVertexArray</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">glGetStringi</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFNGLGETSTRINGIPROC</span><span class="p">)</span><span class="nf">glXGetProcAddress</span><span class="p">((</span><span class="k">const</span> <span class="n">GLubyte</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;glGetStringi&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">glGenBuffers</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFNGLGENBUFFERSPROC</span><span class="p">)</span><span class="nf">glXGetProcAddress</span><span class="p">((</span><span class="k">const</span> <span class="n">GLubyte</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;glGenBuffers&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">glBindBuffer</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFNGLBINDBUFFERPROC</span><span class="p">)</span><span class="nf">glXGetProcAddress</span><span class="p">((</span><span class="k">const</span> <span class="n">GLubyte</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;glBindBuffer&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">glBufferData</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFNGLBUFFERDATAPROC</span><span class="p">)</span><span class="nf">glXGetProcAddress</span><span class="p">((</span><span class="k">const</span> <span class="n">GLubyte</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;glBufferData&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">glCreateShader</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFNGLCREATESHADERPROC</span><span class="p">)</span><span class="nf">glXGetProcAddress</span><span class="p">((</span><span class="k">const</span> <span class="n">GLubyte</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;glCreateShader&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">glShaderSource</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFNGLSHADERSOURCEPROC</span><span class="p">)</span><span class="nf">glXGetProcAddress</span><span class="p">((</span><span class="k">const</span> <span class="n">GLubyte</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;glShaderSource&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">glCompileShader</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFNGLCOMPILESHADERPROC</span><span class="p">)</span><span class="nf">glXGetProcAddress</span><span class="p">((</span><span class="k">const</span> <span class="n">GLubyte</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;glCompileShader&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">glCreateProgram</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFNGLCREATEPROGRAMPROC</span><span class="p">)</span><span class="nf">glXGetProcAddress</span><span class="p">((</span><span class="k">const</span> <span class="n">GLubyte</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;glCreateProgram&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">glAttachShader</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFNGLATTACHSHADERPROC</span><span class="p">)</span><span class="nf">glXGetProcAddress</span><span class="p">((</span><span class="k">const</span> <span class="n">GLubyte</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;glAttachShader&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">glLinkProgram</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFNGLLINKPROGRAMPROC</span><span class="p">)</span><span class="nf">glXGetProcAddress</span><span class="p">((</span><span class="k">const</span> <span class="n">GLubyte</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;glLinkProgram&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">glDeleteShader</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFNGLDELETESHADERPROC</span><span class="p">)</span><span class="nf">glXGetProcAddress</span><span class="p">((</span><span class="k">const</span> <span class="n">GLubyte</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;glDeleteShader&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">glUseProgram</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFNGLUSEPROGRAMPROC</span><span class="p">)</span><span class="nf">glXGetProcAddress</span><span class="p">((</span><span class="k">const</span> <span class="n">GLubyte</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;glUseProgram&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">glVertexAttribPointer</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFNGLVERTEXATTRIBPOINTERPROC</span><span class="p">)</span><span class="nf">glXGetProcAddress</span><span class="p">((</span><span class="k">const</span> <span class="n">GLubyte</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;glVertexAttribPointer&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">glEnableVertexAttribArray</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFNGLENABLEVERTEXATTRIBARRAYPROC</span><span class="p">)</span><span class="nf">glXGetProcAddress</span><span class="p">((</span><span class="k">const</span> <span class="n">GLubyte</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;glEnableVertexAttribArray&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">glGenVertexArrays</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFNGLGENVERTEXARRAYSPROC</span><span class="p">)</span><span class="nf">glXGetProcAddress</span><span class="p">((</span><span class="k">const</span> <span class="n">GLubyte</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;glGenVertexArrays&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">glBindVertexArray</span> <span class="o">=</span> <span class="p">(</span><span class="n">PFNGLBINDVERTEXARRAYPROC</span><span class="p">)</span><span class="nf">glXGetProcAddress</span><span class="p">((</span><span class="k">const</span> <span class="n">GLubyte</span> <span class="o">*</span><span class="p">)</span><span class="s">&#34;glBindVertexArray&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* @! */</span>
+</span></span></code></pre></div><p>Note that some functions like <code>glClear()</code> do not need to be loaded because they are old functions, part of the original OpenGL version. It&rsquo;s only newer procedures (that were once purely extensions, and hence are loaded at runtime) that have to be loaded like this.</p>
+<p>People keep complaining about how hard it is to load GL procedures, but it&rsquo;s literally as simple as I have shown you. There are a lot of other caveats, such as checking the GL version and extension to make sure that certain functions are available, but the core idea is fairly simple.</p>
+<p>Considering that OpenGL will not be updated, and that we&rsquo;ve had 4.6 for almost a decade now, it won&rsquo;t be that difficult to determine which extensions are generally present on most systems. Obviously vendor-specific extension procedures will need to be queried for in a different manner, but the core OpenGL version 4 functions are going to be pretty much available everywhere.</p>
+
+<h2 class="relative group">Configuring Window/Framebuffer Settings
+    <div id="configuring-windowframebuffer-settings" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#configuring-windowframebuffer-settings" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>There are a couple of Window settings we can configure before we get to actual GL rendering. We can set the name of the window, ask X11 to receive certain events (keyboard input), and also turn on vsync:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cm">/* @@ configuring window parameters */</span>
+</span></span><span class="line"><span class="cl"><span class="nf">XStoreName</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="s">&#34;X11 OpenGL Window&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">XSelectInput</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">KeyPressMask</span><span class="p">);</span> <span class="cm">/* so we can get keyboard inputs in the X11 event loop */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* even though we checked to see if the extension is present, we should still check again with glXQueryDrawable() to make sure it is there. This is a robust and defensive way of programming that you need to do. */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">query_val</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glXQueryDrawable</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">glx_window</span><span class="p">,</span> <span class="n">GLX_LATE_SWAPS_TEAR_EXT</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">query_val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="n">query_val</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/* late swaps is supported, i.e. adaptive v-sync */</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">glXSwapIntervalEXT</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">glx_window</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span> <span class="cm">/* -1 is adaptive v-sync */</span>	    
+</span></span><span class="line"><span class="cl">      <span class="nf">glXQueryDrawable</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">glx_window</span><span class="p">,</span> <span class="n">GLX_SWAP_INTERVAL_EXT</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">query_val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">query_val</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/* even again here we check to make sure it was set properly */</span>
+</span></span><span class="line"><span class="cl">	    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;ERROR: failed to set swapinterval val correctly. </span><span class="se">\&#34;</span><span class="s">-1</span><span class="se">\&#34;</span><span class="s"> was requested but we did not get it</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	    <span class="k">goto</span> <span class="n">CLEANUP_AND_EXIT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">glXSwapIntervalEXT</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">glx_window</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> <span class="cm">/* 1 is normal v-sync */</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">glXQueryDrawable</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">glx_window</span><span class="p">,</span> <span class="n">GLX_SWAP_INTERVAL_EXT</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">query_val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span><span class="p">(</span><span class="n">query_val</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;ERROR: failed to set swapinterval val correctly. </span><span class="se">\&#34;</span><span class="s">1</span><span class="se">\&#34;</span><span class="s"> was requested but we did not get it</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	    <span class="k">goto</span> <span class="n">CLEANUP_AND_EXIT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">glViewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">window_width</span><span class="p">,</span> <span class="n">window_height</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="cm">/* @! */</span>
+</span></span></code></pre></div><p>First we give our window a name with <code>XStoreName(display, window, &quot;X11 OpenGL Window&quot;)</code>, and then we ask it to get keyboard input with <code>XSelectInput()</code> and the <code>KeyPressMask</code> flag.</p>
+<p>Then using <code>glXQueryDrawable()</code>, we double check if what the extensions support is actually there, just to be safe. Depending on what seems to be supported, we either select for late swapping (adaptive vsync) or normal vsync. We set the swap interval with the GLX extension provided procedure <code>glXSwapIntervalEXT()</code>.</p>
+<p>Lastly, we set the GL viewport with <code>glViewport()</code>.</p>
+
+<h2 class="relative group">Basic OpenGL Hello Triangle
+    <div id="basic-opengl-hello-triangle" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#basic-opengl-hello-triangle" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>As an example, just to prove that this whole tutorial does indeed work - let us setup a basic hello triangle example with OpenGL. I will not write code for this correctly or explain how it works as that is out of the scope of this tutorial. See: <a
+  href="https://learnopengl.com/"
+    target="_blank"
+  >LearnOpenGL</a> as an excellent resource for learning how to program OpenGL, of which this example is taken from.</p>
+<p>You can just copy-paste this code just as a test to see if everything works:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cm">/* @@ setting up rendering of basic hello triangle */</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#define VERT_SIZE 9
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="n">GLfloat</span> <span class="n">vertices</span><span class="p">[</span><span class="n">VERT_SIZE</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="n">vertices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vertices</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vertices</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vertices</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vertices</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vertices</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vertices</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vertices</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vertices</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">vert_shader_source</span> <span class="o">=</span> <span class="s">&#34;#version 460 core</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="s">&#34;layout (location = 0) in vec3 vpos;</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="s">&#34;void main()</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="s">&#34;{</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="s">&#34;gl_Position = vec4(vpos.x, vpos.y, vpos.z, 1.0);</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="s">&#34;}</span><span class="se">\n\0</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">frag_shader_source</span> <span class="o">=</span> <span class="s">&#34;#version 460 core</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="s">&#34;out vec4 frag_color;</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="s">&#34;void main()</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="s">&#34;{</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="s">&#34;frag_color = vec4(0.1f, 0.7f, 0.5f, 1.0f);</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="s">&#34;}</span><span class="se">\n\0</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">GLuint</span> <span class="n">vert_shader</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">GLuint</span> <span class="n">frag_shader</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">GLuint</span> <span class="n">shader_program</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">vert_shader</span> <span class="o">=</span> <span class="nf">glCreateShader</span><span class="p">(</span><span class="n">GL_VERTEX_SHADER</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">frag_shader</span> <span class="o">=</span> <span class="nf">glCreateShader</span><span class="p">(</span><span class="n">GL_FRAGMENT_SHADER</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">shader_program</span> <span class="o">=</span> <span class="nf">glCreateProgram</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">glShaderSource</span><span class="p">(</span><span class="n">vert_shader</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">vert_shader_source</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glShaderSource</span><span class="p">(</span><span class="n">frag_shader</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">frag_shader_source</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">glCompileShader</span><span class="p">(</span><span class="n">vert_shader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glCompileShader</span><span class="p">(</span><span class="n">frag_shader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">glAttachShader</span><span class="p">(</span><span class="n">shader_program</span><span class="p">,</span> <span class="n">vert_shader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glAttachShader</span><span class="p">(</span><span class="n">shader_program</span><span class="p">,</span> <span class="n">frag_shader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">glLinkProgram</span><span class="p">(</span><span class="n">shader_program</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">glDeleteShader</span><span class="p">(</span><span class="n">vert_shader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glDeleteShader</span><span class="p">(</span><span class="n">frag_shader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">GLuint</span> <span class="n">vao</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">GLuint</span> <span class="n">vbo</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glGenVertexArrays</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">vao</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glGenBuffers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">vbo</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">glBindVertexArray</span><span class="p">(</span><span class="n">vao</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">glBindBuffer</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span> <span class="n">vbo</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glBufferData</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span> <span class="n">VERT_SIZE</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">GLfloat</span><span class="p">),</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">vertices</span><span class="p">,</span> <span class="n">GL_STATIC_DRAW</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glVertexAttribPointer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">GL_FLOAT</span><span class="p">,</span> <span class="n">GL_FALSE</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">GLfloat</span><span class="p">),</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glEnableVertexAttribArray</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">XMapRaised</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">window</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* @! */</span>
+</span></span></code></pre></div><p>The only thing I want to explain is that we make a call to <code>XMapRaised()</code> so that we can finally see the window. This still won&rsquo;t make the window visible, both because the program ends too quickly and also because we need to setup the event loop and actually have X commands flushed to the server.</p>
+
+<h3 class="relative group">X Event Loop &amp; Basic Rendering
+    <div id="x-event-loop--basic-rendering" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#x-event-loop--basic-rendering" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>The last thing to do is write a basic event loop with rendering the triangle we setup, responding to keyboard events, and swapping buffers.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cm">/* @@ main loop */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">running</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span><span class="p">(</span><span class="n">running</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">glClearColor</span><span class="p">(</span><span class="mf">0.1f</span><span class="p">,</span> <span class="mf">0.15f</span><span class="p">,</span> <span class="mf">0.19f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="cm">/* int num_events = XPending(display); /\* identical to XEventsQueued(display, QueuedAfterFlush) *\/ */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="nf">XFlush</span><span class="p">(</span><span class="n">display</span><span class="p">);</span> <span class="cm">/* rather than calling XFlush() here, we could use the XPending() function instead of XEventsQueued() which will flush the X buffer if needed, I want to ensure that it flushes every frame consistently so that&#39;s why this is done */</span>
+</span></span><span class="line"><span class="cl">      <span class="kt">int</span> <span class="n">num_events</span> <span class="o">=</span> <span class="nf">XEventsQueued</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">QueuedAlready</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="n">XEvent</span> <span class="n">event</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">while</span><span class="p">(</span><span class="n">num_events</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	    <span class="nf">XNextEvent</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">event</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	    <span class="k">if</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">KeyPress</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		  <span class="n">running</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	    <span class="n">num_events</span> <span class="o">=</span> <span class="n">num_events</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="cm">/* @@ rendering */</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">glUseProgram</span><span class="p">(</span><span class="n">shader_program</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">glBindVertexArray</span><span class="p">(</span><span class="n">vao</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">glDrawArrays</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="cm">/* @! */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="cm">/* @@ the order of these last few procedures are critical */</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">glXSwapBuffers</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">glx_window</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">glFinish</span><span class="p">();</span> <span class="cm">/* blocks until all previous GL commands to finish, including the buffer swap. */</span>
+</span></span><span class="line"><span class="cl">      <span class="cm">/* @! */</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* @! */</span>
+</span></span></code></pre></div><p>In the loop, we first clear the framebuffer with <code>glClear()</code>. Then, we use <code>XFlush()</code> to flush the X buffer so that we can get access to the latest events, such as keyboard input or window events.</p>
+<p>We then get the number of events with <code>XEventsQueued()</code>, it&rsquo;s important that we specify <code>QueuedAlready</code> instead of something like <code>QueuedAfterFlush</code>, because we are manually flushing ourselves with <code>XFlush()</code>, so we don&rsquo;t need to use <code>QueuedAfterFlush</code>.</p>
+<p>Once we have the number of events in the event queue, we simply read off that number of events in a loop with the <code>XNextEvent()</code> function which returns the next event. Be careful when calling the <code>XNextEvent()</code> function, because it will block if there are no events in the queue and wait until another event comes. For some applications this behaviour is desirable, but for a realtime application such as a graphics engine, we definitely do not want that.</p>
+<p>In our case, we just check if there is keyboard input and kill the program if there is by setting <code>running = 0</code>. Then, we do some basic OpenGL rendering using the setup before.</p>
+<p>The last two things in the loop is to swap the buffers and then synchronize with <code>glFinish()</code>. <code>glXSwapBuffers()</code> will behave as according to how we controlled the swap interval with <code>glXSwapIntervalEXT()</code>. If we set the swap interval to <code>0</code>, then it would not try to synchronize to the refresh rate or vertical blank whatsoever.</p>
+<p>Calling <code>glFinish()</code> here is not usually seen, but it is important to understand that the <code>glXSwapBuffers()</code> function does not block or wait for the buffer swap to be complete, all the function does is queue up a buffer swap and lets the driver decide when to actually make the swap (according to vsync rules primarily). If you just call this function without a call to <code>glFinish()</code>, then you might end up queuing subsequent frames early, before the previous frame is visible. Worst-case scenario, you would be possibly a whole frame behind because you&rsquo;re simulation/rendering runs much faster than the refresh rate.</p>
+<p>Synchronization is out of scope for this post, but suffice to say, a call to <code>glFinish()</code> will block until the buffers are swapped. I do not claim to be an expert on this, but for more information, see <a
+  href="https://community.khronos.org/t/swapbuffers-and-synchronization/107667"
+    target="_blank"
+  >this</a> blog post.</p>
+<p>And that&rsquo;s it! I&rsquo;ll provide the full source code at the end of the page and the GCC options to compile.</p>
+
+<h2 class="relative group">Addendums
+    <div id="addendums" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#addendums" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>There are a couple of extra points I want to clarify or expand upon that were hinted in the post.</p>
+
+<h3 class="relative group">glXGetProcAddress vs glXGetProcAddressARB
+    <div id="glxgetprocaddress-vs-glxgetprocaddressarb" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#glxgetprocaddress-vs-glxgetprocaddressarb" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>So it may be confusing which of these functions to use. For one, the author(s) of the official Khronos API doesn&rsquo;t even seem to know what to use, as according to this <a
+  href="https://www.khronos.org/opengl/wiki/Load_OpenGL_Functions"
+    target="_blank"
+  >link</a>:</p>
+<blockquote>
+<p>The function glXGetProcAddress (or glXGetProcAddressARB; it is not entirely clear as to which should be used) retrieves function pointers on X-Windows-based systems.</p>
+</blockquote>
+<p>So that&rsquo;s not much help, but I&rsquo;ve done some digging myself on the matter.</p>
+<p>The <code>glXGetProcAddressARB()</code> function was written against the GLX 1.3 specification, as evidenced by <a
+  href="https://registry.khronos.org/OpenGL/extensions/ARB/GLX_ARB_get_proc_address.txt"
+    target="_blank"
+  >this</a> documentation for the <code>GLX_ARB_get_proc_address</code> extension. However, in the GLX 1.4 spec, the <code>glXGetProcAddressARB()</code> function was promoted to the core <code>glXGetProcAddress()</code> function. You can find this in the &ldquo;GLX Versions&rdquo; section of the GLX 1.4 spec which is at the very end. Therefore, if we use GLX 1.4 (which we are), then we can just use <code>glXGetProcAddress()</code>.</p>
+<p>If you want to support pre GLX 1.4 or legacy OpenGL, consider then using <code>glXGetProcAddressARB()</code>.</p>
+
+<h3 class="relative group">GLXWindow vs X Window
+    <div id="glxwindow-vs-x-window" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#glxwindow-vs-x-window" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>So a point I brought up was that we need to create a GLX Window, although some people disagree. <a
+  href="https://stackoverflow.com/questions/60795622/xlibs-window-vs-glxs-glxwindow-confusion"
+    target="_blank"
+  >This</a> stackoverflow post is incorrect that the GLX window is &ldquo;useless&rdquo;.</p>
+<p>For one, this GLFW <a
+  href="https://github.com/glfw/glfw/issues/507"
+    target="_blank"
+  >github issue</a> shows a request to use GLFW windows for GLX 1.4 support.</p>
+<p>Secondly, the <a
+  href="https://registry.khronos.org/OpenGL/extensions/EXT/EXT_swap_control.txt"
+    target="_blank"
+  >documentation</a> for the swap control extension mandates that we need to query a GLX window rather than an X window for swap interval properties, otherwise it will not work correctly. Right from these docs:</p>
+<blockquote>
+<p>The current swap interval and implementation-dependent max swap interval for a particular drawable can be obtained by calling glXQueryDrawable with the attributes GLX_SWAP_INTERVAL_EXT and GLX_MAX_SWAP_INTERVAL_EXT respectively. The value returned by glXQueryDrawable is undefined if the drawable is not a <strong>GLXWindow</strong> and these attributes are given.</p>
+</blockquote>
+<p>And in my own testing, I found that using a normal X window instead of a GLX window cause errors just as this spec described. I would get incorrect values for the max swap interval, such as 0, when it returns a much higher number with a GLX window.</p>
+<p>Thirdly, if you try to set the swap interval without a GLX window, not only will it crash, but trying to do basic GL rendering won&rsquo;t even work at all.</p>
+<p>The bottom line is that you can&rsquo;t trust what you see on the internet. I understand that&rsquo;s rich coming from the author here, but I have also provided evidence for my claims.</p>
+
+<h2 class="relative group">Source Code and GCC Options
+    <div id="source-code-and-gcc-options" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#source-code-and-gcc-options" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>As promised, the full source code is available <a
+  href="https://github.com/James822/x11-OpenGL-window"
+    target="_blank"
+  >here</a> <a href="">.</p>
+<p>GCC options are as follows:</p>
+<pre tabindex="0"><code>gcc x11_window.c -lX11 -lGLX -lGL -o x11_window
+</code></pre><!-- <div class="he">References</div> -->
+<!-- <ul> -->
+<!--   <li>Khronos OpenGL registry (GLX spec is available here): <a href="https://registry.khronos.org/OpenGL/index_gl.php">https://registry.khronos.org/OpenGL/index_gl.php</a></li> -->
+<!--   <li>Xorg/Xlib Documentation: <a href="https://www.x.org/wiki/ProgrammingDocumentation/">https://www.x.org/wiki/ProgrammingDocumentation/</a></li> -->
+<!--   <li>Khronos Opengl Context Creation Tutorial: <a href="https://www.khronos.org/opengl/wiki/Tutorial:_OpenGL_3.0_Context_Creation_(GLX)">https://www.khronos.org/opengl/wiki/Tutorial:_OpenGL_3.0_Context_Creation_(GLX)</a></li> -->
+<!--   <li>Tutorial by <a href="https://github.com/ColleagueRiley">ColleagueRiley</a> on Window/GL context creation: <a href="https://github.com/ColleagueRiley/OpenGL-Context-Creation">https://github.com/ColleagueRiley/OpenGL-Context-Creation</a></li> -->
+<!--   <li>Tutorial by <a href="https://apoorvaj.io/">Apoorva Joshi</a>, also on Window/GL context creation:<a href="https://apoorvaj.io/creating-a-modern-opengl-context/">https://apoorvaj.io/creating-a-modern-opengl-context/</a></li> -->
+<!--   <li>Khronos tutorial on loading OpenGL functions: <a href="https://www.khronos.org/opengl/wiki/Load_OpenGL_Functions">https://www.khronos.org/opengl/wiki/Load_OpenGL_Functions</a></li> -->
+<!--   <li>The amazing and classic learnOpenGL tutorial: <a href="https://learnopengl.com/">https://learnopengl.com/</a></li> -->
+<!--   <li>Excellent tutorial that mirrors my own: <a href="https://www.tspi.at/2021/06/13/openglcontextx11.html">https://www.tspi.at/2021/06/13/openglcontextx11.html</a></li> -->
+<!-- </ul> -->
+
+          
+          
+          
+            <strong class="block mt-8">
+              <a
+                target="_blank"
+                class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+                href="mailto:JamesSpratt.business@protonmail.com?subject=Reply%20to%20Creating%20an%20X11%20Window%20and%20OpenGL%20Context%20on%20Linux%20From%20Scratch">
+                Reply by Email
+              </a>
+            </strong>
+          
+        </div>
+        
+        
+
+        
+
+        
+
+      </div>
+
+      
+      
+        
+        
+          
+          
+        
+        
+        
+        <script
+          type="text/javascript"
+          src="/js/page.min.54b6f4371722649edbe871e431d8670d670878c22be8f36e229fe53cc9b786fe25a834def5e6de621f7a3e37b72bc8cd73839aa5ed907ed6cbd45cd3e1b0fa20.js"
+          integrity="sha512-VLb0NxciZJ7b6HHkMdhnDWcIeMIr6PNuIp/lPMm3hv4lqDTe9ebeYh96Pje3K8jNc4Oape2QftbL1FzT4bD6IA=="
+          data-oid="views_posts/x11_window_opengl.md"
+          data-oid-likes="likes_posts/x11_window_opengl.md"></script>
+      
+    </section>
+
+    
+    <footer class="pt-8 max-w-prose print:hidden">
+      
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600">
+      <div class="flex justify-between pt-3">
+        <span class="flex flex-col">
+          
+            <a
+              class="flex text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+              href="/posts/group_theory_part_1/">
+              <span class="leading-6">
+                <span class="inline-block rtl:rotate-180">&larr;</span>&ensp;Introduction to Group Theory Part 1: Permutations
+              </span>
+            </a>
+            
+              <span class="ms-6 mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+                <time datetime="2025-03-09T00:00:00&#43;00:00">9 March 2025</time>
+              </span>
+            
+          
+        </span>
+        <span class="flex flex-col items-end">
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+      
+    </footer>
+  </article>
+
+        
+
+
+  
+
+
+
+
+
+
+<div
+  id="scroll-to-top"
+  class="fixed bottom-6 end-6 z-50 transform translate-y-4 opacity-0 duration-200">
+  <a
+    href="#the-top"
+    class="pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+    aria-label="Scroll to top"
+    title="Scroll to top">
+    &uarr;
+  </a>
+</div>
+
+      </main><footer id="site-footer" class="py-10 print:hidden">
+  
+  
+    
+  
+  <div class="flex items-center justify-between">
+    
+    
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          &copy;
+          2025
+          James Spratt
+      </p>
+    
+
+    
+    
+  </div>
+  
+    <script>
+      mediumZoom(document.querySelectorAll("img:not(.nozoom)"), {
+        margin: 24,
+        background: "rgba(0,0,0,0.5)",
+        scrollOffset: 0,
+      });
+    </script>
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/process.min.ee03488f19c93c2efb199e2e3014ea5f3cb2ce7d45154adb3399a158cac27ca52831db249ede5bb602700ef87eb02434139de0858af1818ab0fb4182472204a4.js"
+    integrity="sha512-7gNIjxnJPC77GZ4uMBTqXzyyzn1FFUrbM5mhWMrCfKUoMdsknt5btgJwDvh&#43;sCQ0E53ghYrxgYqw&#43;0GCRyIEpA=="></script>
+  
+  
+</footer>
+<div
+  id="search-wrapper"
+  class="invisible fixed inset-0 flex h-screen w-screen cursor-default flex-col bg-neutral-500/50 p-4 backdrop-blur-sm dark:bg-neutral-900/50 sm:p-6 md:p-[10vh] lg:p-[12vh] z-500"
+  data-url="https://james822.github.io/">
+  <div
+    id="search-modal"
+    class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg top-20 border-neutral-200 bg-neutral dark:border-neutral-700 dark:bg-neutral-800">
+    <header class="relative z-10 flex items-center justify-between flex-none px-2">
+      <form class="flex items-center flex-auto min-w-0">
+        <div class="flex items-center justify-center w-8 h-8 text-neutral-400">
+          <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+        </div>
+        <input
+          type="search"
+          id="search-query"
+          class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-2 focus:outline-transparent"
+          placeholder="Search"
+          tabindex="0">
+      </form>
+      <button
+        id="close-search-button"
+        class="flex items-center justify-center w-8 h-8 text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+        title="Close (Esc)">
+        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span>
+      </button>
+    </header>
+    <section class="flex-auto px-2 overflow-auto">
+      <ul id="search-results">
+        
+      </ul>
+    </section>
+  </div>
+</div>
+
+    </div>
+  </body>
+  
+</html>
