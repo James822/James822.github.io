@@ -1,0 +1,20 @@
+html {
+    font-size: 12pt;
+}
+
+.max-w-7xl {
+    max-width: 85rem !important;
+}
+
+.max-w-prose {
+    max-width: 50rem;
+    /* 	       max-w-full */
+    /* width: a; */
+    /* max-width: 50rem !important; */
+}
+
+/* .prose { */
+/*     max-width: 160ch; */
+/* } */
+
+

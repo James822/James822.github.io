@@ -45,6 +45,12 @@
         
       
     
+      
+        
+          <link href="https://linkedin.com/in/james-spratt-b4b619203" rel="me">
+        
+      
+    
   
 
   
@@ -97,6 +103,8 @@
   
   
   
+    
+  
   
     
   
@@ -104,8 +112,8 @@
   <link
     type="text/css"
     rel="stylesheet"
-    href="/css/main.bundle.min.13b90cc160b0ac19874b3449bd786e78589cb5453b1a4bbed9eebea764aed20048ac46f6e293f10fbe163aa3975cbb4239d52403972ad8d6a0d33ac28bc6b284.css"
-    integrity="sha512-E7kMwWCwrBmHSzRJvXhueFictUU7Gku&#43;2e6&#43;p2Su0gBIrEb24pPxD74WOqOXXLtCOdUkA5cq2Nag0zrCi8ayhA==">
+    href="/css/main.bundle.min.54e62ae45a2d5c87fe49b5abef80cea38073003192e6b2427af85695cbe85c837dd7aa16136069267152754e82b7a551824c291ee538a844bd998bd85ef9725b.css"
+    integrity="sha512-VOYq5FotXIf&#43;SbWr74DOo4BzADGS5rJCevhWlcvoXIN916oWE2BpJnFSdU6Ct6VRgkwpHuU4qES9mYvYXvlyWw==">
 
   
   
@@ -160,6 +168,145 @@
 
 
 
+
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/lib/katex/katex.min.9e578d7ac3b5270b37ae32edae7835a744cda7734036e6e2f1ccf16f382b056ccd51c0df6b7ef3470991357a026507840aa22c1740ea2fe6bbce9b4223c5c182.css"
+    integrity="sha512-nleNesO1Jws3rjLtrng1p0TNp3NANubi8czxbzgrBWzNUcDfa37zRwmRNXoCZQeECqIsF0DqL&#43;a7zptCI8XBgg==">
+  
+  
+  
+  <script
+    defer
+    type="text/javascript"
+    src="/js/katex.bundle.a10a4a0655682a978b0422e48a40f3515d4d96c8e600a48e3dad34029a55cc00b128b89a908855227d1c07897ce09cdfe9f0d57decb148cb73f17dbb8a0a715c.js"
+    integrity="sha512-oQpKBlVoKpeLBCLkikDzUV1NlsjmAKSOPa00AppVzACxKLiakIhVIn0cB4l84Jzf6fDVfeyxSMtz8X27igpxXA=="
+    id="katex-render"></script>
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
 
 
 
@@ -225,7 +372,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "448"
+    "wordCount": "4704"
   }]
   </script>
 
@@ -623,6 +770,13 @@
     <nav id="TableOfContents">
   <ul>
     <li><a href="#permutations">Permutations</a></li>
+    <li><a href="#compositions-of-permutations">Compositions of Permutations</a></li>
+    <li><a href="#cycle-notation">Cycle notation</a></li>
+    <li><a href="#converting-between-cycle-form-and-tabular-form">Converting Between Cycle Form and Tabular Form</a></li>
+    <li><a href="#inverses-and-the-identity-permutation">Inverses and the Identity Permutation</a></li>
+    <li><a href="#extended-compositions">Extended Compositions</a></li>
+    <li><a href="#array--odc-form">Array &amp; ODC Form</a></li>
+    <li><a href="#transpositions">Transpositions</a></li>
   </ul>
 </nav>
   </div>
@@ -637,6 +791,13 @@
     <nav id="TableOfContents">
   <ul>
     <li><a href="#permutations">Permutations</a></li>
+    <li><a href="#compositions-of-permutations">Compositions of Permutations</a></li>
+    <li><a href="#cycle-notation">Cycle notation</a></li>
+    <li><a href="#converting-between-cycle-form-and-tabular-form">Converting Between Cycle Form and Tabular Form</a></li>
+    <li><a href="#inverses-and-the-identity-permutation">Inverses and the Identity Permutation</a></li>
+    <li><a href="#extended-compositions">Extended Compositions</a></li>
+    <li><a href="#array--odc-form">Array &amp; ODC Form</a></li>
+    <li><a href="#transpositions">Transpositions</a></li>
   </ul>
 </nav>
   </div>
@@ -654,7 +815,9 @@
         
 
         <div class="article-content max-w-prose mb-20">
-          <p>I&rsquo;ve recently taken a course in group theory, a branch of abstract algebra that studies the mathematical structures known as <strong>groups</strong>.</p>
+          
+
+<p>I&rsquo;ve recently taken a course in group theory, a branch of abstract algebra that studies the mathematical structures known as <strong>groups</strong>.</p>
 <p>Abstract algebra is a fascinating study in mathematics, as it unifies concepts previously scattered in different areas. Boolean algbera for example is the mathematical structure that underlies working with operations on any kind of binary system. Propositional logic, digital circuit design (logic gates), and even set operations are all forms of boolean algebra. Set operations, propositonal logic, and the design of combinational circuits may seem disparate; but their structure is essentially the same.</p>
 <p>This is why I have come to love abstract algebra as a discpline. At it&rsquo;s core, it is the formal study of mathematical <strong>essence</strong>. Two structures may have different <strong>substance</strong>, but if they function exactly the same up to some kind of isomorphism; then they are the <em>essentially</em> the same.</p>
 <p>Groups, the primary study of <em>group theory</em>, happen to be a type of structure that is encountered very frequently in mathematics. Many other structures such as vector spaces, rings, fields, the real numbers; can all be shown be groups. Therefore, studying groups will reveal properties shared with all of these other structures.</p>
@@ -679,14 +842,493 @@ Given by the rule: </p>
 \[ \tau (1) = 2, \tau (2) = 3, \tau (3) = 1 \]<p>This means simply that 1 is sent to 2, 2 is sent to 3, and 3 is sent to 1.</p>
 <p>Rather than painstakingly write out the function value for each input, we can represent this same exact function \(\tau\) in tabular form as the following:</p>
 \[
-  \begin{bmatrix}
-  1 & 2 & 3\\
-  2 & 3 & 1
-  \end{bmatrix}
-  \]<p>This format is known as <a
+\begin{bmatrix}
+1 & 2 & 3\\
+2 & 3 & 1
+\end{bmatrix}
+\]<p>This format is known as <a
   href="https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy"
     target="_blank"
-  >Cauchy&rsquo;s two-line notation</a>, but we will refer to it as tabular form. All entries are read &ldquo;top-down&rdquo; per column. In any given column, the element of the top row is &ldquo;sent&rdquo; to the element of the bottom row.</p>
+  >Cauchy&rsquo;s</a> two-line notation, but we will refer to it as tabular form. All entries are read &ldquo;top-down&rdquo; per column. In any given column, the element of the top row is &ldquo;sent&rdquo; to the element of the bottom row.</p>
+<p>More generally, we can represent any permutation with the following form:</p>
+\[
+\begin{bmatrix}
+1 & 2 & 3 & \cdots & n\\
+a_1 & a_2 & a_3 & \cdots & a_n
+\end{bmatrix}
+\]<p>And this is read as 1 goes to \(a_1\), 2 goes to \(a_3\), 3 goes to \(a_3\),&hellip;, \(n\) goes to \(a_n\). Here, \(n\) is the number of elements to be permuted, and \(a_i\) are the numbers belonging to the set \(\{1,2,...,n\}\), and it also must be the case that \(a_i \neq a_j\) iff \(i \neq j\). Basically, no \(a_i\) can appear more than once. Any kind of table that follows this specific format is a valid permutation.</p>
+<p>Notice also that the order of columns does not matter, as we could freely swap them to our liking without changing the permutation. As a matter of style, we typically like to order the columns by the first/top row with 1,2,3,&hellip; etc.</p>
+<p>Every finite collection of \(n\) objects can be <em>indexed</em>, that is to say, we can label every object with a number from 1 to \(n\). Because of this simple and obvious fact, it is sufficient to only study permutations with the set \(\{1,2,...,n\}\), as every finite set can be put into a one-to-one correspodence with this set.</p>
+
+<h2 class="relative group">Compositions of Permutations
+    <div id="compositions-of-permutations" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#compositions-of-permutations" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>Since permutations are bijective functions from a set to itself, it is possible to compose any number of permutations we like, as long as the permutations are both of \(n\) elements.</p>
+<p>The operation of function composition is given by \(\sigma \circ \tau (a) = \sigma (\tau (a))\) for two permutations \(\tau\) and \(\sigma\). This means we apply the permutation \(\tau\) first, and then we apply \(\sigma\) second. Composition is read from &ldquo;right-to-left&rdquo; which can be confusing.</p>
+<p>For example, take two permutations such as these:</p>
+\[
+\tau = 
+\begin{bmatrix}
+1 & 2 & 3\\
+2 & 1 & 3
+\end{bmatrix}
+,
+\sigma = 
+\begin{bmatrix}
+1 & 2 & 3\\
+2 & 3 & 1
+\end{bmatrix}
+\]<p>Let&rsquo;s see where the number &ldquo;1&rdquo; goes under the composition of \(\sigma \circ \tau\): \(\tau (1) = 2\), which implies that \(\sigma (\tau (1)) = \sigma(2)\), and \(\sigma (2) = 3\), so that implies that \(\sigma \circ \tau (1) = \sigma (\tau (1)) = 3\). A similar process can be performed for 2 and 3 to show that: \(\sigma (\tau (2)) = 2\) and \(\sigma (\tau (3)) = 1\)</p>
+<p>There is a much easier way to create compositions of permutations by using the tabular form directly. Using the previous example, Take the first permutation \(\tau\) and superimpose it on top of the second permutation \(\sigma\). (order matters here, don&rsquo;t put \(\sigma\) on the top and \(\tau\) on the bottom). This will create a matrix that has 4 rows, and it should look like this:</p>
+\[
+\begin{bmatrix}
+1 & 2 & 3\\
+2 & 1 & 3\\
+-&-&-\\
+1 & 2 & 3\\
+2 & 3 & 1
+\end{bmatrix}
+\]<p>Then, rearrange the columns of the bottom matrix \(\sigma\) so that the numbers at the top row of \(\sigma\) match the numbers of the bottom row of \(\tau\). In this example, all we need to do is swap column 1 and column 2 of \(\sigma\) just like so:</p>
+\[
+\begin{bmatrix}
+1 & 2 & 3\\
+2 & 1 & 3\\
+-&-&-\\
+2 & 1 & 3\\
+3 & 2 & 1
+\end{bmatrix}
+\]<p>The next step is to simply remove the bottom row of \(\tau\) and remove the top row of \(\sigma\). Basically, remove the middle two rows of the whole matrix and leave the rest:</p>
+\[
+\begin{bmatrix}
+1 & 2 & 3\\
+3 & 2 & 1
+\end{bmatrix}
+\]<p>But wait, doesn&rsquo;t this just look like another permutation? And in fact it is! Compositions of permutations are themselves permutations! This may seem obvious, but it&rsquo;s an important result that we&rsquo;ll come back to later.</p>
+<p>Compositions of permutations are also <strong>associative</strong> meaning that for any three permutations \(\tau\), \(\sigma\), and \(\rho\):</p>
+\[ \rho \circ (\sigma \circ \tau) = (\rho \circ \sigma) \circ \tau \]<p>Associativity follows from the fact that function composition in general is always associative, but it is NOT the case that compositions of permutations are always <strong>commutative</strong>. In general:</p>
+\[ \sigma \circ \tau \neq \tau \circ \sigma \]<p>This inequality doesn&rsquo;t hold for every permutation, as there are some permutations that do commute. We will see some examples of commutative permutations in the next section when we talk about disjoint cycles.</p>
+
+<h2 class="relative group">Cycle notation
+    <div id="cycle-notation" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#cycle-notation" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>Another way to represent permutations is with something called <strong>cycle notation</strong>.</p>
+<p>A <strong>cycle</strong> is a permutation that takes a collection of <em>distinct</em> numbers in a cycle, leaving all other numbers fixed. For example: 4 -&gt; 2, 2 -&gt; 6, 6 -&gt; 3, 3 -&gt; 4; is a valid cycle because it wraps back around and no number is visited more than once (besides of course the starting number 4, which must be visited twice). The other numbers are left fixed and unchanged.</p>
+<p>We can represent this example with the following cycle notation:</p>
+\[
+\begin{pmatrix}
+4 & 2 & 6 & 3
+\end{pmatrix}
+\]<p>Each number sends you to the next one, and once you reach the end of the list, it wraps back around to the first element. This example is a 4-cycle as there are 4 distinct numbers in the cycle. It also doesn&rsquo;t matter where we start the list as long as we maintain the order, so we could also represent the same 4-cycle as so:</p>
+\[
+\begin{pmatrix}
+2 & 6 & 3 & 4
+\end{pmatrix}
+\]<p>and you can verify that this changes nothing, but we tend to prefer to start cycles with the least element as a matter of style. Since any k-cycle is also a permutation, we can also represent it using our tabular form like before. The numbers 1 and 5 are not in this cycle which means that they stay fixed as we mentioned before, so we can write:</p>
+$$
+	\begin{pmatrix}
+	2 & 6 & 3 & 4
+	\end{pmatrix}
+	=
+	\begin{bmatrix}
+	1 & 2 & 3 & 4 & 5 & 6\\
+	1 & 6 & 4 & 2 & 5 & 3
+	\end{bmatrix}
+$$<p>But can <em>any</em> permutation be represented by a k-cycle? Let&rsquo;s investigate this to see if it is true by considering the following permutation:</p>
+$$
+	\begin{bmatrix}
+	1 & 2 & 3 & 4 & 5\\
+	2 & 1 & 4 & 5 & 3
+	\end{bmatrix}
+$$<p>Could we represent this as a single cycle? The answer is no! You can try as hard as you want, but there won&rsquo;t be a single k-cycle that can represent this permutation. We can however represent this as a composition of 2 cycles like this:</p>
+$$
+	\begin{bmatrix}
+	1 & 2 & 3 & 4 & 5\\
+	2 & 1 & 4 & 5 & 3
+	\end{bmatrix}
+	=
+	\begin{pmatrix}
+	1 & 2
+	\end{pmatrix}
+	\circ
+	\begin{pmatrix}
+	3 & 4 & 5
+	\end{pmatrix}
+$$<p>Cycle composition follows the exact same rule as permutation composition like we discussed before. Don&rsquo;t forget that a cycle is a permutation, just a different way of representing it.</p>
+<p>Rather than using the \(\circ\) notation, we typically just leave it out and only write:</p>
+$$
+	\begin{pmatrix}
+	1 & 2
+	\end{pmatrix}
+	\begin{pmatrix}
+	3 & 4 & 5
+	\end{pmatrix}
+$$<p>with the understanding that there is an implicit composition between the two cycles, and order also matters as it goes from right-to-left. If we have more than two compositions, we also don&rsquo;t need to use brackets because we know that compositions of permutations are associative.</p>
+<p>It can be proved that every permutation can be represented either as a single cycle, or as a composition of 2 or more <em>disjoint</em> cycles. It is also the case that the order of compositions doesn&rsquo;t matter with disjoint cycles, so the following equality holds for the previous example:</p>
+$$
+	\begin{pmatrix}
+	1 & 2
+	\end{pmatrix}
+	\begin{pmatrix}
+	3 & 4 & 5
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+	3 & 4 & 5
+	\end{pmatrix}
+	\begin{pmatrix}
+	1 & 2
+	\end{pmatrix}
+$$<p>The idea is that if a composition of any number of cycles are disjoint, then there are no elements in common. Any element will only be &ldquo;permuted&rdquo; by exactly one of the cycles that happens to contain that element. The other cycles will leave that element fixed, so therefore it doesn&rsquo;t really matter where we place the cycle in the composition.</p>
+<p>Therefore, any composition of disjoint cycles is <strong>commutative</strong>.</p>
+<p>Also, if we wanted to, we could for example rewrite the cycle \(\begin{pmatrix}3 & 7 & 5\end{pmatrix}\) as:</p>
+$$
+	\begin{pmatrix}
+	1
+	\end{pmatrix}
+	\begin{pmatrix}
+	2
+	\end{pmatrix}
+	\begin{pmatrix}
+	3 & 7 & 5
+	\end{pmatrix}
+	\begin{pmatrix}
+	4
+	\end{pmatrix}
+	\begin{pmatrix}
+	6
+	\end{pmatrix}
+$$<p>but writing all of these extra 1-cycles is redundant, so we usually leave them out.</p>
+<p>If we want to write the <em>identity</em> permutation (that is, the permutation that takes every number to itself), then we can simply write a cycle with empty brackets \(\begin{pmatrix}\end{pmatrix}\). This element is special, and so we give it the letter \(e\) (not to be confused with euler&rsquo;s number):</p>
+$$
+	e
+	=
+	\begin{pmatrix}
+	\end{pmatrix}
+	=
+	\begin{bmatrix}
+	1 & 2 & 3 & \cdots & n\\
+	1 & 2 & 3 & \cdots & n
+	\end{bmatrix}
+$$<p>with the special property that for any permutation \(\sigma\):</p>
+$$
+	\sigma \circ e = e \circ \sigma = \sigma
+$$
+<h2 class="relative group">Converting Between Cycle Form and Tabular Form
+    <div id="converting-between-cycle-form-and-tabular-form" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#converting-between-cycle-form-and-tabular-form" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>There is a straightforward way to convert from cycle-form to tabular-form so let&rsquo;s take an example composition of disjoint cycles and see how we can convert it to tabular form:</p>
+$$
+	\begin{pmatrix}
+	1 & 5
+	\end{pmatrix}
+	\begin{pmatrix}
+	2 & 4 & 6
+	\end{pmatrix}
+	\begin{pmatrix}
+	7 & 9
+	\end{pmatrix}
+$$<p>Since the largest number here is 9, that means that we are dealing with 9 numbers to be permuted, so create an empty table that has numbers 1 through 9 on the top, and leave the bottom row empty:</p>
+$$
+	\begin{bmatrix}
+	1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\
+	. & . & . & . & . & . & . & . & .
+	\end{bmatrix}
+$$<p>Our goal here is to &ldquo;fill in the dots&rdquo; and determine what numbers need to go there. For starters, we observe that the numbers 3 and 8 are not in the cycles whatsoever, so we know that they stay fixed:</p>
+$$
+	\begin{bmatrix}
+	1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\
+	. & . & 3 & . & . & . & . & 8 & .
+	\end{bmatrix}
+$$<p>Then, we start at the number 1 and see where it maps to. Since the only cycle that 1 belongs to is: \( \begin{pmatrix}1 & 5\end{pmatrix} \), we know that 1 maps to 5:</p>
+$$
+	\begin{bmatrix}
+	1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\
+	5 & . & 3 & . & . & . & . & 8 & .
+	\end{bmatrix}
+$$<p>Similarly, we can see that 2 maps to 4 because of the cycle \( \begin{pmatrix}2 & 4 & 6\end{pmatrix} \):</p>
+$$
+	\begin{bmatrix}
+	1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\
+	5 & 4 & 3 & . & . & . & . & 8 & .
+	\end{bmatrix}
+$$<p>And if we continue this process we get for the remaining numbers, then we see that we get the following permutation in tabular form:</p>
+$$
+	\begin{pmatrix}
+	1 & 5
+	\end{pmatrix}
+	\begin{pmatrix}
+	2 & 4 & 6
+	\end{pmatrix}
+	\begin{pmatrix}
+	7 & 9
+	\end{pmatrix}
+	=
+	\begin{bmatrix}
+	1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\
+	5 & 4 & 3 & 6 & 1 & 2 & 9 & 8 & 7
+	\end{bmatrix}
+$$<p>and you can verify that this is correct.</p>
+<p>We also can do the opposite and convert from tabular form to disjoint cycle-form by simply picking numbers and seeing what cycles they belong to. Let&rsquo;s take this same example and convert it back to cycle-form. To start, we pick the number 1 and &ldquo;follow&rdquo; it until we get back to 1. In this case, 1 goes to 5, and 5 goes back to 1, so we write that cycle out:</p>
+$$
+	\begin{pmatrix}
+	1 & 5
+	\end{pmatrix}
+$$<p>Then, we pick the next number that has not been visited yet. So we pick 2, and see where that goes. 2 goes to 4, 4 goes to 6, 6 goes to 2; so that should give us \(  \begin{pmatrix}2 & 4 & 6\end{pmatrix}\). Now add this cycle to the existing cycles like so:</p>
+$$
+	\begin{pmatrix}
+	1 & 5
+	\end{pmatrix}
+	\begin{pmatrix}
+	2 & 4 & 6
+	\end{pmatrix}
+$$<p>And then we move to the next number that is not already in a cycle, which is 3; and we see that 3 goes to itself, so we can leave it out.</p>
+<p>Then the next number that we haven&rsquo;t visited yet is 7. If we follow 7 then we see that 7 goes to 9 and then goes back to 7, giving us:</p>
+$$
+	\begin{pmatrix}
+	1 & 5
+	\end{pmatrix}
+	\begin{pmatrix}
+	2 & 4 & 6
+	\end{pmatrix}
+	\begin{pmatrix}
+	7 & 9
+	\end{pmatrix}
+$$<p>Finally, the last number we need to visit is 8, but 8 just maps back to itself so we leave it as is.</p>
+<p>Using cycle notation is generally preferred over tabular form as it takes up less space, and it also represents a core feature of the permutation in a better way. Using disjoint cycles is really handy so we will continue with this format primarly, but feel free to use tabular form as well to help you understand cycle form. Note also that compositions of non-disjoint cycles is perfectly valid too, but we prefer to use disjoint cycles whenever possible.</p>
+
+<h2 class="relative group">Inverses and the Identity Permutation
+    <div id="inverses-and-the-identity-permutation" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#inverses-and-the-identity-permutation" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>Every permutation has an inverse permutation. For every permutation \(\sigma\), there exists an identity permutation which we denote \(\sigma^{-1}\), such that the following holds:</p>
+$$
+	\sigma^{-1} \circ \sigma = \sigma \circ \sigma^{-1} = e
+$$<p>The proof that every permutation has an inverse follows from the fact that permutations are bijective functions from a set to itself. Every bijective function has an inverse, and since permutations are from a set to itself; then that inverse is also a permutation. The inverse is also <em>unique</em>, but we&rsquo;ll not prove that.</p>
+<p>Let&rsquo;s take the following permutation \(\sigma\) as an example:</p>
+$$
+	\begin{pmatrix}
+	1 & 4
+	\end{pmatrix}
+	\begin{pmatrix}
+	3 & 7 & 5
+	\end{pmatrix}
+$$<p>The inverse of this permutation is \( \begin{pmatrix}1 & 4\end{pmatrix}\begin{pmatrix}3 & 5 & 7\end{pmatrix} \) as:</p>
+$$
+	\begin{pmatrix}
+	1 & 4
+	\end{pmatrix}
+	\begin{pmatrix}
+	3 & 7 & 5
+	\end{pmatrix}
+	\begin{pmatrix}
+	1 & 4
+	\end{pmatrix}
+	\begin{pmatrix}
+	3 & 5 & 7
+	\end{pmatrix}
+	=
+	e
+$$<p>Recall that cycle composition is from right-to-left. Take every number from 1 to 7 and move it from right to left across these 4 cycles, and you will see that the number ends up back at itself.</p>
+<p>For example: 1 goes to 4 in \( \begin{pmatrix}1 & 4\end{pmatrix} \), 4 stays fixed in \( \begin{pmatrix}3 & 7 & 5\end{pmatrix} \), 4 goes to 1 in \( \begin{pmatrix}1 & 4\end{pmatrix} \), and 1 stays fixed in \( \begin{pmatrix}3 & 5 & 7\end{pmatrix} \). So, 1 goes to 1, itself. The same is true for every other number.</p>
+<p>If we go back to using tabular form, then there is similar &ldquo;trick&rdquo; to finding out what the inverse of any permutation is. First, let&rsquo;s take this same example and convert it to tabular form:</p>
+$$
+	\begin{pmatrix}
+	1 & 4
+	\end{pmatrix}
+	\begin{pmatrix}
+	3 & 7 & 5
+	\end{pmatrix}
+	=
+	\begin{bmatrix}
+	1 & 2 & 3 & 4 & 5 & 6 & 7\\
+	4 & 2 & 7 & 1 & 3 & 6 & 5
+	\end{bmatrix}
+$$<p>To find the inverse in tabular form, simply swap the top row and the bottom row:</p>
+$$
+	\begin{bmatrix}
+	1 & 2 & 3 & 4 & 5 & 6 & 7\\
+	4 & 2 & 7 & 1 & 3 & 6 & 5
+	\end{bmatrix}^{-1}
+	=
+	\begin{bmatrix}
+	4 & 2 & 7 & 1 & 3 & 6 & 5\\
+	1 & 2 & 3 & 4 & 5 & 6 & 7
+	\end{bmatrix}
+$$<p>If you want, you can then swap the columns around so that the top row is ordered from 1,2,3,&hellip; and so on, just like this:</p>
+$$
+	\begin{bmatrix}
+	4 & 2 & 7 & 1 & 3 & 6 & 5\\
+	1 & 2 & 3 & 4 & 5 & 6 & 7
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+	1 & 2 & 3 & 4 & 5 & 6 & 7\\
+	4 & 2 & 5 & 1 & 7 & 6 & 3
+	\end{bmatrix}
+$$<p>You can verify that this indeed does give you the inverse.</p>
+<p>The inverse of an inverse is itself, i.e. \((\sigma^{-1})^{-1} = \sigma\), and this is true for any function (that is invertible).</p>
+<p>Also, the inverse of any 2-cycle is itself, so \( \begin{pmatrix}a & b\end{pmatrix}^{-1} = \begin{pmatrix}a & b\end{pmatrix} \) for any numbers \(a\) and \(b\).</p>
+
+<h2 class="relative group">Extended Compositions
+    <div id="extended-compositions" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#extended-compositions" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>One thing we can do is compose a permutation with itself, i.e. \(\sigma \circ \sigma\), which leads to some interesting results. As a shorthand we write: \(\sigma \circ \sigma = \sigma^2\), understanding that the superscript here refers to composition and NOT exponentiation.</p>
+<p>We can generalize this to any integer \(n > 0\) so that:</p>
+$$ \sigma^n = \underbrace{\sigma \circ \sigma \circ \cdots \circ \sigma}_\text{$n$ times} $$<p>we can extend to the number 0 by defining:</p>
+$$ \sigma^0 = e $$<p>and, we can also extend into the negative integers by defining the following:</p>
+$$
+	\sigma^{-n} = (\sigma^{-1})^n = \underbrace{\sigma^{-1} \circ \sigma^{-1} \circ \cdots \circ \sigma^{-1}}_\text{$n$ times}
+$$<p>where \(n > 0\).</p>
+<p>With this cool notation, we have found a way to use any integers \(k\) and \(r\), negative or non-negative, so that the following expressions are well-defined and true:</p>
+$$ \sigma^k \circ \sigma^r = \sigma^{k + r}, (\sigma^k)^r = \sigma^{kr} $$<p>This gives us the ability to &ldquo;treat&rdquo; compositions similar to exponent rules as seen in normal arthmetic. Of course, our superscript notation is NOT exponentiation, but it <em>behaves</em> similar to exponent rules.</p>
+<p>An interesting question might be to ask for what values of \(k\) does \(\sigma^k = e\), if any at all. The answer is that this is true for any <em>finite</em> permutation.</p>
+<p>If you think about, there cannot be an infinite amount of different permutations generated by a permutation being composed with itself over and over again. Eventually, it will have to start repeating itself, as there are only \(n!\) possible permutations. This means that there exists an integer \(k\) such that \(\sigma^k = \sigma\). And in fact, if this is true then we can prove that:</p>
+$$
+	\begin{align}
+	\sigma^k &= \sigma\\
+	\Longrightarrow \sigma^{-1} \circ \sigma^k &= \sigma^{-1} \circ \sigma\\
+	\Longrightarrow \sigma^{k-1} &= e
+	\end{align}
+$$<p>So we can state as a theorem that for every finite permutation, there exists an integer \(r\) such that \(\sigma^r = e\), \(\sigma^{r-1} = \sigma^{-1}\), and \(\sigma^{r+1} = \sigma \). This means that every permutation, when repeatedly applied over and over again, will eventually just lead all numbers back to themselves.</p>
+<p>Let us define the set of all self compositions of \(\sigma\) as: \(\langle \sigma \rangle\), which is defined as:</p>
+$$ \langle \sigma \rangle\ = \{\sigma^n | n > 0\} $$<p>We restrict \(n\) to be greater than 0, but this is not neccessary. We could say it&rsquo;s less than or equal to 0, or we could just let it be any integer. All these choices will create the same set, as the set of self-compositions is cyclic. You could go backwards or forwards but it doesn&rsquo;t matter, you&rsquo;ll get the same results whichever direction you pick and whatever element you start with.</p>
+<p>In fact, because of the cyclic nature of this set, we only need to specify an integer <strong>range</strong> that needs to be at least greater or equal to the number of elements in \(\langle \sigma \rangle\).</p>
+<p>We define the <strong>order</strong> of \(\sigma\), denoted  by \(|\sigma|\), to be the smallest positive integer \(k\) such that \(\sigma^k = e\). Therefore:</p>
+$$ |\sigma| = |\langle \sigma \rangle| $$<p>And so we can give an equivalent definition for \(\langle \sigma \rangle\) as so:</p>
+$$ \langle \sigma \rangle = \{\sigma^k | k \in [a,b) \land |b - a| = | \sigma | \} $$<p>This notation is confusing for many reasons so I&rsquo;ll break it down:</p>
+<ul>
+<li>\(a\) and \(b\) are any integers</li>
+<li>\(|\sigma|\) refers to the <em>order</em> of \(\sigma\), whereas \(|b - a|\) refers to the <em>absolute value</em> of \(b-a\).</li>
+<li>The differing parentheses in \([a,b)\) is done on purpose so that \(b\) is not included. Otherwise, if we used the range \([a,b]\) instead, then we would have to require that \(b - a + 1 = | \sigma| \).</li>
+</ul>
+<p>Try to understand this &ldquo;cyclic&rdquo; notion well, because it is a critical aspect of not just permutations but any group in general.</p>
+
+<h2 class="relative group">Array &amp; ODC Form
+    <div id="array--odc-form" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#array--odc-form" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>So far we&rsquo;ve mentioned two main ways to represent permutations: tabular form and cycle form. Both of these representations have the property that there is more than one possible way of representing the same exact permutation.</p>
+<p>In tabular form, it is possible to reorder columns freely without changing the permutation. In cycle form, we observed that disjoint cycles compose in any order that we like. Not only that, but the numbers within cycles can be re-ordered to start at any of the elements.</p>
+<p>In order to introduce form that has a single representation per permutation, we will introduce <strong>array form</strong> and <strong>ordered disjoint cycle form</strong>.</p>
+<p><strong>Array form</strong> is written as so:</p>
+$$
+	\begin{bmatrix}
+	a_1 & a_2 & a_3 & \cdots & a_n
+	\end{bmatrix}
+$$<p>Where \(n\) is the amount of numbers to be permuted, and every \(a_i\) is unique and belongs to the set \(\{1,2,...,n\}\), and the permutation of the array form \(\tau\) is given by:</p>
+$$ \forall i \in \{1,2,...,n\} : \tau(i) = a_i $$<p>This can be best understood as imagining that there is a row above the array that has the numbers 1,2,3,&hellip;,n in order so that the following is true:</p>
+$$
+	\begin{bmatrix}
+	a_1 & a_2 & a_3 & \cdots & a_n
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+	1 & 2 & 3 & \cdots & n\\
+	a_1 & a_2 & a_3 & \cdots & a_n
+	\end{bmatrix}
+$$<p>This basically just gives us a shorthand as opposed to tabular form. Array form is especially useful for computation as you can simply store vectors all of size \(n\) and easily compute compositions with very simple algorithms. The downside is that array form (like tabular form) is very &ldquo;wasteful&rdquo; when we have a lot of 1-cycles. Consider this example:</p>
+$$
+	\begin{pmatrix}
+	4 & 9
+	\end{pmatrix}
+	=
+	\begin{bmatrix}
+	1 & 2 & 3 & 9 & 5 & 6 & 7 & 8 & 4
+	\end{bmatrix}
+$$<p>It&rsquo;s not hard to see how array form could be a huge waste of memory over the much more memory-conservative cycle form. There are ways you could further optimize array form by using some kind of compression like <a
+  href="https://en.wikipedia.org/wiki/Run-length_encoding"
+    target="_blank"
+  >run-length encoding</a> for runs of 1-cycles, but we won&rsquo;t go over that in this post.</p>
+<p>We can also use <strong>ordered disjoint cycle form</strong> or just &ldquo;ODC&rdquo; for short, which is simply just using disjoint cycles where each cycle starts with the least number in that cycle. Since compositions of disjoint cycles can be rearranged, we also order the cycles by least starting element to greatest starting element.</p>
+<p>Take this as an example conversion from normal cycle form to ODC form:</p>
+$$
+	\begin{pmatrix}
+	5 & 3
+	\end{pmatrix}
+	\begin{pmatrix}
+	6 & 2 & 1
+	\end{pmatrix}
+	\begin{pmatrix}
+	4 & 9
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+	1 & 6 & 2
+	\end{pmatrix}
+	\begin{pmatrix}
+	3 & 5
+	\end{pmatrix}
+	\begin{pmatrix}
+	4 & 9
+	\end{pmatrix}
+$$<p>ODC form also has the nice property that there is unique representation for every permutation, so we can compare two permutations in ODC form very easily to see if they are equal by simply iterating linearly over the numbers. The disadvantage with ODC compared to Array form is that with ODC, we need to store a list of lists to represent the cycles, which is more complex than just a single linear array. The tradeoff here is that ODC saves a lot more memory, and compositions with ODC can potentially be computed with significantly less iterations.</p>
+
+<h2 class="relative group">Transpositions
+    <div id="transpositions" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#transpositions" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>The last thing I want to cover in this post are <strong>transpositions</strong>, which is simply just another name for a 2-cycle, i.e. \( \begin{pmatrix}a & b\end{pmatrix} \). We give 2-cycles this special name because of a very special property: <em>every permutation can be represented as a composition of transpositions</em>.</p>
+<p>To prove this, we observe that the following is true for any k-cycle:</p>
+$$
+	\begin{pmatrix}
+	a_1 & a_2 & a_3 & \cdots & a_{k-1} & a_{k}
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+	a_1 & a_k
+	\end{pmatrix}
+	\begin{pmatrix}
+	a_1 & a_{k-1}
+	\end{pmatrix}
+	\cdots
+	\begin{pmatrix}
+	a_1 & a_3
+	\end{pmatrix}
+	\begin{pmatrix}
+	a_1 & a_2
+	\end{pmatrix}
+$$<p>The composition of these transpositions certainly aren&rsquo;t <em>disjoint</em> (as \(a_1\) appears in all of them), but they will equal the original cycle.</p>
+<p>The next step in the proof is to realize that every permutation can be represented as a combination of cycles, which we have already implicity assumed. Then, if you take each cycle, simply replace it with it&rsquo;s equivalent composition of transpositions. The whole expression will then be one giant composition of transpositions, and it will be equal to the original permutation!</p>
+<p>This result is useful because it means we can always represent a permutation as a series of &ldquo;swaps&rdquo;. In other words, every permutation is just taking a list of things and swapping them around some number of times.</p>
 
           
           
