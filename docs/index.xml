@@ -12,6 +12,16 @@
     <lastBuildDate>Sun, 14 Dec 2025 17:54:24 -0500</lastBuildDate><atom:link href="https://james822.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Creating a win32 Window and OpenGL Context on Windows From Scratch</title>
+      <link>https://james822.github.io/posts/win32_window_opengl/</link>
+      <pubDate>Fri, 02 May 2025 00:00:00 +0000</pubDate>
+      <author>JamesSpratt.business@protonmail.com (James Spratt)</author>
+      <guid>https://james822.github.io/posts/win32_window_opengl/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
       <title>Creating an X11 Window and OpenGL Context on Linux From Scratch</title>
       <link>https://james822.github.io/posts/x11_window_opengl/</link>
       <pubDate>Sat, 05 Apr 2025 00:00:00 +0000</pubDate>

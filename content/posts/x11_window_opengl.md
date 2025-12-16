@@ -702,7 +702,7 @@ The bottom line is that you can't trust what you see on the internet. I understa
 
 
 ## Source Code and GCC Options
-As promised, the full source code is available [here](https://github.com/James822/x11-OpenGL-window) <a href="">.
+As promised, the full source code is available [here](https://github.com/James822/x11-OpenGL-window).
 
 GCC options are as follows:
 
@@ -711,15 +711,13 @@ gcc x11_window.c -lX11 -lGLX -lGL -o x11_window
 ```
 
 
+## References
+- Khronos OpenGL registry (GLX spec is available here): [https://registry.khronos.org/OpenGL/index_gl.php](https://registry.khronos.org/OpenGL/index_gl.php)
+- Xorg/Xlib Documentation: [https://www.x.org/wiki/ProgrammingDocumentation/](https://www.x.org/wiki/ProgrammingDocumentation/)
+- Khronos Opengl Context Creation Tutorial: [https://www.khronos.org/opengl/wiki/Tutorial:_OpenGL_3.0_Context_Creation_(GLX)](https://www.khronos.org/opengl/wiki/Tutorial:_OpenGL_3.0_Context_Creation_(GLX))
+- Tutorial by [ColleagueRiley](https://github.com/ColleagueRiley) on Window/GL context creation: [https://github.com/ColleagueRiley/OpenGL-Context-Creation](https://github.com/ColleagueRiley/OpenGL-Context-Creation)
+- Tutorial by [Apoorva Joshi](https://apoorvaj.io/), also on Window/GL context creation: [https://apoorvaj.io/creating-a-modern-opengl-context/](https://apoorvaj.io/creating-a-modern-opengl-context/)
+- Khronos tutorial on loading OpenGL functions: [https://www.khronos.org/opengl/wiki/Load_OpenGL_Functions](https://www.khronos.org/opengl/wiki/Load_OpenGL_Functions)
+- The amazing and classic learnOpenGL tutorial: [https://learnopengl.com/](https://learnopengl.com/)
+- Excellent tutorial that mirrors my own: [https://www.tspi.at/2021/06/13/openglcontextx11.html](https://www.tspi.at/2021/06/13/openglcontextx11.html)
   
-<!-- <div class="he">References</div> -->
-<!-- <ul> -->
-<!--   <li>Khronos OpenGL registry (GLX spec is available here): <a href="https://registry.khronos.org/OpenGL/index_gl.php">https://registry.khronos.org/OpenGL/index_gl.php</a></li> -->
-<!--   <li>Xorg/Xlib Documentation: <a href="https://www.x.org/wiki/ProgrammingDocumentation/">https://www.x.org/wiki/ProgrammingDocumentation/</a></li> -->
-<!--   <li>Khronos Opengl Context Creation Tutorial: <a href="https://www.khronos.org/opengl/wiki/Tutorial:_OpenGL_3.0_Context_Creation_(GLX)">https://www.khronos.org/opengl/wiki/Tutorial:_OpenGL_3.0_Context_Creation_(GLX)</a></li> -->
-<!--   <li>Tutorial by <a href="https://github.com/ColleagueRiley">ColleagueRiley</a> on Window/GL context creation: <a href="https://github.com/ColleagueRiley/OpenGL-Context-Creation">https://github.com/ColleagueRiley/OpenGL-Context-Creation</a></li> -->
-<!--   <li>Tutorial by <a href="https://apoorvaj.io/">Apoorva Joshi</a>, also on Window/GL context creation:<a href="https://apoorvaj.io/creating-a-modern-opengl-context/">https://apoorvaj.io/creating-a-modern-opengl-context/</a></li> -->
-<!--   <li>Khronos tutorial on loading OpenGL functions: <a href="https://www.khronos.org/opengl/wiki/Load_OpenGL_Functions">https://www.khronos.org/opengl/wiki/Load_OpenGL_Functions</a></li> -->
-<!--   <li>The amazing and classic learnOpenGL tutorial: <a href="https://learnopengl.com/">https://learnopengl.com/</a></li> -->
-<!--   <li>Excellent tutorial that mirrors my own: <a href="https://www.tspi.at/2021/06/13/openglcontextx11.html">https://www.tspi.at/2021/06/13/openglcontextx11.html</a></li> -->
-<!-- </ul> -->
