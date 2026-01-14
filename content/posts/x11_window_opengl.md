@@ -5,19 +5,17 @@ title = 'Creating an X11 Window and OpenGL Context on Linux From Scratch'
 +++
 
 
-Let me start off by saying that it's not that difficult to open a native window with no libraries or other extra help. Sure, it's not as easy as using a library like SDL, but it's also not so complicated that you can't at least understand how it works. Don't get me wrong, I'm all for SDL and other similar libraries such as GLFW, but it's certainly a good thing to at least understand how these libraries operate.
+Part of the motivation for this post/tutorial was how arcane it is to open a basic window and start drawing graphics. Most beginner programmers typically start out learning basic graphics, but it's usually through a library or framework that sort of robs you of learning the underlying mechanisms.
 
-Chances are that if you're here, you're already pursuing something plenty difficult enough that manually opening a native window and creating an OpenGL context is not something that deters you anyways, but I still emphasize that it is not difficult to do so. I also consider the proposition that doing this is a "waste of time" to be absurd, and one that could only come from a place of ignorance, perpetrated by people who lack understanding of how to do it themselves.
+I was more interested in how to get pixels on the screen *without* having to use a library such as Qt or JavaFX. I wanted to figure out how to at least open a basic window that you could start drawing to by programming the operating system directly.
 
-In fact, this generally negative attitude towards "low-level" programming among the software people community is the exact reason why documentation is generally scarce on this subject, precisely because everyone just uses a library and thus few people know how to do it manually. It's quite sad that new and curious programmers are discouraged to delve into native programming by so-called "senior software engineers", who themselves only issue these warnings out of their own ignorance and incompetence. Either way, it is the sparsity of documentation surrounding this subject that has prompted me to write this tutorial and give a full overview of what is needed to get started.
+After opening a window the next logical step would be hardware acceleration, and for that I've chosen **OpenGL**, but the same basic principles apply for other graphics standards such as Vulkan. It's not strictly necessary to do graphics with dedicated hardware, but software rendering is typically slower and more difficult as you're pushing everything on the CPU.
 
-Furthermore, an important reason why I am making this tutorial is because the existing ones surrounding this subject are also full of error. I claim to have found some important errors that would set back new developers quite a bit, and I'll go over exactly what these errors are in this tutorial. Still, I'm grateful for the tutorials that exist and have referenced them extensively in this post.
-
-Alright, let's actually get into to it!
+Also, because different operating systems have different programming interfaces; I've chosen Linux to start with. I'll be tackling Microsoft Windows in a future post, but for now we'll focus on Linux only in this post.
 
 
 ## X11 & GLX
-To talk about opening a native window on any platform we need to understand what the native windowing system is. In the case of Microsoft Windows, the windowing system is built into the general platform API known as win32. In the case of linux, windowing systems are seperate from the kernel (properly speaking, seperate from linux itself), but the most widely used windowing system across different linux distributions is **X11** by far. Wayland is another option, but I won't be touching that.
+To talk about opening a native window on any platform we need to understand what the native windowing system is. In the case of Microsoft Windows, the windowing system is built into the general platform API known as win32. In the case of Linux, windowing systems are separate from the kernel (properly speaking, separate from Linux itself), but the most widely used windowing system across different Linux distributions is **X11** by far. Wayland is another option, but I won't be touching that.
 
 X11, or *The X Window system* is a bitmap display system based on a client-server architecture with a specified protocol called the "X Protocol". Applications communicate to the X Sever (which may be on the same device, or across a network) with commands to peform actions.
 
@@ -35,13 +33,13 @@ Unfortunately, the documentation for creating a window and GL context with Xlib/
 
 The Xlib documentation is found here: [https://www.x.org/wiki/ProgrammingDocumentation/](https://www.x.org/wiki/ProgrammingDocumentation/) <a href=""></a>, and the GLX documentation is found within the Khronos OpenGL registry here: [https://registry.khronos.org/OpenGL/index_gl.php](https://registry.khronos.org/OpenGL/index_gl.php). Even though GLX is a library extension to Xlib, it is listed in the OpenGL Registry which can be somewhat confusing. Out of all the documentation cited in this post, GLX is easily the worst, so I'll do my best to explain it. You should really grab the documentation for Xlib, GLX, and also the OpenGL core spec as well, which can also be found in the Khronos OpenGL registry.
 
-GLX 1.4 is the latest version and the one we will be using, but the documentation for it is outdated and flawed in many ways. It appears that the maintainers have given up on updating it since probably the early 2010s. For example, this documentation here: [https://registry.khronos.org/OpenGL/extensions/EXT/GLX_EXT_swap_control_tear.txt](https://registry.khronos.org/OpenGL/extensions/EXT/GLX_EXT_swap_control_tear.txt) suggests edits and additions to the GLX 1.4 spec that are not actually present. If you grab the latest spec you won't find these additions or changes anywhere. There are several other examples where these proposed "additions" are not to be found anywhere with the GLX 1.4 spec found in the Khronos OpenGL registery. It's possible that these extensions were intended for the next version of GLX, so "GLX 1.5", but that never came so we are left with somewhat of a mess.
+GLX 1.4 is the latest version and the one we will be using, but the documentation for it is outdated and flawed in many ways. It appears that the maintainers have given up on updating it since probably the early 2010s. For example, this documentation here: [https://registry.khronos.org/OpenGL/extensions/EXT/GLX_EXT_swap_control_tear.txt](https://registry.khronos.org/OpenGL/extensions/EXT/GLX_EXT_swap_control_tear.txt) suggests edits and additions to the GLX 1.4 spec that are not actually present. If you grab the latest spec you won't find these additions or changes anywhere. There are several other examples where these proposed "additions" are not to be found anywhere with the GLX 1.4 spec found in the Khronos OpenGL registry. It's possible that these extensions were intended for the next version of GLX, so "GLX 1.5", but that never came so we are left with somewhat of a mess.
 
 What this really means for us is that we just need to read the extension documentation alongside the GLX 1.4 spec, which is not really that bad.
 
 
 ## Starter Program and Compilation with GCC
-I'm going to be compiling with GCC and be using C, but you can also follow along in C++ with only a few modificaitions. If you read the Xlib documentation you'll note that most functions are provided as Macros, this is exactly so that either C or C++ can use the macro and get the right function. I just call the functions directly personally.
+I'm going to be compiling with GCC and be using C, but you can also follow along in C++ with only a few modifications. If you read the Xlib documentation you'll note that most functions are provided as Macros, this is exactly so that either C or C++ can use the macro and get the right function. I just call the functions directly personally.
 
 Anyways, start with this C code, and name it something like "x11_window.c":
 
@@ -171,7 +169,7 @@ I won't be considering supporting old or legacy OpenGL in this tutorial, as I vi
 ### Checking for GLX extensions
 After having made sure we have GLX 1.4 supported, we then need to check to see what extensions are supported. Some extensions are mandatory for creating a modern OpenGL context, but some are also very useful such as querying for swap control which gives us access to double-buffered vsync swapping. Note that GLX extensions are NOT the same thing as OpenGL or GL extensions, they are mutually exclusive with some exceptions. GLX extensions are properly extensions to GLX itself that gives you greater functionality, one of these extensions is `GLX_ARB_create_context_profile` which is necessary for a core OpenGL profile.
 
-To query for extensions we use the `glXQueryExtensionsString()` function, which gives us a space-seperated list of extensions that we can check through. It's a good idea to print out this string and check each extension for yourself to see what kinds of things GLX extensions accomplish.
+To query for extensions we use the `glXQueryExtensionsString()` function, which gives us a space-separated list of extensions that we can check through. It's a good idea to print out this string and check each extension for yourself to see what kinds of things GLX extensions accomplish.
 
 For our interests, we only care about two other extensions besides `GLX_ARB_create_context_profile`, which are `GLX_EXT_swap_control` and `GLX_EXT_swap_control_tear`. These two swap control extensions give us normal vsync and adaptive vsync respectively. We don't strictly need them, so you can decide whether they are required for your application or not.
 
@@ -179,7 +177,7 @@ For our interests, we only care about two other extensions besides `GLX_ARB_crea
 /* @@ Checking for GLX extensions */
 const char* glx_extensions_string = glXQueryExtensionsString(display, default_screen_id);      
 
-/* @NOTE: GLX_ARB_create_context_profile is absolutely neccessary in order to create a GL context, we cannot proceed without it. Technically, we need only check if GLX_ARB_create_context is supported rather than GLX_ARB_create_context_profile, because the former implies the latter is supported, IF the implementation supports OpenGL 3.2 or later, but we are definitely using a version higher than OpenGL 3.2, version 4 actually. Still, just in case, we explicity check if GLX_ARB_create_context_profile is supported to be as robust as possible. See this documentation for more details: https://registry.khronos.org/OpenGL/extensions/ARB/GLX_ARB_create_context.txt, specifically check the "Dependencies on OpenGL 3.2 and later OpenGL versions" section. */
+/* @NOTE: GLX_ARB_create_context_profile is absolutely necessary in order to create a GL context, we cannot proceed without it. Technically, we need only check if GLX_ARB_create_context is supported rather than GLX_ARB_create_context_profile, because the former implies the latter is supported, IF the implementation supports OpenGL 3.2 or later, but we are definitely using a version higher than OpenGL 3.2, version 4 actually. Still, just in case, we explicitly check if GLX_ARB_create_context_profile is supported to be as robust as possible. See this documentation for more details: https://registry.khronos.org/OpenGL/extensions/ARB/GLX_ARB_create_context.txt, specifically check the "Dependencies on OpenGL 3.2 and later OpenGL versions" section. */
 if(search_str_in_str(glx_extensions_string, "GLX_ARB_create_context_profile") != TRUE) {
       printf("ERROR: \"GLX_ARB_create_context\" extension not supported, cannot create GL context!");
       goto CLEANUP_AND_EXIT;
@@ -287,7 +285,7 @@ The other settings are important too, check the GLX/Xlib documentation to see wh
 
 Once we have our attrib array, we need to pass that into the `glXChooseFBConfig()` function and see if there are any framebuffer configs on the system that matches our requested attributes. The call to `glXChooseFBConfig()` will return a list of GLXFBConfigs or NULL on failure. Then, we just pick the first `GLXFBConfig` out of the list and save it for later.
 
-Once we are done, we can free the `fb_config` array with `XFree()`. If you're wondering why you can't find `XFree()` in the GLX 1.4 spec, it's because it's not there. `XFree()` is an Xlib function, which may seem weird as to why we're using an Xlib function for an array returned by a GLX function. But don't forget, GLX is just an *extension* to Xlib/X11, so it operates on the same basic inherited things that Xlib does, such as memory mangament in this case. Another thing GLX inherits are the Xlib boolean definitions `True` and `False`, which are seperate from my own personal `TRUE` and `FALSE`.
+Once we are done, we can free the `fb_config` array with `XFree()`. If you're wondering why you can't find `XFree()` in the GLX 1.4 spec, it's because it's not there. `XFree()` is an Xlib function, which may seem weird as to why we're using an Xlib function for an array returned by a GLX function. But don't forget, GLX is just an *extension* to Xlib/X11, so it operates on the same basic inherited things that Xlib does, such as memory management in this case. Another thing GLX inherits are the Xlib boolean definitions `True` and `False`, which are separate from my own personal `TRUE` and `FALSE`.
 
 
 ## Creating an X11 Window and GLX Window
@@ -333,7 +331,7 @@ glx_window_exists = TRUE;
 
 Firstly, we need to get a X11 Visual Config from our previous fb config with the `glXGetVisualFromFBConfig()` function. It may seem pointless that we have the fb config in the first place when we just convert it to an `XVisualInfo` struct, but the GLX fb config is necessary for the GLX window, and especially for creating an OpenGL context.
 
-Then, we need to fill out a `XSetWindowAttributes` struct which contains some basic properties. I've only set some basic stuff here like making the window white by default, and getting rid of a backgound pixmap which we don't need.
+Then, we need to fill out a `XSetWindowAttributes` struct which contains some basic properties. I've only set some basic stuff here like making the window white by default, and getting rid of a background pixmap which we don't need.
 
 We also need a colormap which can be created by a call to `XCreateColormap()`. I just use the default colormap which is just taken from the parent window. We also need to pass in the `visual` attribute from the `visual_info` struct we created from the GLX fb config.
 
@@ -361,7 +359,7 @@ CLEANUP_AND_EXIT:
      /* @! */
 ```
 
-If you compile the code, the window won't be visible yet because we haven't made the neccessary call to `XMapRaised(display, window)` which will display our window and raise it to the top. Even doing this won't work because the X server hasn't synced it's request, so we need to do that with the call: `XSync(display, False)`, but even then you won't see the window just yet. The window will close as soon as it opens, so we need to add a sleep() call or something like that to see the window.
+If you compile the code, the window won't be visible yet because we haven't made the necessary call to `XMapRaised(display, window)` which will display our window and raise it to the top. Even doing this won't work because the X server hasn't synced its request, so we need to do that with the call: `XSync(display, False)`, but even then you won't see the window just yet. The window will close as soon as it opens, so we need to add a sleep() call or something like that to see the window.
 
 You could do this if you want to see the window and make sure that it is working, but delete that code for later because we'll handle this in a different way.
 
@@ -397,7 +395,7 @@ if(glx_context == NULL) {
 }
 
 if(glXIsDirect(display, glx_context) != True) {
-      printf("ERROR: OpenGL Context was NOT created in direct mode (DRI). It is not supported to run a networked X server setup with the client and server not on the same device. Otherwise, some other error occured.\n");
+      printf("ERROR: OpenGL Context was NOT created in direct mode (DRI). It is not supported to run a networked X server setup with the client and server not on the same device. Otherwise, some other error occurred.\n");
       goto CLEANUP_AND_EXIT;
 }
 

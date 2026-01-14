@@ -4,7 +4,7 @@ draft = false
 title = 'Creating a win32 Window and OpenGL Context on Windows From Scratch'
 +++
 
-In a [previous post](/posts/x11_window_opengl/) I made a tutorial showing how to get a window open on linux/X11 with an OpenGL context. I'd like to make the same tutorial but for windows now, so here it is.
+In a [previous post](/posts/x11_window_opengl/) I made a tutorial showing how to get a window open on Linux/X11 with an OpenGL context. I'd like to make the same tutorial but for Microsoft Windows now, so here it is.
 
 This tutorial follows the same format as the last one, so I won't really go into too much detail on things that I've already covered. I'm moreso only going to outline the windows/win32 aspects here, but don't worry, the full source code is available [here](https://github.com/James822/win32-opengl-window) in my github repository.
 
@@ -12,27 +12,27 @@ Just like the last tutorial, we'll be using C to do everything, but you can also
 
 
 ## Win32
-Unlike linux, everything we'll need for this tutorial is under the win32 API. The win32 API is the programming interface to the windows operating system. It gives us the ability to perform file I/O, allocate memory, and namely: create windows.
+Unlike Linux, everything we'll need for this tutorial is under the win32 API. The win32 API is the programming interface to the windows operating system. It gives us the ability to perform file I/O, allocate memory, and namely: create windows.
 
-As opposed to linux (or rather linux distributions), the windowing system is not seperate from the kernel or OS interface, but is provided as an integral part of win32. We'll shortly see the functions we can use to create and manage windows.
+As opposed to Linux (or rather Linux distributions), the windowing system is not separate from the kernel or OS interface, but is provided as an integral part of win32. We'll shortly see the functions we can use to create and manage windows.
 
-If you had already read my previous tutorial for making a window on linux with GLX and X11, then win32 essentially combines all these things together into one interface. The equivalent to GLX on windows is called "WGL", or the "Windows Extension to OpenGL". There is no equivalent to a windowing system like X11 or wayland, as the windowing system is an integral part of win32.
+If you had already read my previous tutorial for making a window on Linux with GLX and X11, then win32 essentially combines all these things together into one interface. The equivalent to GLX on windows is called "WGL", or the "Windows Extension to OpenGL". There is no equivalent to a windowing system like X11 or wayland, as the windowing system is an integral part of the operating system.
 
 
 ## Documentation
 The primary source of documentation is MSDN (Microsoft Developer Network). Technically, MSDN was removed and integrated into a new space called "Microsoft Learn", but everyone still refers to this portion of Microsoft Learn as what it used to be, which is MSDN.
 
-Unfortunately, Microsft Learn/MSDN is very disorganized. I would provide you a link, but that would be more unhelpful than just providing a few select links on specific topics.
+Unfortunately, Microsoft Learn/MSDN is very disorganized. I would provide you a link, but that would be more unhelpful than just providing a few select links on specific topics.
 
 Along with MSDN, you should also have the [OpenGL registry](https://registry.khronos.org/OpenGL/index_gl.php) on hand.
 
 
 ## Compiling/Building on Windows with MSVC
-MSVC or the "Microsoft Visual C++" compiler is the main C/C++ compiler for windows which we will be using. Even though it only has "C++" in the title, it also supports C compilation. When it comes to microsoft, almost nothing is named what it should be, and everything seems to be almost deliberately confusing. Bear with me, as it only gets worse the further into it you go. Many of the MSDN docs will refer to "C++" tutorials or references, but these also apply to plain C as well.
+MSVC or the "Microsoft Visual C++" compiler is the main C/C++ compiler for windows which we will be using. Even though it only has "C++" in the title, it also supports C compilation. Many of the MSDN docs will refer to "C++" tutorials or references, but these also apply to plain C as well.
 
-MSVC is the compiler used in Visual Studio, and typically, people invoke it when they use the Visual Studio IDE. If you want to use VS that's up to you, but I'll demonstrate how to use MSVC from the command line directly which I find be easier to use, and it allows you to use whatever IDE you like. For this section, the primary reference will be this [MSDN documentation](https://learn.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=msvc-170).
+MSVC is the compiler used in Visual Studio, and typically, people invoke it when they use the Visual Studio IDE. If you want to use VS that's up to you, but I'll demonstrate how to use MSVC from the command line directly which I find to be easier to use, and it allows you to use whatever IDE you like. For this section, the primary reference will be this [MSDN documentation](https://learn.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=msvc-170).
 
-The first thing you need to do is grab the "Build Tools for Visual Studio" which is referenced in the MSDN doc, and can be found [here](https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2022). This will give you the Visual Studio installer, which you should launch. You're going to want to select the "Desktop development with C++" install package, which is again poorly named, considering that it also gives us access to just plain C development tools. This install option is most likely all you'll need, but check the other options to see if you need something else. Again, just like we stated before, many of the tutorials/docs are named for C++ but are also for C as well, so don't worry.
+The first thing you need to do is grab the "Build Tools for Visual Studio" which is referenced in the MSDN doc, and can be found [here](https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2022). This will give you the Visual Studio installer, which you should launch. You're going to want to select the "Desktop development with C++" install package, which also gives us access to just plain C development tools. This install option is most likely all you'll need, but check the other options to see if you need something else. Again, just like we stated before, many of the tutorials/docs are named for C++ but are also for C as well, so don't worry.
 
 In order for these build tools to work, a lot of environment variables need to be set correctly, which in my opinion is a very bad design decision on the behalf of windows. Thankfully, they at least provided a fix for this issue by giving us our choice of specific developer CMDs, or by using a vcvars<>.bat shell script to setup and configure any CMD for proper use in compiling with MSVC. We will go with the vcvars<>.bat option for this tutorial, but you can also just use one of the developer command prompts which does the same thing.
 
@@ -40,11 +40,11 @@ Unfortunately, all of these configurations and environment variables are specifi
 
 The location of these vcvars<>.bat files is dependent, but I found mine for VS 2022 in the following location: `C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build`. The location can also be in many different places, such as the "Progam Files" without the x86, but this one is the correct one because it is under the "BuildTools" directory which corresponds to the Build Tools that I just referenced earlier in this tutorial for you to make sure to install. Again, windows is awful for this as there's multiple locations for these build files.
 
-We'll use the `vcvars64.bat` one because according to the MSDN docs: "Use the 64-bit x64-native tools to build 64-bit x64 code", so it builds us 64-bit code. DO NOT cut or copy this file anywhere else. These files are so delicate and I fear that even chaging the file location could screw it up because of how delicate these things are. The cwd doesn't seem to matter at least, but do not mess with these files as they are incredibly delicate as we will see soon.
+We'll use the `vcvars64.bat` one because according to the MSDN docs: "Use the 64-bit x64-native tools to build 64-bit x64 code", so it builds us 64-bit code. DO NOT cut or copy this file anywhere else. These files are so delicate and I fear that even changing the file location could screw it up because of how delicate these things are. The cwd doesn't seem to matter at least, but do not mess with these files as they are incredibly delicate as we will see soon.
 
 Then, run the vcvars<>.bat file only ONCE in the CMD you are using, then you can use the MSVC compiler. The vcvars<>.bat files are NOT meant to be run any more than ONE time in a given CMD, otherwise they will screw up the PATH environment variable among other environment variables. They will just add to it instead of properly changing it, so you can only run ONE of these per CMD window/instance and not more than once. A good idea would be to write a script that sets a variable to see if it has been run in your CMD already, so that it only runs it once.
 
-Once this is done in your CMD, MSVC is now avaible to run with "cl" or "cl.exe" as the compiler, and "link" or "link.exe" as the linker. These will be valid for the rest of the lifetime of the CMD you are in.
+Once this is done in your CMD, MSVC is now available to run with "cl" or "cl.exe" as the compiler, and "link" or "link.exe" as the linker. These will be valid for the rest of the lifetime of the CMD you are in.
 
 
 ### Windows SDK and Installing (OpenGL) Headers
@@ -141,13 +141,13 @@ win32_window.exe
 
 and you should get "Hello World!" as output in your CMD.
 
-The libraries `User32.lib`, `Gdi32.lib`, and `Opengl32.lib` are all required for what we are going to do. `User32.lib` is neccessary for some basic win32 functions, and the remaining two are necessary for creating an OpenGL context.
+The libraries `User32.lib`, `Gdi32.lib`, and `Opengl32.lib` are all required for what we are going to do. `User32.lib` is necessary for some basic win32 functions, and the remaining two are necessary for creating an OpenGL context.
 
 
 ## Dummy Window/Context
 Before we jump into anything else, I need to make something clear about a certain quirk on windows that you need to be aware of when it comes to OpenGL.
 
-For 2 reasons on windows, it is neccessary to create both a "dummy" window & GL context. We will need to first create the dummy window, get a dummy (legacy) OpenGL context, and then use that dummy GL context to load the necessary extension procedures to create a modern core-profile GL context.
+For 2 reasons on windows, it is necessary to create both a "dummy" window & GL context. We will need to first create the dummy window, get a dummy (legacy) OpenGL context, and then use that dummy GL context to load the necessary extension procedures to create a modern core-profile GL context.
 
 The procedure that we need to create a modern core-profile OpenGL context is mainly `wglCreateContextAttribsARB`, and also a few others. The problem here is that we can't load these extension procedures unless we *already* have an OpenGL context! The procedure loading function on windows is `wglGetProcAddress`, and it requires a context to be current in order to function properly. In fact, the MSDN docs say that the function pointers returned by `wglGetProcAddress` are only valid given a current-context, and it may not be valid for any other contexts.
 
@@ -268,7 +268,7 @@ if(wglMakeCurrent(dummygl_DC, dummygl_context) != TRUE) {
 /* @! */
 ```
 
-The first we thing we need to do is create a window class for the dummy window and register it with `RegisterClassA()`. Window classes in win32 are basically just window information for a window class, they don't really serve much of a purpose beyond the fact that they can be reused across more than one window. We won't be doing such thing, so we'll create the window class for our dummy window.
+The first thing we need to do is create a window class for the dummy window and register it with `RegisterClassA()`. Window classes in win32 are basically just window information for a window class, they don't really serve much purpose beyond the fact that they can be reused across more than one window. We won't be doing such thing, so we'll create the window class for our dummy window.
 
 We also need to pass in a pointer to the `RegisterClassA()` function that specifies something called the "window procedure", a special callback that we must register for each window. This window callback is a function called by the OS which receives all kinds of events or messages that we need to handle.
 
@@ -297,7 +297,7 @@ The next thing we do after that is create the dummy context with the wgl functio
 
 
 ### Loading WGL Extension Procedures
-Now that we have our (legacy) dummy GL context, we can load the important procedures that will be neccessary for a modern core-profile GL context.
+Now that we have our (legacy) dummy GL context, we can load the important procedures that will be necessary for a modern core-profile GL context.
 
 There are three extensions that we need to create a new context: `WGL_ARB_extensions_string`, `WGL_ARB_pixel_format`, and `WGL_ARB_create_context_profile`.
 
@@ -327,12 +327,12 @@ void* Load_WGL_Proc(const char* proc_name)
 }
 ```
 
-We also need a function to parse the extension string as it is a space-seperated list of extensions names (there are no spaces in an extension name). In python, this might be a simple one-liner, but in C, it takes a bit more work. My implementation is here, I call the function `Check_Extension_Available()`:
+We also need a function to parse the extension string as it is a space-separated list of extensions names (there are no spaces in an extension name). In python, this might be a simple one-liner, but in C, it takes a bit more work. My implementation is here, I call the function `Check_Extension_Available()`:
 
 ```c
 /* Returns 1 if extension is available, otherwise 0 if it is not present.
 
-This function expects "extensions_lists" to be a space seperated list of GL (or platform, e.g. WGL/GLX) extensions, and it searches extensions_lists to find if the extension "extensions" is within it.
+This function expects "extensions_lists" to be a space separated list of GL (or platform, e.g. WGL/GLX) extensions, and it searches extensions_lists to find if the extension "extensions" is within it.
  */
 static int Check_Extension_Available(const char* extensions_list, const char* extension)
 {
@@ -409,7 +409,7 @@ if(Check_Extension_Available(extensions_string, "WGL_ARB_create_context_profile"
 }
 
 
-/* These procedure pointers are neccessary to aquire/load in the dummy context, but the remainder of the WGL (and GL) extension procedures should be loaded with the actual context. wglGetExtensionsStringARB() should be loaded again with the new context, but these ones are only neccessary to for context creation, so we don't need them again. */
+/* These procedure pointers are necessary to acquire/load in the dummy context, but the remainder of the WGL (and GL) extension procedures should be loaded with the actual context. wglGetExtensionsStringARB() should be loaded again with the new context, but these ones are only necessary to for context creation, so we don't need them again. */
 PFNWGLGETPIXELFORMATATTRIBIVARBPROC wglGetPixelFormatAttribivARB = NULL;
 PFNWGLGETPIXELFORMATATTRIBFVARBPROC wglGetPixelFormatAttribfvARB = NULL;
 PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB = NULL;
@@ -483,27 +483,21 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 where you either decide to intercept messages yourself, or let them be handled by the Default Window Procedure `DefWindowProc()`.
 
-Microsoft doesn't even document these messages properly, with their documentation being scattered all over MSDN and not in a central place. Luckily, the folks over at WINE have taken it upon themselves do to so which can be found [here](https://gitlab.winehq.org/wine/wine/-/wikis/Wine-Developer's-Guide/List-of-Windows-Messages).
+Microsoft doesn't even document these messages properly, with their documentation being scattered all over MSDN and not in a central place. Luckily, the folks over at WINE have taken it upon themselves to do so which can be found [here](https://gitlab.winehq.org/wine/wine/-/wikis/Wine-Developer's-Guide/List-of-Windows-Messages).
 
-What's not so great is that the window procedure can be called by windows (the OS) at *any time* and there is no way of predicting when! Rather than just having a simple message loop that blocks until it gets messages, the creators behind win32 also opted to go for a callback design with the window procedure message, which is nothing less than an awful design choice no matter what historical context prompted it.
+What's not so great is that the window procedure can be called by windows (the OS) at *any time* and there is no way of predicting when! Rather than just having a simple message loop that blocks until it gets messages, the creators behind win32 also opted to go for a callback design with the window procedure message.
 
 The window procedure can either be called in the message loop by `DispatchMessage()`, which is a function we will call (we'll get to the message loop later), OR, it can be called at any point by the OS. There are essentially two different event-handling paradigms (callback/queued) that are both present in win32. This is the worst of both worlds, not the best.
 
-There is also absolutely no clear and cut way to know what messages you should handle, whether you should intercept some and handle completely yourself, or if you should handle it and <i>then</i> pass it to the default window procedure - OR - if you should only use the default window procedure period. Since we don't have the source code for `DefWindowProc()`, half the time we just have to guess what it does, as most of the documentation for it is in the MSDN description for a message and is usually vague and somtimes completely absent.
+There is also absolutely no clear and cut way to know what messages you should handle, whether you should intercept some and handle completely yourself, or if you should handle it and <i>then</i> pass it to the default window procedure - OR - if you should only use the default window procedure period. Since we don't have the source code for `DefWindowProc()`, half the time we just have to guess what it does, as most of the documentation for it is in the MSDN description for a message and is usually vague and sometimes completely absent.
 
-What's even worse is that if you choose not to handle some messages, your window or application will break in completely unpredictable ways, as the message model that win32 operates on is very odd in several places. Sometimes messages will be passed in for purely informational purposes (such as when a window is created), but you still have to return a specific value otherwise certain functions will break (such as `CreateWindow()`).
+<!-- What's even worse is that if you choose not to handle some messages, your window or application will break in completely unpredictable ways, as the message model that win32 operates on is very odd in several places. Sometimes messages will be passed in for purely informational purposes (such as when a window is created), but you still have to return a specific value otherwise certain functions will break (such as `CreateWindow()`). -->
 
-What the OS is essentially doing is "recruiting" our process (specifically the thread the window was created in) to do the window processing that it should be handling itself. This is a terrible design decision and could have only ever been cooked up by microsoft. It is overly complex and very error-prone, with absolutely no benefit.
+Rather than running window processing on a separate kernel process/thread, the OS is "recruiting" our process (specifically the thread the window was created in) to handle window operations. A lot of critical default behaviour is offloaded onto your thread, which causes unexpected behaviour that can be bad in very subtle ways. See this [link](https://github.com/libsdl-org/SDL/issues/1059) for example of how much of a headache this caused for the folks at SDL. This is just one particular example.
 
-Rather than handling it in the OS (where it should be) a lot of critical default behaviour is offloaded onto your thread, which causes unexpected behaviour that can be bad in very subtle ways. See this [link](https://github.com/libsdl-org/SDL/issues/1059) for example of how much of a headache this caused for the folks at SDL. This is just one particular example.
+All of this *might* be acceptable if it was well-documented exactly what the default window procedure does, as we are essentially forced into calling it on our own process thread as trying to reverse-engineer it is not easy. Thankfully, the folks at WINE have once again come to the rescue and they have reverse engineered the default window procedure which can be found [here](https://gitlab.winehq.org/wine/wine/-/blob/master/dlls/win32u/defwnd.c#L2388).
 
-All of this *might* be acceptable if it was well-documented exactly what the default window procedure does, as we are essentially forced into calling it on our own process thread, rather than the OS handling itself (which it should). But of course, as we would expect, the documentation for `DefWindowProc()` is spread out all over MSDN for each message (there are thousands of messages!). Most of the time, only vague descriptions are given as to what the default window procedure does, which is next to useless.
-
-Thankfully, the folks at WINE have once again come to the rescue and they have reverse engineered the default window procedure which can be found [here](https://gitlab.winehq.org/wine/wine/-/blob/master/dlls/win32u/defwnd.c#L2388).
-
-To deal with all of this nonsense, we basically just have to call the default window procedure, and try to figure out which cases we need to handle ourselves. This is a tedious trial-and-error process and is unfortunately the only way to go. Once again, absolutely terrible design on the behalf of microsoft.
-
-On the bright side, we can learn from existing codebases (such as the reverse-engineered one in WINE) for how to write our window procedures.
+I find the best strategy is to just default on calling the default window procedure and then determining which messages we can/should handle ourselves on a case-by-case basis.
 
 The implementation we will use for this tutorial is given here:
 
@@ -642,7 +636,7 @@ To do so, use this code:
 WNDCLASSEXA wnd_class;
 const char* window_class_name = "WINDOW_CLASS";
 wnd_class.cbSize = sizeof(WNDCLASSEXA);
-wnd_class.style = CS_OWNDC; /* it's probably neccessary to set CS_OWNDC flag for OpenGL context creation */
+wnd_class.style = CS_OWNDC; /* it's probably necessary to set CS_OWNDC flag for OpenGL context creation */
 wnd_class.lpfnWndProc = WindowProc;
 wnd_class.cbClsExtra = 0;
 wnd_class.cbWndExtra = 0;

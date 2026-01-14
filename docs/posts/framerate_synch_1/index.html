@@ -1,0 +1,1407 @@
+<!doctype html>
+<html
+  lang="en"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="light"
+  data-auto-appearance="true"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+  
+    <meta http-equiv="content-language" content="en">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color">
+
+  
+  
+    <title>Framerate Independence - Part 1: Refresh Rate and VSync &middot; James Spratt</title>
+    <meta name="title" content="Framerate Independence - Part 1: Refresh Rate and VSync &middot; James Spratt">
+  
+
+  
+  
+  
+  
+  
+  <link rel="canonical" href="http://localhost:1313/posts/framerate_synch_1/">
+  
+
+  
+  
+    <meta name="author" content="James Spratt">
+  
+  
+    
+      
+        
+          <link href="JamesSpratt.business@protonmail.com" rel="me">
+        
+      
+    
+      
+        
+          <link href="https://github.com/james822" rel="me">
+        
+      
+    
+      
+        
+          <link href="https://linkedin.com/in/james-spratt-b4b619203" rel="me">
+        
+      
+    
+  
+
+  
+  <meta property="og:url" content="http://localhost:1313/posts/framerate_synch_1/">
+  <meta property="og:site_name" content="James Spratt">
+  <meta property="og:title" content="Framerate Independence - Part 1: Refresh Rate and VSync">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-12-14T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-12-14T00:00:00+00:00">
+
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Framerate Independence - Part 1: Refresh Rate and VSync">
+
+  
+  
+  
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+  
+    
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.66c506a5c4f6511d889183b31701ff2539c3b74c87f6941ac97de8ae693436d96d1a28c111af25968dc239d84011f367293a7f5707e3274c70dcdcd411a4d4c4.css"
+    integrity="sha512-ZsUGpcT2UR2IkYOzFwH/JTnDt0yH9pQayX3ormk0NtltGijBEa8llo3COdhAEfNnKTp/VwfjJ0xw3NzUEaTUxA==">
+
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/appearance.min.6f41174b3a05b680820fe08cadbfa5fb7a7ca347b76a0955cdc68b9d8aca1ce24f0547e138cea33bcc7904d551a90afcb1cc7f2d9fe8557075d501419046c08c.js"
+    integrity="sha512-b0EXSzoFtoCCD&#43;CMrb&#43;l&#43;3p8o0e3aglVzcaLnYrKHOJPBUfhOM6jO8x5BNVRqQr8scx/LZ/oVXB11QFBkEbAjA=="></script>
+  
+  
+  
+  
+  
+  
+    
+    <script src="/lib/zoom/zoom.min.umd.a527109b68c082a70f3697716dd72a9d5aa8b545cf800cecbbc7399f2ca6f6e0ce3e431f2062b48bbfa47c9ea42822714060bef309be073f49b9c0e30d318d7b.js" integrity="sha512-pScQm2jAgqcPNpdxbdcqnVqotUXPgAzsu8c5nyym9uDOPkMfIGK0i7&#43;kfJ6kKCJxQGC&#43;8wm&#43;Bz9JucDjDTGNew=="></script>
+  
+
+  
+  
+  
+    
+  
+  
+    
+  
+  
+  
+  
+  
+  
+  
+    
+    <script
+      defer
+      type="text/javascript"
+      id="script-bundle"
+      src="/js/main.bundle.min.9df4fc14d50efcc9aa4cfc2b6f348e365f421f5ad491278f8f48c0360cf2f93f08882fda6da162d7ace8e5add57c2df4ac46bd3861306b1d4c452cd31f448d64.js"
+      integrity="sha512-nfT8FNUO/MmqTPwrbzSONl9CH1rUkSePj0jANgzy&#43;T8IiC/abaFi16zo5a3VfC30rEa9OGEwax1MRSzTH0SNZA=="
+      data-copy="Copy"
+      data-copied="Copied"></script>
+  
+
+  
+  
+
+<script src="/lib/jquery/jquery.slim.min.b0dca576e87d7eaa5850ae4e61759c065786cdb6489d68fcc82240539eebd5da522bdb4fda085ffd245808c8fe2acb2516408eb774ef26b5f6015fc6737c0ea8.js" integrity="sha512-sNylduh9fqpYUK5OYXWcBleGzbZInWj8yCJAU57r1dpSK9tP2ghf/SRYCMj&#43;KsslFkCOt3TvJrX2AV/Gc3wOqA=="></script>
+
+
+
+
+
+
+
+
+
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/lib/katex/katex.min.9e578d7ac3b5270b37ae32edae7835a744cda7734036e6e2f1ccf16f382b056ccd51c0df6b7ef3470991357a026507840aa22c1740ea2fe6bbce9b4223c5c182.css"
+    integrity="sha512-nleNesO1Jws3rjLtrng1p0TNp3NANubi8czxbzgrBWzNUcDfa37zRwmRNXoCZQeECqIsF0DqL&#43;a7zptCI8XBgg==">
+  
+  
+  
+  <script
+    defer
+    type="text/javascript"
+    src="/js/katex.bundle.a10a4a0655682a978b0422e48a40f3515d4d96c8e600a48e3dad34029a55cc00b128b89a908855227d1c07897ce09cdfe9f0d57decb148cb73f17dbb8a0a715c.js"
+    integrity="sha512-oQpKBlVoKpeLBCLkikDzUV1NlsjmAKSOPa00AppVzACxKLiakIhVIn0cB4l84Jzf6fDVfeyxSMtz8X27igpxXA=="
+    id="katex-render"></script>
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+  
+  
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+  
+
+  
+  <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "Posts",
+    "name": "Framerate Independence - Part 1: Refresh Rate and VSync",
+    "headline": "Framerate Independence - Part 1: Refresh Rate and VSync",
+    
+    
+    "inLanguage": "en",
+    "url" : "http://localhost:1313/posts/framerate_synch_1/",
+    "author" : {
+      "@type": "Person",
+      "name": "James Spratt"
+    },
+    "copyrightYear": "2025",
+    "dateCreated": "2025-12-14T00:00:00\u002b00:00",
+    "datePublished": "2025-12-14T00:00:00\u002b00:00",
+    
+    "dateModified": "2025-12-14T00:00:00\u002b00:00",
+    
+    
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "7613"
+  }]
+  </script>
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <body class="flex flex-col h-screen m-auto leading-7 max-w-7xl px-6 sm:px-14 md:px-24 lg:px-32 text-lg bg-neutral text-neutral-900 dark:bg-neutral-800 dark:text-neutral scrollbar-thin scrollbar-track-neutral-200 scrollbar-thumb-neutral-400 dark:scrollbar-track-neutral-800 dark:scrollbar-thumb-neutral-600">
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 focus:translate-y-0 dark:bg-neutral-600"
+        href="#main-content">
+        <span class="font-bold text-primary-600 pe-2 dark:text-primary-400">&darr;</span>
+        Skip to main content
+      </a>
+    </div>
+    
+    
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div
+  class="main-menu flex items-center justify-between py-6 md:justify-start gap-x-3 pt-[2px] pr-2 md:pr-4 pb-[3px] pl-0">
+  
+  
+
+  <div class="flex flex-1 items-center justify-between">
+    <nav class="flex space-x-3">
+      
+        <a href="/" class="text-base font-medium">
+          James Spratt
+        </a>
+      
+    </nav>
+    
+  <nav class="hidden md:flex items-center gap-x-5 md:ml-12 h-12">
+    
+      
+        
+  <a
+  href="/posts/"
+  
+  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+  aria-label="Recent Posts"
+  title="Posts">
+  
+  
+    <p class="text-base font-medium">
+      Recent Posts
+    </p>
+  
+</a>
+
+
+
+      
+        
+  <a
+  href="/projects/"
+  
+  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+  aria-label="Projects"
+  title="Projects">
+  
+  
+    <p class="text-base font-medium">
+      Projects
+    </p>
+  
+</a>
+
+
+
+      
+    
+
+    
+
+    
+
+    
+      <button
+        id="search-button"
+        aria-label="Search"
+        class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+        title="Search (/)">
+        <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+      </button>
+    
+
+    
+      <div class=" flex items-center">
+        <button
+          id="appearance-switcher"
+          aria-label="Dark mode switcher"
+          type="button"
+          class="text-base hover:text-primary-600 dark:hover:text-primary-400">
+          <div class="flex items-center justify-center dark:hidden">
+            <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+</span>
+          </div>
+          <div class="items-center justify-center hidden dark:flex">
+            <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+</span>
+          </div>
+        </button>
+      </div>
+    
+  </nav>
+
+    
+  <div class="flex md:hidden items-center gap-x-5 md:ml-12 h-12">
+    <span></span>
+
+    
+
+    
+
+    
+      <button
+        id="search-button-mobile"
+        aria-label="Search"
+        class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+        title="Search (/)">
+        <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+      </button>
+    
+
+    
+      <button
+        id="appearance-switcher-mobile"
+        aria-label="Dark mode switcher"
+        type="button"
+        class="text-base hover:text-primary-600 dark:hover:text-primary-400 me-1">
+        <div class="flex items-center justify-center dark:hidden">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+</span>
+        </div>
+        <div class="items-center justify-center hidden dark:flex">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+</span>
+        </div>
+      </button>
+    
+  </div>
+
+  </div>
+  
+  <div class="-my-2 md:hidden">
+    <div id="menu-button" class="block">
+      
+        <div class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+</span>
+        </div>
+        <div
+          id="menu-wrapper"
+          class="fixed inset-0 z-30 invisible w-screen h-screen m-0 overflow-auto transition-opacity opacity-0 cursor-default bg-neutral-100/50 backdrop-blur-sm dark:bg-neutral-900/50 pt-[5px]">
+          <ul
+            class="flex space-y-2 mt-3 flex-col items-end w-full px-6 py-6 mx-auto overflow-visible list-none text-end max-w-7xl">
+            <li id="menu-close-button">
+              <span
+                class="cursor-pointer inline-block align-text-bottom hover:text-primary-600 dark:hover:text-primary-400">
+                <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span>
+              </span>
+            </li>
+
+            
+              
+  <li class="mt-1">
+  <a
+    href="/posts/"
+    
+    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+    aria-label="Recent Posts"
+    title="Posts">
+    
+    
+      <p class="text-bg font-bg">
+        Recent Posts
+      </p>
+    
+  </a>
+</li>
+
+
+
+            
+              
+  <li class="mt-1">
+  <a
+    href="/projects/"
+    
+    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400"
+    aria-label="Projects"
+    title="Projects">
+    
+    
+      <p class="text-bg font-bg">
+        Projects
+      </p>
+    
+  </a>
+</li>
+
+
+
+            
+
+          </ul>
+          
+        </div>
+      
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+    
+    <div class="relative flex flex-col grow">
+      <main id="main-content" class="grow">
+        
+  
+  <article>
+    
+    
+
+    
+    <header id="single_header" class="mt-5 max-w-prose">
+      
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        Framerate Independence - Part 1: Refresh Rate and VSync
+      </h1>
+      <div class="mt-1 mb-6 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+        
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2025-12-14T00:00:00&#43;00:00">14 December 2025</time>
+    
+
+    
+    
+      <span class="ps-2"><span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    Draft
+  </span>
+</span>
+</span>
+    
+  </div>
+
+  
+
+  
+  
+
+  
+  
+
+
+
+      </div>
+      
+        
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+      
+    </header>
+
+    
+    <section class="flex flex-col max-w-full mt-0 prose dark:prose-invert lg:flex-row">
+      
+      
+      
+      
+      
+        <div class="order-first lg:ml-auto px-0 lg:order-last lg:ps-8 lg:max-w-2xs">
+          <div class="toc ps-5 print:hidden lg:sticky lg:top-10">
+            
+              <details
+  open
+  id="TOCView"
+  class="toc-right mt-0 overflow-y-auto overscroll-contain scrollbar-thin scrollbar-track-neutral-200 scrollbar-thumb-neutral-400 dark:scrollbar-track-neutral-800 dark:scrollbar-thumb-neutral-600 rounded-lg -ms-5 ps-5 pe-2 hidden lg:block">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 -ms-5 ps-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
+    Table of Contents
+  </summary>
+  <div
+    class="min-w-[220px] py-2 border-dotted border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#refresh-rate-and-gpu-scanout">Refresh Rate and GPU Scanout</a></li>
+    <li><a href="#screen-tearing-and-multi-buffering">Screen-Tearing and Multi-Buffering</a></li>
+    <li><a href="#vertical-blank-and-refresh-rate-re-visited">Vertical Blank and Refresh Rate Re-visited</a></li>
+    <li><a href="#vsync">VSync</a>
+      <ul>
+        <li><a href="#missed-vblanks-framerate-and-adapative-vsync">Missed VBLANKS, Framerate, and Adapative VSync</a></li>
+        <li><a href="#vsync-off-giving-better-latency">VSync OFF Giving Better Latency</a></li>
+      </ul>
+    </li>
+    <li><a href="#caveats">Caveats</a></li>
+    <li><a href="#in-practice---example-synchronization">In Practice - Example Synchronization</a>
+      <ul>
+        <li><a href="#synchronization-with-glfinishglclear">Synchronization With glFinish()/glClear()</a></li>
+      </ul>
+    </li>
+    <li><a href="#sources-and-additional-research">Sources and Additional Research</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+<details class="toc-inside mt-0 overflow-hidden rounded-lg -ms-5 ps-5 lg:hidden">
+  <summary
+    class="py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 -ms-5 ps-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
+    Table of Contents
+  </summary>
+  <div
+    class="py-2 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#refresh-rate-and-gpu-scanout">Refresh Rate and GPU Scanout</a></li>
+    <li><a href="#screen-tearing-and-multi-buffering">Screen-Tearing and Multi-Buffering</a></li>
+    <li><a href="#vertical-blank-and-refresh-rate-re-visited">Vertical Blank and Refresh Rate Re-visited</a></li>
+    <li><a href="#vsync">VSync</a>
+      <ul>
+        <li><a href="#missed-vblanks-framerate-and-adapative-vsync">Missed VBLANKS, Framerate, and Adapative VSync</a></li>
+        <li><a href="#vsync-off-giving-better-latency">VSync OFF Giving Better Latency</a></li>
+      </ul>
+    </li>
+    <li><a href="#caveats">Caveats</a></li>
+    <li><a href="#in-practice---example-synchronization">In Practice - Example Synchronization</a>
+      <ul>
+        <li><a href="#synchronization-with-glfinishglclear">Synchronization With glFinish()/glClear()</a></li>
+      </ul>
+    </li>
+    <li><a href="#sources-and-additional-research">Sources and Additional Research</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+
+
+            
+          </div>
+        </div>
+      
+
+
+      <div class="min-w-0 min-h-0 max-w-fit">
+        
+
+        <div class="article-content max-w-prose mb-20">
+          
+
+<p>A well known-issue plaguing real-time graphics, especially video games; is the difficult task of ensuring framerate independence across a wide variety of devices and configurations. This is important for several reasons. It&rsquo;s needed for the application to function correctly with regards to physics, simulation, animation, rendering, etc. Just about everything depends on this and it&rsquo;s critical to get it right.</p>
+<p>More generally, the problem to solve is how to be independent of any kind of rate. Wether that&rsquo;s the rendering rate, refresh rate, framerate, whatver. Refresh rate is going to be the main subject of this post, but future posts will examine physics framerate, simulation framerate, CPU/GPU throughput and latency, etc.</p>
+<p>For now, we can define <strong>framerate independence</strong> as the ability of our real-time application to function exactly the same across different framerate, or at least as similar as reasonably possible.</p>
+<p>In the old days, video games were made for specific hardware and were the sole application running on the system. A Pacman arcade machine for example only has the Pacman game running on it, with the display/monitor and computer integrated into one machine. On simple systems such as these, you knew ahead of time exactly what the hardware was and what the refresh rate of the display was, simplfying development by a lot. Basically, you could design and test it on one machine and if it worked properly then, it would pretty much work properly on every other machine since the hardware was identical.</p>
+<p>Today, the situation is much more complex. You have to deal with different monitor refresh rates, different hardware, different drivers, different Operating Systems, etc. These issues compound and make it exceptionally difficult to properly run an interactive real-time application with correct simulation, graphics, and a smooth user experience.</p>
+<p>This is, unfortunately, a very difficult problem to solve. Almost no perfect solution exists, and compromises must be made. What&rsquo;s worse, in some aspects it&rsquo;s impossible to solve properly considering that there are things outside the control of the application developer. On certain platforms it&rsquo;s just simply impossible to solve the problem correctly. At that point, you have to just use hacks or workarounds and give up on the idea of a perfect solution.</p>
+<p>This will be part 1 in a multi-part series where I will continually update and share my findings. I&rsquo;ll revisit this topic over the years and improve my understanding and implementations - and make sure to provide relatively frequent updates.</p>
+
+<h2 class="relative group">Refresh Rate and GPU Scanout
+    <div id="refresh-rate-and-gpu-scanout" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#refresh-rate-and-gpu-scanout" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>It&rsquo;s widely known that every monitor or display device operates on the notion of displaying a new &ldquo;frame&rdquo; at some frequency, which is known as the <strong>refresh rate</strong>. A typical Desktop monitor might have a refresh rate of 60Hz, meaning that 60 times per second, the monitor updates the image on screen. The monitor gets the image data from a region of memory called the <strong>framebuffer</strong>, which is where the frame to be presented is stored. The framebuffer is typically never controlled directly by the application, and is usually managed in conjuction by the OS/windowing system and the graphics driver (the GPU).</p>
+<p>There is a period of time every refresh cycle where the monitor does not display anything called the <strong>Vertical Blanking Interval</strong>, or just VBLANK for short. The other period of time, where the monitor is actively displaying something, is aptly named the <strong>Active Video</strong> period, or just active video. These two periods make up the entire time of a refresh cycle of a given monitor. For example, a given 60Hz monitor refreshes once every ~16ms, and maybe about 2ms of that 16ms is the VBLANK period, the rest of the 14ms being active video.</p>
+<p>However, it&rsquo;s incorrect to say that the monitor &ldquo;gets&rdquo; or &ldquo;retrieves&rdquo; the framebuffer data, quite the opposite. The monitor is essentially a slave device that just displays whatever data is sent to it. It&rsquo;s the graphics card or display adapter that is responsible for sending the framebuffer data to the monitor over HDMI/DisplayPort, or whatever media is in use.</p>
+<p>The term for this is <strong>GPU scanout</strong>, when the GPU <em>serially</em> sends the framebuffer data pixel-by-pixel to the monitor device. GPU scanout operates independently of GPU rendering, which can be confusing. It&rsquo;s entirely possible for the contents of the framebuffer to change midway during the scanout, producing inconsistent results. And in fact, it&rsquo;s this exact scenario that causes screen-tearing!</p>
+<p>Most people will tell you that screen-tearing is due to improper synchronization with the VBLANK period or refresh rate, and while that is true, it ignores the underlying mechanism. The issue actually stems from GPU scanout not being synchronized with the framebuffer contents. We&rsquo;ll talk about how that relates to the refresh rate and VBLANK periods later.</p>
+<p>Most people sort of pretend that the scanout is performed by the monitor rather than the graphics card, which is an incorrect mental model, but can still be used to understand the issue to a decently satisfying degree.</p>
+<p>Either way, you need to understand that if the GPU is scanning out a frame serially (pixel-by-pixel), and the framebuffer contents change during the scanout; the scanout will still continue scanning out the framebuffer, but with the new contents partway. It&rsquo;s like if you&rsquo;re a news reporter reading off the TV script that they give you, and someone just changes the script on the TV while you&rsquo;re in the middle of reading it. You still continue <a
+  href="https://youtu.be/iplfWUtKMzI?t=47"
+    target="_blank"
+  >reading off from the script even though someone changed it midway</a>, which is jarring to say the least.</p>
+<p>Clearly, we somehow need a way to ensure that the script doesn&rsquo;t change midway through the news reporter reading off the TV. Or in our land, we need a way to ensure the framebuffer doesn&rsquo;t change while the GPU is scanning out the framebuffer contents.</p>
+
+<h2 class="relative group">Screen-Tearing and Multi-Buffering
+    <div id="screen-tearing-and-multi-buffering" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#screen-tearing-and-multi-buffering" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>But what is screen-tearing exactly? Visually, it&rsquo;s when it looks like there is a rip across the screen. <a
+  href="https://en.wikipedia.org/wiki/Screen_tearing"
+    target="_blank"
+  >This</a> wikipedia article has a good picture showing what it looks like.</p>
+<p>In the picture, there appears to be a very sharp cut across the screen. It looks like the top half was shifted over relative to the bottom half (or vice-versa), and in the wikipedia example there&rsquo;s two tears! The result is very unpleasant in motion picture.</p>
+<p>As I explained before, screen-tearing results because the framebuffer contents are changed sometime during the GPU scanout, causing the first half of the scanout to be the old framebuffer contents, and the second half of the scanout to be of the new framebuffer contents. So one scanout is supposed to correspond to one frame, but can be two or sometimes more if the framebuffer is changed more than once during the scanout period. This is exactly why there is a TEAR, because the tear represents the sharp difference between the different frames in one scanout.</p>
+<p>Technically, screen tearing doesn&rsquo;t happen on a still image, even if the framebuffer contents change during the period of one scanout. But if one frame is different than the next, and if the difference is especially noticeable, then tearing will be observed.</p>
+<p>(You may wonder what this has to do with refresh rate or the VBLANK period, and I&rsquo;ll get to that. For now, just forget about those things and focus only on scanout and framebuffer synchronization.)</p>
+<p>So how would one solve this issue? Clearly, we need a way to synchronize scanout with updating the framebuffer. In particular, we want to only change the framebuffer contents when the GPU is NOT in the middle of a scanout. Logically then, we need a period provided where the GPU does NOT do a scanout, and during that short period, we are free to change the framebuffer contents.</p>
+<p>This short period of time in between scanouts, specifically in between the end of the last scanout and before the beginning of the next scanout; must be long enough so that we can change the framebuffer contents in time, but also not too long otherwise scanout will be throttled. Typically, this period of time in between scanouts is very short, and so we only have a small amount of time to modify the framebuffer before the next scanout.</p>
+<p>Because we have a limited period of time to change the framebuffer, we only have a short window to do all of our rendering to the framebuffer, which amounts to wasted time where we can&rsquo;t do any rendering work during scanout. We have to deliberately limit ourselves to only render during this short window between scanouts, which is sort of awful right?</p>
+<p>This is of course not how it works. Since it&rsquo;s beyond silly to limit ourselves to render only in a short period of time between scanouts, it makes more sense to render to another buffer, an offscreen buffer, which we then swap with the actual framebuffer during the period between scanouts. The offscreen buffer is called the <strong>back buffer</strong>, and the framebuffer that the GPU uses to scanout is called the <strong>front buffer</strong>. This way, we can maximize the time we have to render AND also swap the buffers during the time between scanouts&mdash;provided that buffer swapping is a much shorter operation than rendering, which it is. We can take advantage of the much shorter operation of buffer swapping (which can be as low as a few microsceonds or even less) to schedule it to be exactly in the period between scanouts.</p>
+<p>So we&rsquo;ve naturally derived the reason for multiple buffering, specifically double buffering in this example. The idea is that we always maintain an offscreen buffer called the &ldquo;back buffer&rdquo; (possibly more than one offscreen buffer in the cases of triple-buffering or higher) that we are rendering to that the GPU doesn&rsquo;t scanout from. The other buffer is the visible buffer, called the &ldquo;front buffer&rdquo;, that the scanout always reads from.</p>
+<p>When the time is right (during the next period between scanouts), we swap the back buffer with the front buffer, making the back buffer the new front buffer. Since swapping is very fast, we can easily do this in the period between scanouts and avoid swapping the framebuffer during a scanout.</p>
+<p>With this solution, we can take as long as we like to render to the backbuffer and not waste time purposely waiting to render in a very short window. Doing this successfully and consistently ensures that the framebuffer contents will never change midway through a scanout, thus eliminating screen-tearing. There&rsquo;s more to say on this, but for now keep this mental model in mind.</p>
+<p>I mentioned that buffer swapping is an operation that is short enough to be able to execute within the short period of time between scanouts. We would simply have to copy the contents of the back buffer into the front buffer, which is a relatively quick operation. Even better (and this is how it usually works), the GPU stores a pointer to the framebuffers. In a double-buffered setup, whichever of the two framebuffers that is being pointed to is considered the front buffer, and the other one the back buffer. Therefore, buffer swapping is simply just changing a single pointer that makes the back buffer the front buffer, and front buffer the back buffer. This is literally just a pointer change which is an absurdly fast operation that can easily complete within the period between scanouts.</p>
+<p>You can sometimes configure the behaviour of framebuffer swapping with Graphics APIs such as OpenGL, Vulkan, DirectX, etc. The OpenGL extension <code>GLX_OML_swap_method</code> (only available with Linux/X11) allows you to configure how the framebuffer is swapped in a double-buffered setup. The setting <code>GLX_SWAP_EXCHANGE_OML</code> will basically just switch the pointer so that the front buffer becomes the back buffer, and back buffer becomes the front buffer. There is also <code>GLX_SWAP_COPY_OML</code> which will copy the contents of the back buffer into the front buffer.</p>
+
+<h2 class="relative group">Vertical Blank and Refresh Rate Re-visited
+    <div id="vertical-blank-and-refresh-rate-re-visited" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#vertical-blank-and-refresh-rate-re-visited" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>This hypothetical &ldquo;short period&rdquo; between scanouts that we have discussed up to this point is exactly the same as the VBLANK period. They are one and the same.</p>
+<p><em>Now</em> it should start to make sense how these things are related. And hopefully you can see where this is going.</p>
+<p>To recap, we defined the VBLANK period as a short period of time during the refresh cycle where the monitor does not display anything. This also coincides with the time that GPU does not scanout anything. In fact, these two time periods are exactly synchronized due to precise hardware timers and communication between the monitor and GPU.</p>
+<p>Through standards like EDID (Extended Display Identification Data), the GPU is alerted of the refresh rate of the monitor so that the GPU feeds the monitor with video feed (during the active video period) consistently and in synch with the refresh rate. In other words, it&rsquo;s basically impossible for the GPU to scanout video at the incorrect time.</p>
+<p>Contrary to what seems like popular belief, screen-tearing is NOT caused by the GPU outputting image data at the wrong time, rather that the GPU is scanning out a framebuffer WHILE the framebuffer contents are changed. The GPU is ALWAYS scanning out video at the right times (during the active video period), so tearing is caused by the <em>framebuffer</em> changing at the wrong time.</p>
+<p>Picture the GPU -&gt; Monitor scanout as a tightly synchronized stream where the GPU begins scanout exactly when VBLANK ends (and thus active video begins), and ends when the active video period is over (right at the beginning of the next VBLANK period). This isn&rsquo;t exactly how it works, but the idea is generally that scanout does NOT happen during VBLANK. VBLANK is aptly named, as nothing happens or changes during that period of time.</p>
+<p>The VBLANK period can be understood as a time where the monitor <em>provides</em> a purposeful blank period in the refresh cycle where you shouldn&rsquo;t send it any video feed. During this provided period, you can change your image (swap the buffer) rather than changing it during active video, as the latter will cause the video feed to change mid-transmission and cause visual artifacts (screen-tearing).</p>
+<p>So that&rsquo;s why people often omit discussions of GPU scanout and almost imply that it&rsquo;s the monitor that fetches the data at a fixed cycle, leaving the VBLANK period as a grace period where we can swap our framebuffer and avoid tearing. Even though this model is incorrect, it is sufficient in MOST cases (not all) to understand what is going on.</p>
+<p>It is precisely because GPU scanout is perfectly synchronized with the monitor refresh rate AND that it acts independently of rendering; that it appears as if it is the monitor that is serially reading data from the framebuffer at regular uninteruppted intervals independent of when you change the framebuffer contents.</p>
+<p>If you&rsquo;re more interested in the low level functions of the GPU scanout behaviour in relation to the monitor, then you can check out <a
+  href="https://www.extron.com/article/uedid"
+    target="_blank"
+  >this source</a> on the EDID protocol (Extended Display Identification Data), which is used to calibrate GPU scanout to be in synch with the refresh rate and active video periods (among other things).</p>
+<p>For now, we&rsquo;re going to stop here and sit with this high-level model, and continue onwards to further understand the problem.</p>
+
+<h2 class="relative group">VSync
+    <div id="vsync" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#vsync" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>So how exactly do we solve screen-tearing? Obviously we need to synchronize our buffer swaps with the VBLANK period and refresh rate, but how is that accomplished?</p>
+<p>This is <em>exactly</em> what VSync accomplishes. VSync stands for &ldquo;Vertical Sync&rdquo;, as in <em>Vertical Blanking Interval Synchronization</em>. The way VSync works is that when you have fully rendered a frame to the back buffer, it will then instruct your graphics card to hold off on swapping the back and front buffers until you reach the next VBLANK period, at which point it will then peform the buffer swap. Note that VSync is only possible with a multi-buffered setup, as it&rsquo;s the framebuffer swap that is being synchronized here, NOT rendering. This is a good thing though, as it allows us to control when we render asynchronously with respect to framebuffer swapping, but that also comes with some heavy responsibilites and consequences that we&rsquo;ll soon see.</p>
+<p>So now we&rsquo;ve derived the reason for having multi-buffering + VSync, as together, they solve the problem of screen-tearing.</p>
+<p>Already though, you might see that there can be issues with this approach. For example, what would happen if the rendering time takes too long (and/or is started too late), so that the next VBLANK period is missed? Well you would then have to wait an entire refresh cycle for the next VBLANK period to do a buffer swap, effectively halving your framerate and doubling latency. This is what the default VSync option does, and if you&rsquo;re not careful, you&rsquo;ll throw away precious time idling the GPU and outputting at a much lower framerate.</p>
+<p>With a 60Hz refresh rate, if your rendering time takes longer than ~16.6ms, but not greater than ~33.3ms, then you&rsquo;re going to be missing every other VBLANK period. This will reduce your effective framerate down to 30Hz, or 30 FPS, which is rather undesirable.</p>
+<p>The reverse case is also a source of problems. What if your rendering time is faster than the refresh rate? You might end up getting ahead and start rendering frames too far in advance, maintaining throughput at the refresh rate, but increasing the <em>latency</em> by X amount of frames, where X is how many frames you are ahead of. Failing to account for this will cause potentially unlimited latency and make your game feel unresponsive and sluggish. Most drivers will typically have methods to prevent too many frames from being queued up before a buffer swap happens, but you shouldn&rsquo;t rely on this behaviour as it&rsquo;s driver-dependent. You really want to make sure you control your rendering so you don&rsquo;t render ahead and queue up too many frames.</p>
+<p>One way to solve this is to simply block or wait until the framebuffer has been swapped (or until you know the image is presented on the screen, which as we&rsquo;ll see later, is not very simple). The downside is that you let the GPU idle while you&rsquo;re waiting for the next framebuffer swap. The upsides are that it is easy to program, saves more power, and has low latency.</p>
+<p>Another way to solve this problem is utilizing triple buffering (when you have two back buffers), where you choose not to wait on a framebuffer swap and immediately start rendering the next frame to the other back buffer, before the framebuffer swap happens. If the rendering gets far ahead enough, frames are discarded. I&rsquo;ll have to do a seperate post on triple-buffering and other buffering methods alone just because it&rsquo;s a whole topic.</p>
+<!-- Briefly though, I don't think triple-buffering should be used in every scenario as it adds latency and discards frames every now and then. The motivation for using triple-buffering is to have as high as possible framerate with VSYNC, which periodically causes missed VBLANKS. It also comes with the cost of higher latency, almost always an entire frame behind. It also puts difficult requirements on your simulation to have to produce results for the renderer more often. -->
+<!-- Triple-buffering makes sense when we're talking about AAA studios that are using fairly complex engine architectures with deeply pipelined stages and a mulithreaded job system; but many of these AAA studios also purposely incur latency for improved framerate. Having better graphics tends to sell more shelf units it seems. -->
+
+<h3 class="relative group">Missed VBLANKS, Framerate, and Adapative VSync
+    <div id="missed-vblanks-framerate-and-adapative-vsync" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#missed-vblanks-framerate-and-adapative-vsync" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>Because VSync limits your framebuffer swap to only happen on regular intervals of the VBLANK period, your framerate (as in how often you swap the framebuffer) is limited by the refresh rate and how long your render takes. We can model this relationship with simple equations.</p>
+<p>First, let&rsquo;s go over some basic math. To calculate the refresh <em>period</em> (the time between refreshes), you use this simple inverse relationship:</p>
+$$
+\text{refresh\_period} = \frac{1}{\text{ refresh\_rate }} \iff \text{ refresh\_rate } = \frac{1}{\text{refresh\_period}}
+$$<p>The same is true of converting between framerate and frame period (or frametime):</p>
+$$
+\text{frame\_period} = \frac{1}{\text{ frame\_rate }} \iff \text{ frame\_rate } = \frac{1}{\text{frame\_period}}
+$$<p>We&rsquo;ll use the term frame period for consistency with refresh period, but frametime and frame period are interchangeable. Keep in mind we&rsquo;re using &ldquo;framerate&rdquo; as the frequency of buffer swaps here. Framerate can mean different things in different contexts, but here it&rsquo;s directly how often we swap the buffer.</p>
+<p>If we want to determine what the effective framerate actually is (due to missed VBLANKS), then we need to know on average how many VBLANKS we miss. This can be calcuated by a ceiling on how much time it takes to render on average (or in the worst case) divided by the refresh period:</p>
+$$ \lceil \text{render\_time} \div \text{refresh\_period} \rceil $$<p>Putting everything together, we get this formula for our effective framerate:</p>
+$$
+\text{frame\_rate} = \frac{\text{refresh\_rate}}{\lceil \text{render\_time} \div \text{refresh\_period} \rceil}
+$$<p>With this simple model, we can start evaluting what framerates we can expect for different refresh rates. Here is a list of refresh rates with the possible framerates as render time increases, and so VBLANK misses increase.</p>
+<ul>
+<li>For 60Hz: 60, 30, 20, 15, 12</li>
+<li>For 75Hz: 75, 37.5, 25, 18.75, 15</li>
+<li>For 120Hz: 120, 60, 40, 30, 24</li>
+<li>For 144Hz: 144, 72, 48, 36, 28.8</li>
+<li>For 240Hz: 240, 120, 80, 60, 48</li>
+</ul>
+<p>The varying framerates that we can target with VSync are not consistent across refresh rates. If you wanted to target 60FPS, the closest you could get on 144Hz monitor would be 72FPS which is about a 2.8ms difference compared to running at 60FPS!</p>
+<p>In real-time simulation, 2.8ms is a MASSIVE difference, and it&rsquo;s very difficult to design your engine to robustly account for such major differences. Practically speaking, you need to know what the minimum FPS is that you can run on most platforms, but that&rsquo;s difficult to determine exactly. If you have that, you at least have a maximum bound on your target FPS and can go from there.</p>
+<p>It can get ugly quickly though. If you can only run at most 67 FPS, then you still won&rsquo;t be able to make 72FPS on 144Hz without screen tearing. In that case, you either choose to just accept tearing, or you drop down to the next available FPS with VSync which is 48FPS! Even though you can run at 67FPS, you are forced to go at 48FPS which stinks. This has the unintuitive result of making your app run <em>better</em> on a 60Hz monitor than a 144Hz monitor, because it can achieve a higher framerate without tearing. Most people who buy a 144Hz monitor do so because they want higher framerates, not lower!</p>
+<p>It&rsquo;s no suprise then, that on PC, many games expose several options for the player to tune because it&rsquo;s just impossible to predict the characterstics of every device you ship to. In practice, many gamers (especially with comptetive games) turn off VSync so they can hit a decent framerate.</p>
+<p>At some point, a high-enough refresh rate minimizes the effect of screen tearing by virtue of just refreshing so fast. Eventually it becomes unnoticeable, but it&rsquo;s debatable as to where the cutoff is, many people online with 240Hz monitors still complain about screen-tearing. Whatever the case, we&rsquo;ll probably need to support VSync for the foreseeable future.</p>
+<p>Then there&rsquo;s also Adaptive VSync, which up until this point we&rsquo;ve been ignoring. Adaptive VSync is an interesting compromise to this problem where render times are just a bit longer than the refresh rate. The idea is that if you miss a VBLANK, Adaptive VSync will just swap the framebuffer in the middle of a scanout even though it will certainly cause screen tearing. These swaps are called &ldquo;late swaps&rdquo;, and they&rsquo;re a compromise between having VSync and having higher framerates.</p>
+<p>The idea is that it would better to render a bit late and with tearing, rather than halve your framerate just to avoid tearing. For example, if a game that was normally 60FPS suddenly spiked a little above, and if adaptive VSync was turned on, then it would just swap as soon as it&rsquo;s ready rather than waiting for the next VBLANK.</p>
+<p>What&rsquo;s tricky to determine is if you should use this for a situation where there&rsquo;s a mismatch between your application&rsquo;s framerate and the refresh rate. For example, if your application can most of the time run at around 70-75 FPS, but not consistently, AND you&rsquo;re on a 144Hz monitor; then you can enable adaptive Vsync and you will sort of achieve a stable 72FPS, but with occasional screen tears.</p>
+<p>In a case like this where anywhere from 1%-10% of the time you can&rsquo;t render at 72FPS (maybe only at 50-60FPS), then adaptive vsync saves you but with screen tearing as the tradeoff. This could be a decent compromise, and Adaptive VSync is certainly a good solution that you can employ.</p>
+<p>This is where triple-buffering with VSYNC comes in handy, as it allows you to start rendering right away instead of waiting for the next VBLANK. You&rsquo;ll get lower framerates still, but you won&rsquo;t have any tearing. The tradeoff is of course increased latency, but then you eliminate screen-tearing and get a better framerate on average.</p>
+<p>The OpenGL <code>EXT_swap_control_tear</code> Is the extension that is available for Linux and Windows (GLX/WGL), that allows you to enable adaptive VSync by specifying that late swaps are allowed to happen.</p>
+<!-- - don't take it from me, test this on your own machine and work out the math yourself. Use a higher vblank interval on your device that will produce an uneven mutlitple, and measure the times and then do 1 divided by the time to get the actual framerate. -->
+
+<h3 class="relative group">VSync OFF Giving Better Latency
+    <div id="vsync-off-giving-better-latency" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#vsync-off-giving-better-latency" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>Many gamers turn off VSync for other reasons than just refresh-rate mismatching framerate. Most of the time, even when the game can run well within the refresh rate, gamers still prefer to switch off VSync. Why is this? The reason is very nuanced and most gamers (or even some game developers) don&rsquo;t understand what&rsquo;s really going on.</p>
+<p>In theory, if you can consistently render within the refresh rate, then you can just turn on VSync and never miss a VBlank period (assuming that frames aren&rsquo;t buffered internally by the driver, which we&rsquo;ll talk about later). Your effective framerate is limited by the refresh rate, which is well understood even by the layman, so you should still get the highest framerate possible (exactly at the refresh rate). But gamers still turn off VSync to get better latency, how is this possible?</p>
+<p>It&rsquo;s possible <em>because</em> of screen tearing. If you swap the framebuffer during scanout, then the scanout will start reading the new framebuffer data, and the screen will have old and new contents from the old and new rendered frames respectively.</p>
+<p>This means that the portion of the screen update with the new rendered frame is technically more up to date than the old portion. Thus, you&rsquo;ve basically took advantage of the serial update of the monitor (as fed by scanout) to unlock the refresh rate and effectively get sub-refresh-cycle latency.</p>
+<p>The natural limitation of course is that the sub-refresh-cycle latencies are only for the portions of the screen that correspond to the point when the framebuffer was changed during scanout. If you do this multiple times per scanout, then you can even further reduce the sub-refresh-cycle latency, at the cost of inducing more tears, with each new section having less and less latency.</p>
+<p>In practice, it manages to make the application feel more graphically responsive by locally reducing latency in certain portions of the screen. You can basically turn half of the screen of a 60Hz monitor into a 120Hz monitor with this method!. It doesn&rsquo;t work exactly like that, but I hope the idea is clear.</p>
+<p>It&rsquo;s also true that for many first-person competitive games, that your gaze is typically focused towards the top of the screen rather than the bottom, because of 3D perspective making things father away look higher (<a
+  href="https://en.wikipedia.org/wiki/Vanishing_point"
+    target="_blank"
+  >vanishing point</a>). It&rsquo;s also true that many monitors typically first update from the top and then go down line-by-line, technically making the top of your screen have better latency than the bottom, which at 60Hz, would be about a 14-16ms reduction in latency at the top of the screen!</p>
+<p>So these are the reasons why it feels better to turn off VSync in competetive fast-paced games, because you&rsquo;re hacking the intended serial uninterrupted mechansim of monitor refreshes to achieve a higher framerate. Somehow, our eyes/brains can process the latency differential across the screen and synthesize it into a coherent image that appears to be updating faster.</p>
+<p>Just to be clear, this is not an intended effect that any graphical application (that I know of) specifically aims for, but it is the natural side-effect of having a higher framerate than the refresh rate and not using VSync. It would be pretty cool if some games or applications targeted this as a <em>feature</em> in order to simulate higher refresh rates on monitors with lower refresh rates. The funny thing is, you would need to do the opposite of VSync and time your swaps to happen <em>during</em> the scanout period. You would actually want to try NOT to swap during VBLANKs, exactly the opposite of what VSync does. Currently, I don&rsquo;t know if that&rsquo;s even possible at all with current hardware and drivers, besides just trying to render at the highest framerate possible with no VSync.</p>
+<p>The technical term for all of this is &ldquo;sub-refresh-cycle latencies&rdquo;, and the folks over at blurbusters.com did an excellent review of this exact phenomenon in <a
+  href="https://blurbusters.com/understanding-display-scanout-lag-with-high-speed-video/"
+    target="_blank"
+  >this</a> post. I would highly recommend checking it out, specifically the section titled &ldquo;Sub-Refresh-Cycle Latencies Are Possible With VSYNC OFF&rdquo;. They did a much better job of explaining it over there.</p>
+
+<h2 class="relative group">Caveats
+    <div id="caveats" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#caveats" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>All of this stuff we&rsquo;ve been saying up to this point with VSync has been with many assumptions though, such as render time having an upper bound, VSync working properly, refresh rate being consistent, and being able to query the exact time a framebuffer swap happened. It may suprise you that usually NONE of these conditions are true, or at least, not all of them are true at the same time.</p>
+<p>Having upper-bounded render time is a classic problem in real-time graphics, and is nevertheless still very difficult, especially as the demand for higher quality graphics remains. Even games released today such as the recent Death Stranding 2 that dropped this past summer, can only get 30FPS on the high quality mode on the PS5! There&rsquo;s also a performance mode on the game which gives a locked 60FPS, but it&rsquo;s 2025 and many people are starting to expect more than just 60FPS.</p>
+<p>In practice, most developers have to choose a render time budget (such as ~16.6ms for 60FPS) and just stick with it. You have to make sure that the budget is never exceeded, or at least very rarely exceeded, and you also have to determine what your target hardware/platforms are. This is not an easy problem to solve, and that&rsquo;s why even on the PS5 games are still running at 30FPS or slower.</p>
+<p>VSync itself is also rather unreliable. It&rsquo;s not consistently supported across driver implementations, and on PC, users usually have the option to force VSync off in their graphics card control panel. There is currently NO way to detect this at runtime. Vulkan, DirectX, and OpenGL do not provide any mechanisms to query if the user has forced VSync off. You just have to guess yourself using timers to see if VSync is behaving as expected.</p>
+<p>Then there&rsquo;s also the refresh rate being inconsistent. It&rsquo;s not necessarily true that the refresh rate of a 60Hz monitor is exactly 60Hz, it might be 59.9Hz or something like that. This many seem trivial, but even minute differences can add up and you can quickly find yourself out of alignment in mere minutes or even seconds in some cases.</p>
+<p>There&rsquo;s also VRR (Variable Refresh Rate) such as Nvidia G-Sync or AMD FreeSync. These technologies are very good solutions to the problems that we&rsquo;ve discussed (especially screen-tearing), except that in practice, it&rsquo;s tricky to support them correctly. I&rsquo;m not experienced at all with VRR, so don&rsquo;t take my word for it, but I&rsquo;ll investigate it in subsequent parts of this series.</p>
+<p>Just to give you an idea though, the documentation for the Vulkan extension <code>VK_GOOGLE_display_timing</code> (which can be found <a
+  href="https://docs.vulkan.org/refpages/latest/refpages/source/VK_GOOGLE_display_timing.html"
+    target="_blank"
+  >here</a>) makes note of VRR with this very insightful comment:</p>
+<blockquote>
+<p>This extension treats variable-refresh-rate (VRR) displays as if they are fixed-refresh-rate (FRR) displays.</p>
+</blockquote>
+<p>As a graphics programmer I have no idea how to interpret what that means.</p>
+<p>Lastly, and perhaps most importantly, it is not as widely supported as you might think to be able to know when a frame was presented. The aforementioned <code>VK_GOOGLE_display_timing</code> extension which gives you information on when framebuffer swaps happen, and when your framebuffer becomes visible; is not even supported on windows! It&rsquo;s mostly supported on Linux through the MESA drivers, and also on all Android platforms, but not on windows! That basically completely limits your windows port to treat vulkan as a sub-optimal option for a graphics backend. If you&rsquo;re running on windows you probably are using DirectX as your graphics backend anyways, so it&rsquo;s not too bad.</p>
+<p>For OpenGL, we have the extension <code>OML_sync_control</code> which also gives us critical timing information for buffer swapping and VBLANK periods. And with DirectX, you can use the <code>DXGI_FRAME_STATISTICS</code> struct to get info on similar things.</p>
+<p>I just want give huge thanks to Alan Ladavac and his seminal <a
+  href="https://medium.com/@alen.ladavac/the-elusive-frame-timing-168f899aec92"
+    target="_blank"
+  >post</a> that highlighted the need for accurate presentation timing. As far as I understand, he was the one that pioneered bringing the <code>VK_GOOGLE_display_timing</code> to be more widely available on Linux/MESA which he presented in the GDC talk <a
+  href="https://www.gdcvault.com/play/1025031/Advanced-Graphics-Techniques-Tutorial-The/1000"
+    target="_blank"
+  >here</a>.</p>
+
+<h2 class="relative group">In Practice - Example Synchronization
+    <div id="in-practice---example-synchronization" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#in-practice---example-synchronization" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<p>After all that boring theory and background it&rsquo;s time to finally look at some concrete implementations.</p>
+<p>I&rsquo;m going to be using OpenGL as the graphics API, but the same concepts apply generally. I&rsquo;m also running my code on Linux, but you can do the same thing for other platforms as well. We also need VSync, which is provided by the <code>EXT_swap_control</code> extension. <code>EXT_swap_control_tear</code> provides adaptive VSync as well.</p>
+<p>First, let&rsquo;s start off with a beginner render loop. This will be a mix of pseudo-code and actual code (note that this example uses double-buffering, but the code for that is omitted for brevity):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">time_t</span> <span class="n">last_time</span> <span class="o">=</span> <span class="nf">get_time</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kt">time_t</span> <span class="n">current_time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">time_t</span> <span class="n">frame_delta_time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glXSwapIntervalEXT</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> <span class="cm">/* provided by GLX_EXT_swap_control, this sets the swap interval to 1, meaning that we wait until the next VBLANK to swap, which is normal VSync. */</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glClearColor</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">);</span> <span class="cm">/* sets the clear color to be a bright purple */</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span><span class="p">(</span><span class="n">running</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">simulation_result</span> <span class="o">=</span> <span class="nf">simulate</span><span class="p">(</span><span class="n">frame_delta_time</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="nf">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span><span class="p">);</span> <span class="cm">/* clears the backbuffer to the purple clear color we set prior */</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">render_to_framebuffer</span><span class="p">(</span><span class="n">simulation_result</span><span class="p">);</span> <span class="cm">/* renders to the backbuffer */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="nf">glXSwapBuffers</span><span class="p">();</span> <span class="cm">/* swaps the back and front buffers */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="n">current_time</span> <span class="o">=</span> <span class="nf">get_time</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="n">frame_delta_time</span> <span class="o">=</span> <span class="n">current_time</span> <span class="o">-</span> <span class="n">last_time</span><span class="p">;</span> <span class="cm">/* getting how long this frame took relative to the last frame */</span>
+</span></span><span class="line"><span class="cl">      <span class="n">last_time</span> <span class="o">=</span> <span class="n">current_time</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>This is exactly what most tutorials will tell you to do&mdash;and it&rsquo;s totally wrong.</p>
+<p>For one, the <code>SwapBuffers()</code> function is usually non-blocking, meaning that it is an asynchronous request that is sent out, and then the function returns immediately. This means that your frame time measurement following the <code>SwapBuffers()</code> function will be incorrect. All rendering commands are asynchronous in OpenGL (and other graphics APIs), meaning that by the time <code>SwapBuffers()</code> has completed, you may not even be finished rendering yet!</p>
+<p>Also, If your application&rsquo;s simulation and render time is very short, then you will quickly queue up more frames running way ahead of the refresh rate. You need a mechanism to block your CPU from getting too far ahead of the GPU, or at least a mechanism to synchronize rendering so that the CPU can do other tasks while waiting for the next buffer swap before queuing up more rendering commands. (Or, with triple buffering, queue up rendering commands immediately after <code>SwapBuffers()</code>, and incur a frame of latency as a result).</p>
+<p>Yet, if you try running this code, things will seem mostly okay. What&rsquo;s going on?</p>
+<p>In fact, when I tested this on my machine connected to a 60Hz monitor, <code>frame_delta_time</code> was on average around 16.6ms. I was using a simple Hello Triangle example as a test, which should be running way ahead of the refresh rate, yet <code>frame_delta_time</code> was ~16.6ms on average&mdash;what gives?</p>
+<p>The answer is that the graphics driver blocks you from rendering too many frames in advance. The driver has an internal mechanism for preventing too many frames from being queued up, and the way it accomplishes this is by blocking your render thread during the next GL render command that affects the framebuffer. In our case, the blocking happens during the <code>glClear()</code> command.</p>
+<p>You can easily test this with code like this on your machine:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">time_t</span> <span class="n">last_time</span> <span class="o">=</span> <span class="nf">get_time</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kt">time_t</span> <span class="n">current_time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">time_t</span> <span class="n">frame_delta_time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glXSwapIntervalEXT</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glClearColor</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span><span class="p">(</span><span class="n">running</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">simulation_result</span> <span class="o">=</span> <span class="nf">simulate</span><span class="p">(</span><span class="n">frame_delta_time</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="kt">time_t</span> <span class="n">time_before_clear</span> <span class="o">=</span> <span class="nf">get_time</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="kt">time_t</span> <span class="n">time_after_clear</span> <span class="o">=</span> <span class="nf">get_time</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;glClear() time: %f</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">time_after_clear</span> <span class="o">-</span> <span class="n">time_before_clear</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">      <span class="nf">render_to_framebuffer</span><span class="p">(</span><span class="n">simulation_result</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="kt">time_t</span> <span class="n">time_before_swap</span> <span class="o">=</span> <span class="nf">get_time</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">SwapBuffers</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="kt">time_t</span> <span class="n">time_after_swap</span> <span class="o">=</span> <span class="nf">get_time</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;SwapBuffers() time: %f</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">time_after_swap</span> <span class="o">-</span> <span class="n">time_before_swap</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="n">current_time</span> <span class="o">=</span> <span class="nf">get_time</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="n">frame_delta_time</span> <span class="o">=</span> <span class="n">current_time</span> <span class="o">-</span> <span class="n">last_time</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">last_time</span> <span class="o">=</span> <span class="n">current_time</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>With this code, you might be surprised to find that <code>glClear()</code> takes almost the entire time of a refresh period (~16.6ms on 60Hz). This is because the OpenGL driver is purposely blocking us here until the next framebuffer swap happens, making the buffer available for us to draw to. So in a very weird turn of events, it&rsquo;s not the function itself <code>SwapBuffers()</code> that is being synchronized to the framebuffer swap with VSync, but rather the next GL rendering command that affects the framebuffer.</p>
+<p>And sure enough, this example code will give you very short times for <code>SwapBuffers()</code> (around 100 microseconds), confirming that it&rsquo;s non-blocking. This is because it is simply just sending a command out to the GPU/windowing system, without waiting for that command to complete (what it means for the command of buffer swapping to complete is itself an issue, as it doesn&rsquo;t necessarily correspond to the time that the frame becomes visible on screen).</p>
+<p>It&rsquo;s better to think of <code>SwapBuffers()</code> as a command that just indicates to the GPU/windowing system that rendering work to the framebuffer (the back buffer) is finished. Then, when the next VBLANK comes, the buffers will actually be swapped.</p>
+<p>One way to modify our code example to make it more correct would be to put the <code>glClear()</code> <em>right after</em> <code>SwapBuffers()</code>, so that we can effectively use it as a blocking mechanism to ensure that the framebuffer swap happened. Then our code for calculating <code>frame_delta_time</code> will be better.</p>
+<p>Here is the simple change that we would make:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">time_t</span> <span class="n">last_time</span> <span class="o">=</span> <span class="nf">get_time</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kt">time_t</span> <span class="n">current_time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">time_t</span> <span class="n">frame_delta_time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glXSwapIntervalEXT</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glClearColor</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span><span class="p">(</span><span class="n">running</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">simulation_result</span> <span class="o">=</span> <span class="nf">simulate</span><span class="p">(</span><span class="n">frame_delta_time</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">      <span class="nf">render_to_framebuffer</span><span class="p">(</span><span class="n">simulation_result</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="nf">SwapBuffers</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">      <span class="nf">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span><span class="p">);</span> <span class="cm">/* putting this right after SwapBuffers() blocks until the framebuffer is available again, sometime after the next VBLANK. */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="n">current_time</span> <span class="o">=</span> <span class="nf">get_time</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="n">frame_delta_time</span> <span class="o">=</span> <span class="n">current_time</span> <span class="o">-</span> <span class="n">last_time</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">last_time</span> <span class="o">=</span> <span class="n">current_time</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>This is still far from perfect.</p>
+<p>With this method, <code>frame_delta_time</code> is on average about 16.6ms on my 60Hz setup which is what we would expect if we wanted correct behaviour per VSync. However, we can&rsquo;t just look at average, we also have to take into account the <strong>variance</strong>.</p>
+<p>On my machine, I setup a simple test that measured the result of about 3000 frames (excluding the first 15 frames), and averaged the result. The average was 16.666ms (which is correct), but the highest time was 16.907ms and the lowest time was 16.418. These differences don&rsquo;t seem like much, but at worst, we have a difference of about 0.5ms from the highest to lowest times. Even the difference between the average and highest times is about 0.25ms - which is a lot of time in real-time graphics.</p>
+<p>The reason why this is so bad is because the lost time of up to 0.25ms will cut into our render time budget for the next frame - EVEN if our rendering time is well under the refresh rate. If we render at 10ms and easily make the 16.6ms cutoff, but <code>glClear()</code> takes us 0.25ms over, we still lose that 0.25ms for the next frame and only have 16.35ms to render.</p>
+<p>It&rsquo;s incorrect (as we&rsquo;ve proven) to assume that <code>glClear()</code> finishes blocking the exact moment that our frame has been made visible on the screen. Even if it does, the blocking mechanism or OS thread scheduling may not wakeup our thread in time, adding some amount of latency which can vary. All of these things make it not very consistent, even though we are hitting VSync exactly on time!</p>
+<p>Because the timing we get is not aligned with the time our framebuffer actually appears on screen, we&rsquo;ll be feeding incorrect values of <code>frame_delta_time</code> to our animation/simulation/physics with incorrect timing information, which throws everything off and causes stutter and other visual inconsistencies. It&rsquo;s this exact issue that Alan Ladavac talked about in his article which I mentioned before.</p>
+<p>Keep in mind these simple timing tests were conducted in a very ideal environment as well. It&rsquo;s not always this good, these numbers are much better than what it would be for a real application that has to run for several hours at a time. I&rsquo;ve had it be off by 1-2ms or even more sometimes. I&rsquo;ve also been using a monitor with 60Hz refresh rate for my testing, but monitors with higher refresh rates will suffer even more! The period of a 240Hz monitor is ~4.17ms, and so even just 1ms is almost 25% of the refresh period! With 2ms, that&rsquo;s almost 50%!</p>
+<p>Another major problem with this approach is that although <code>glClear()</code> blocks for the refresh period, it may not start doing so until mutliple frames have been queued up. What this means is that we could be one or more frames ahead before <code>glClear()</code> starts blocking. Ideally, we would hope that <code>glClear()</code> always blocks until the last framebuffer swap is executed, but there is nothing in any standards that explicitly mandates that behaviour.</p>
+<p>In fact, I&rsquo;ve found evidence that exactly the opposite happens. It seems that many drivers allow multiple &ldquo;frames in flight&rdquo;, meaning that you could be 1 or more frames behind in latency. Check out <a
+  href="https://www.reddit.com/r/gamedev/comments/wdqbgv/why_do_modern_console_games_have_inherent_input"
+    target="_blank"
+  >this</a>, <a
+  href="https://stackoverflow.com/questions/41104667/how-many-frames-deep-is-a-modern-graphics-pipeline"
+    target="_blank"
+  >this</a>, and <a
+  href="https://community.khronos.org/t/flip-queue-aka-pre-rendered-frames/71364"
+    target="_blank"
+  >this</a> link for more info.</p>
+<p>Even ignoring what these people claim online, we still cannot <em>in principle</em> rely on <code>glClear()</code> to behave in line with VSync/double-buffering the way we expect it to. We have no reliable method of determining how many &ldquo;frames in flight&rdquo; the driver allows, as there&rsquo;s no visibility to the application for how many frames are queued up.</p>
+
+<h3 class="relative group">Synchronization With glFinish()/glClear()
+    <div id="synchronization-with-glfinishglclear" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#synchronization-with-glfinishglclear" aria-label="Anchor">#</a>
+    </span>
+    
+</h3>
+<p>There is one other option we can consider, which is using <code>glFinish()</code> instead of <code>glClear()</code> for synchronization. This is a little bit better, as it seems to block right away instead of allowing frames to queue, but may not always be consistent. Still, <code>glFinish()</code> has timing issues and is not a good mechanism, but it might be better than <code>glClear()</code>.</p>
+<p>One workaround for the variance in timing is smoothing out your delta time using some kind of interpolation. This is a fairly robust way to handle things in this situation so that you don&rsquo;t feed an incorrect frame delta time into your simluation/physics/etc that causes severe issues. Instead, you just smooth out any spikes so that it is mostly correct.</p>
+<p>If you want to get more precise timing at the risk of sometimes being way off, then you can measure the time and make an educated guess as to if you&rsquo;ve hit or missed the VBLANK. With a 60Hz refresh rate you would check to see if your time is close to 16.66ms, meaning you hit the VBLANK. If it&rsquo;s higher, then you try to guess exactly how many VBLANKS you missed.</p>
+<p>If you think you didn&rsquo;t miss the VBLANK, then what you do is assume that your framebuffer is being swapped/presented exactly at the refresh rate. Calculate the refresh period (which you should do at program startup), and then just use that as your actual frame delta time! So on 60Hz you would just feed in 16.6ms regardless of what the measured time was. If you think you missed 1 VBLANK, then feed in 33.3ms, if you think you missed 2 VLBANKS, feed in 50ms, and so on for each of the possible refresh periods.</p>
+<p>Here is example code that uses this method:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">time_t</span> <span class="n">last_time</span> <span class="o">=</span> <span class="nf">get_time</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kt">time_t</span> <span class="n">current_time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">time_t</span> <span class="n">frame_delta_time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">float</span> <span class="n">refresh_period</span> <span class="o">=</span> <span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="mi">1</span> <span class="o">/</span> <span class="n">refresh_rate</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1000.0</span><span class="p">;</span> <span class="cm">/* in milliseconds */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">float</span> <span class="n">margin</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">;</span> <span class="cm">/* in milliseconds */</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glXSwapIntervalEXT</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glClearColor</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span><span class="p">(</span><span class="n">running</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="kt">float</span> <span class="n">synthetic_frame_delta_time</span><span class="p">;</span> <span class="cm">/* in milliseconds */</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span><span class="p">(</span><span class="n">frame_delta_time</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">refresh_period</span> <span class="o">+</span> <span class="n">margin</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	    <span class="cm">/* means we hit VBLANK */</span>
+</span></span><span class="line"><span class="cl">	    <span class="n">synthetic_frame_delta_time</span> <span class="o">=</span> <span class="n">refresh_period</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	    <span class="cm">/* means we missed at least one VBLANK, possibly more */</span>
+</span></span><span class="line"><span class="cl">	    <span class="kt">int</span> <span class="n">vblanks_missed</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	    <span class="k">while</span><span class="p">(</span><span class="n">frame_delta_time</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">refresh_period</span> <span class="o">*</span> <span class="p">(</span><span class="n">vblanks_missed</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">margin</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		  <span class="o">++</span><span class="n">vblanks_missed</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">	    <span class="n">synthetic_frame_delta_time</span> <span class="o">=</span> <span class="n">refresh_period</span> <span class="o">*</span> <span class="n">vblanks_missed</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">      <span class="n">simulation_result</span> <span class="o">=</span> <span class="nf">simulate</span><span class="p">(</span><span class="n">synthetic_frame_delta_time</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="nf">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span><span class="p">);</span> <span class="cm">/* putting this back here, where it won&#39;t block */</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">render_to_framebuffer</span><span class="p">(</span><span class="n">simulation_result</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="nf">SwapBuffers</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">glFinish</span><span class="p">();</span> <span class="cm">/* this will block every frame until rendering is complete */</span>
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">      <span class="n">current_time</span> <span class="o">=</span> <span class="nf">get_time</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="n">frame_delta_time</span> <span class="o">=</span> <span class="n">current_time</span> <span class="o">-</span> <span class="n">last_time</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">last_time</span> <span class="o">=</span> <span class="n">current_time</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><code>margin</code> is set to be 5ms in this example, but in reality, you need to calibrate this value to be based on a combination of a percentage of the refresh period, and the margin of error that <code>glFinish()</code> gives at worst towards the higher end.</p>
+<p>This code is an OK solution when we can&rsquo;t otherwise access presentation time, especially if your simulation + render time is well within the refresh period. A downside is you might still be getting multiple frames in flight depending on how <code>glFinish()</code> is implemented.</p>
+<p>I could go on and on with solutions of how to workaround this complex issue using all kinds of crazy hacks and recalibration and timing tricks and all that, but it&rsquo;s not worth it. We could endlessly improve and refine this example, but there are far better methods using the timing extensions mentioned before. They&rsquo;re more complicated though, and since this post is getting too long I&rsquo;m going to cut it off here.</p>
+<p>In the next post, I&rsquo;ll start going over some REAL synchronization and timing solutions, using extensions that allow us to properly synchronize without resorting to compromises or unreliable hacks.</p>
+
+<h2 class="relative group">Sources and Additional Research
+    <div id="sources-and-additional-research" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#sources-and-additional-research" aria-label="Anchor">#</a>
+    </span>
+    
+</h2>
+<ul>
+<li><a
+  href="https://wikis.khronos.org/opengl/Swap_Interval"
+    target="_blank"
+  >https://wikis.khronos.org/opengl/Swap_Interval</a></li>
+<li>link jon blow&rsquo;s QA framerate indepedencwe.</li>
+<li><a
+  href="https://developers.meta.com/horizon/blog/optimizing-vr-graphics-with-late-latching/"
+    target="_blank"
+  >https://developers.meta.com/horizon/blog/optimizing-vr-graphics-with-late-latching/</a></li>
+<li><a
+  href="https://www.activision.com/cdn/research/Hogge_Akimitsu_Controller_to_display.pdf"
+    target="_blank"
+  >https://www.activision.com/cdn/research/Hogge_Akimitsu_Controller_to_display.pdf</a></li>
+</ul>
+
+          
+          
+          
+            <strong class="block mt-8">
+              <a
+                target="_blank"
+                class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+                href="mailto:JamesSpratt.business@protonmail.com?subject=Reply%20to%20Framerate%20Independence%20-%20Part%201%3a%20Refresh%20Rate%20and%20VSync">
+                Reply by Email
+              </a>
+            </strong>
+          
+        </div>
+        
+        
+
+        
+
+        
+
+      </div>
+
+      
+      
+        
+        
+          
+          
+        
+        
+        
+        <script
+          type="text/javascript"
+          src="/js/page.min.54b6f4371722649edbe871e431d8670d670878c22be8f36e229fe53cc9b786fe25a834def5e6de621f7a3e37b72bc8cd73839aa5ed907ed6cbd45cd3e1b0fa20.js"
+          integrity="sha512-VLb0NxciZJ7b6HHkMdhnDWcIeMIr6PNuIp/lPMm3hv4lqDTe9ebeYh96Pje3K8jNc4Oape2QftbL1FzT4bD6IA=="
+          data-oid="views_posts/framerate_synch_1.md"
+          data-oid-likes="likes_posts/framerate_synch_1.md"></script>
+      
+    </section>
+
+    
+    <footer class="pt-8 max-w-prose print:hidden">
+      
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600">
+      <div class="flex justify-between pt-3">
+        <span class="flex flex-col">
+          
+            <a
+              class="flex text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+              href="/posts/win32_window_opengl/">
+              <span class="leading-6">
+                <span class="inline-block rtl:rotate-180">&larr;</span>&ensp;Creating a win32 Window and OpenGL Context on Windows From Scratch
+              </span>
+            </a>
+            
+              <span class="ms-6 mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+                <time datetime="2025-05-02T00:00:00&#43;00:00">2 May 2025</time>
+              </span>
+            
+          
+        </span>
+        <span class="flex flex-col items-end">
+          
+            <a
+              class="flex text-right text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+              href="/posts/example_post/">
+              <span class="leading-6">
+                Introduction to Group Theory Part 1: Permutations&ensp;<span class="inline-block rtl:rotate-180">&rarr;</span>
+              </span>
+            </a>
+            
+              <span class="me-6 mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+                <time datetime="2025-12-14T16:17:42-05:00">14 December 2025</time>
+              </span>
+            
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+      
+    </footer>
+  </article>
+
+        
+
+
+  
+
+
+
+
+
+
+<div
+  id="scroll-to-top"
+  class="fixed bottom-6 end-6 z-50 transform translate-y-4 opacity-0 duration-200">
+  <a
+    href="#the-top"
+    class="pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+    aria-label="Scroll to top"
+    title="Scroll to top">
+    &uarr;
+  </a>
+</div>
+
+      </main><footer id="site-footer" class="py-10 print:hidden">
+  
+  
+    
+  
+  <div class="flex items-center justify-between">
+    
+    
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          &copy;
+          2026
+          James Spratt
+      </p>
+    
+
+    
+    
+  </div>
+  
+    <script>
+      mediumZoom(document.querySelectorAll("img:not(.nozoom)"), {
+        margin: 24,
+        background: "rgba(0,0,0,0.5)",
+        scrollOffset: 0,
+      });
+    </script>
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/process.min.ee03488f19c93c2efb199e2e3014ea5f3cb2ce7d45154adb3399a158cac27ca52831db249ede5bb602700ef87eb02434139de0858af1818ab0fb4182472204a4.js"
+    integrity="sha512-7gNIjxnJPC77GZ4uMBTqXzyyzn1FFUrbM5mhWMrCfKUoMdsknt5btgJwDvh&#43;sCQ0E53ghYrxgYqw&#43;0GCRyIEpA=="></script>
+  
+  
+</footer>
+<div
+  id="search-wrapper"
+  class="invisible fixed inset-0 flex h-screen w-screen cursor-default flex-col bg-neutral-500/50 p-4 backdrop-blur-sm dark:bg-neutral-900/50 sm:p-6 md:p-[10vh] lg:p-[12vh] z-500"
+  data-url="http://localhost:1313/">
+  <div
+    id="search-modal"
+    class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg top-20 border-neutral-200 bg-neutral dark:border-neutral-700 dark:bg-neutral-800">
+    <header class="relative z-10 flex items-center justify-between flex-none px-2">
+      <form class="flex items-center flex-auto min-w-0">
+        <div class="flex items-center justify-center w-8 h-8 text-neutral-400">
+          <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+        </div>
+        <input
+          type="search"
+          id="search-query"
+          class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-2 focus:outline-transparent"
+          placeholder="Search"
+          tabindex="0">
+      </form>
+      <button
+        id="close-search-button"
+        class="flex items-center justify-center w-8 h-8 text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+        title="Close (Esc)">
+        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span>
+      </button>
+    </header>
+    <section class="flex-auto px-2 overflow-auto">
+      <ul id="search-results">
+        
+      </ul>
+    </section>
+  </div>
+</div>
+
+    </div>
+  </body>
+  
+</html>
