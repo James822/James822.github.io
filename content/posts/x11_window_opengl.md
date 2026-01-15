@@ -17,9 +17,9 @@ Also, because different operating systems have different programming interfaces;
 ## X11 & GLX
 To talk about opening a native window on any platform we need to understand what the native windowing system is. In the case of Microsoft Windows, the windowing system is built into the general platform API known as win32. In the case of Linux, windowing systems are separate from the kernel (properly speaking, separate from Linux itself), but the most widely used windowing system across different Linux distributions is **X11** by far. Wayland is another option, but I won't be touching that.
 
-X11, or *The X Window system* is a bitmap display system based on a client-server architecture with a specified protocol called the "X Protocol". Applications communicate to the X Sever (which may be on the same device, or across a network) with commands to peform actions.
+X11, or *The X Window system* is a bitmap display system based on a client-server architecture with a specified protocol called the "X Protocol". Applications communicate to the X Server (which may be on the same device, or across a network) with commands to peform actions.
 
-Programming X11 is therefore writing a client application that can communicate with an X11 server, via the X Protocol. Typically, the X sever is on the same device as the client, and in fact we will be counting on that in our OpenGL application as we don't want to consider networked graphics applications.
+Programming X11 is therefore writing a client application that can communicate with an X11 server, via the X Protocol. Typically, the X server is on the same device as the client, and in fact we will be counting on that in our OpenGL application as we don't want to consider networked graphics applications.
 
 It is within possibility to learn the X Protocol and manually implement it within your client application, but this is beyond what I would consider practical. Rather than that, Xlib is provided for us as a C library that implements the X Protocol so that we can communicate between server and client with an API interface. This is the option I will be going with for this tutorial, but the X protocol is standardized and you absolutely could go look at it for yourself.
 
@@ -408,7 +408,7 @@ if(glXMakeCurrent(display, glx_window, glx_context) != True) {
 /* @! */
 ```
 
-First, we fill in an array of attribs `context_attribs`, which mostly just sets the OpenGL profile major and minor version. Then we pass that, along with our fb_config and some other variables into `glXCreateContextAttribsARB()`. The `NULL` is passed in because we don't want to use any shared contexts (we only want one context for this application), and the `True` is passed in to indicate that we want a Direct Rendering context which is very imporant, we need that if we want any chance of having decent performance.
+First, we fill in an array of attribs `context_attribs`, which mostly just sets the OpenGL profile major and minor version. Then we pass that, along with our fb_config and some other variables into `glXCreateContextAttribsARB()`. The `NULL` is passed in because we don't want to use any shared contexts (we only want one context for this application), and the `True` is passed in to indicate that we want a Direct Rendering context which is very important, we need that if we want any chance of having decent performance.
 
 Next, we check to make sure using `glXIsDirect()` that our context is indeed direct, otherwise we exit with failure. Reasons for failing include that the display is not a local X server, or that there are other contexts on the system taking up the max amount of direct contexts supported.
 
